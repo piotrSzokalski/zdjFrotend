@@ -22,3 +22,8 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+Zadasy:
+ - na każdą zmiane torzymy osobną gałąż i robimy pull request gdy ją skończymy
+ - każda zmian powwina być mała
