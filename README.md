@@ -2,7 +2,7 @@
 
 ## Potrzebne oprogramowanie
 
-npm
+Node.js
 
  https://nodejs.org/en/download/
  
