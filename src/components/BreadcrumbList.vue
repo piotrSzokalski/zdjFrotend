@@ -1,7 +1,7 @@
 <template>
   <div class="breadcrumbs">
     <div v-for="(folder, index) in path" :key="index">
-      <Breadcrumb :folder="folder" />
+      <breadcrumb :folder="folder" />
     </div>
   </div>
 </template>

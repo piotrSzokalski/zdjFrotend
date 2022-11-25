@@ -1,7 +1,6 @@
 <template>
   <div class="picture">
     <img src="@\assets\logo.png" alt="tu powinno być zdjęcie" />
-    ee
   </div>
 </template>
 
