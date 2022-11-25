@@ -34,3 +34,4 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Pozostałe inforamcje w wiki
+https://github.com/piotrSzokalski/zdjFrotend/wiki
