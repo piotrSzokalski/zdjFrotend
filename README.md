@@ -1,5 +1,15 @@
 # zdiecia
 
+## Potrzebne oprogramowanie
+
+npm
+
+ https://nodejs.org/en/download/
+ 
+ Vue CLI
+ 
+ https://cli.vuejs.org/guide/installation.html
+
 ## Project setup
 ```
 npm install
@@ -22,8 +32,3 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-
-
-Zadasy:
- - na każdą zmiane torzymy osobną gałąż i robimy pull request gdy ją skończymy
- - każda zmian powwina być mała
