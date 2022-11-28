@@ -9,7 +9,8 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-import { Folder } from "@/models/folder";
+import { Folder } from "@/interfaces/folder";
+
 import ButtonSlot from "./ButtonSlot.vue";
 
 export default defineComponent({
