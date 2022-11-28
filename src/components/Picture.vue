@@ -1,13 +1,44 @@
 <template>
   <div class="picture">
-    <img src="@\assets\logo.png" alt="tu powinno być zdjęcie" />
+    <input v-if="selectMode" type="checkbox" />
+    {{ image.id }}
+    <img
+      :src="image.path"
+      alt="tu powinno być zdjęcie"
+      width="300"
+      height="300"
+      @click="click"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 
-export default defineComponent({});
+import { Image } from "@/interfaces/image";
+
+export default defineComponent({
+  props: {
+    image: {
+      type: Object as PropType<Image>,
+      required: true,
+    },
+    selectMode: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+  emits: {
+    imageClicked: null,
+  },
+  setup(_, { emit }) {
+    function click(): void {
+      emit("imageClicked");
+    }
+    return { click };
+  },
+});
 </script>
 
 <style>

@@ -1,6 +1,6 @@
 <template>
   <div class="breadcrumbs">
-    <div v-for="(folder, index) in path" :key="index">
+    <div v-for="(folder, index) in exampleFolders" :key="index">
       <breadcrumb :folder="folder" />
     </div>
   </div>
@@ -10,7 +10,10 @@
 import { defineComponent } from "vue";
 
 import Breadcrumb from "./Breadcrumb.vue";
-import { Folder } from "@/models/folder";
+
+import { Folder } from "@/interfaces/folder";
+
+import { exampleFolders } from "@/store/dummyData";
 
 export default defineComponent({
   components: {
@@ -18,14 +21,7 @@ export default defineComponent({
   },
 
   setup() {
-    const path = [
-      new Folder(1, "folder1"),
-      new Folder(2, "folder2"),
-      new Folder(3, "folder3"),
-      new Folder(4, "folder4"),
-    ];
-
-    return { path };
+    return { exampleFolders };
   },
 });
 </script>
