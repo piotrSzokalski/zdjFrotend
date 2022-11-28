@@ -17,12 +17,21 @@ import { defineComponent, PropType } from "vue";
 
 import { Image } from "@/interfaces/image";
 
+/**
+ * Zdjęcie
+ */
 export default defineComponent({
   props: {
+    /**
+     * Obraz do wyświetlenia w src
+     */
     image: {
       type: Object as PropType<Image>,
       required: true,
     },
+    /**
+     * Czy w trybie zaznaczania (np. do usuwania wielu zdjęć na raz)
+     */
     selectMode: {
       type: Boolean,
       default: false,
@@ -30,6 +39,9 @@ export default defineComponent({
   },
 
   emits: {
+    /**s
+     * Naciśnięcie zdjęcia
+     */
     imageClicked: null,
   },
   setup(_, { emit }) {

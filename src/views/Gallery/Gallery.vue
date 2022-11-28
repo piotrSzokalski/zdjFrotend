@@ -13,7 +13,7 @@
     </div>
 
     <div class="pictures">
-      <Picture
+      <ImageComponent
         v-for="(image, index) in exampleImages"
         :key="index"
         :image="image"
@@ -37,18 +37,20 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 
-import Picture from "@/components/Picture.vue";
+import ImageComponent from "@/components/ImageComponent.vue";
 import BreadcrumbList from "@/components/BreadcrumbList.vue";
 import ButtonSlot from "@/components/ButtonSlot.vue";
-import Modal from "@/modals/Modal.vue";
 import ImageViewer from "@/modals/ImageViewer.vue";
 
 import { exampleImages } from "@/store/dummyData";
 import { Image } from "@/interfaces/image";
 
+/**
+ * Galeria ze zdjęciami
+ */
 export default defineComponent({
   components: {
-    Picture,
+    ImageComponent,
     BreadcrumbList,
     ButtonSlot,
     ImageViewer,
@@ -62,16 +64,25 @@ export default defineComponent({
 
     const activeImageIndex = ref(-1);
 
+    /**
+     * Włącza/Wyłącza podgląd tryb zaznaczania
+     */
     function toggleSelectMode(): void {
       selectMode.value = !selectMode.value;
     }
 
+    /**
+     * Włącza/Wyłącza podgląd zdjęcia
+     */
     function viewImage(image: Image, index: number): void {
       imageViewerActive.value = true;
       activeImage.value = image;
       activeImageIndex.value = index;
     }
 
+    /**
+     * Zmienia podglądane zdjęcie na następne
+     */
     function nextImage(): void {
       if (activeImageIndex.value + 1 >= exampleImages.value.length) {
         return;
@@ -80,6 +91,9 @@ export default defineComponent({
       activeImage.value = exampleImages.value[activeImageIndex.value];
     }
 
+    /**
+     * Zmienia podglądane zdjęcie na poprzednie
+     */
     function previousImage(): void {
       if (activeImageIndex.value < 0) {
         return;

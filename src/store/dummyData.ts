@@ -3,6 +3,11 @@ import { ref, computed } from 'vue'
 import { Folder } from '@/interfaces/folder'
 import { Image } from '@/interfaces/image'
 
+/**
+ *  Dane przykładowe - do używania gdy api nie jest dostępne
+ */
+
+
 const _exampleFolders = ref<Folder[]>([
     {
         id: 1,
