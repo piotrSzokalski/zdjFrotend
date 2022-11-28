@@ -1,5 +1,5 @@
 <template>
-  Galeria
+  Galeria {{ activeImageIndex }}
   <div class="gallery">
     <breadcrumb-list />
 
@@ -18,7 +18,7 @@
         :key="index"
         :image="image"
         :select-mode="selectMode"
-        @image-clicked="viewImage(image)"
+        @image-clicked="viewImage(image, index)"
       />
     </div>
   </div>
@@ -26,7 +26,11 @@
   <ImageViewer
     :active="imageViewerActive"
     :image="activeImage"
+    :last="false"
+    :first="false"
     @close="imageViewerActive = false"
+    @next="nextImage"
+    @previous="previousImage"
   />
 </template>
 
@@ -47,7 +51,6 @@ export default defineComponent({
     Picture,
     BreadcrumbList,
     ButtonSlot,
-
     ImageViewer,
   },
   setup() {
@@ -55,16 +58,34 @@ export default defineComponent({
 
     const imageViewerActive = ref(false);
 
-    const activeImage = ref();
+    const activeImage = ref<Image>();
+
+    const activeImageIndex = ref(-1);
 
     function toggleSelectMode(): void {
       selectMode.value = !selectMode.value;
     }
 
-    function viewImage(image: Image): void {
+    function viewImage(image: Image, index: number): void {
       imageViewerActive.value = true;
       activeImage.value = image;
-      console.log("active image:", activeImage.value);
+      activeImageIndex.value = index;
+    }
+
+    function nextImage(): void {
+      if (activeImageIndex.value + 1 >= exampleImages.value.length) {
+        return;
+      }
+      activeImageIndex.value++;
+      activeImage.value = exampleImages.value[activeImageIndex.value];
+    }
+
+    function previousImage(): void {
+      if (activeImageIndex.value < 0) {
+        return;
+      }
+      activeImageIndex.value--;
+      activeImage.value = exampleImages.value[activeImageIndex.value];
     }
 
     return {
@@ -72,9 +93,12 @@ export default defineComponent({
       selectMode,
       imageViewerActive,
       activeImage,
+      activeImageIndex,
 
       toggleSelectMode,
       viewImage,
+      nextImage,
+      previousImage,
     };
   },
 });
