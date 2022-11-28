@@ -1,6 +1,8 @@
 <template>
   <modal :active="active" @close="close">
     <img :src="image.path" width="600" height="600" />
+    <button v-if="!last" @click="$emit('previous')">Poprzedni</button>
+    <button v-if="!first" @click="$emit('next')">Następny</button>
   </modal>
 </template>
 
@@ -24,9 +26,19 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    first: {
+      type: Boolean,
+      default: true,
+    },
+    last: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: {
     close: null,
+    previous: null,
+    next: null,
   },
   setup(props, { emit }) {
     function close(): void {
