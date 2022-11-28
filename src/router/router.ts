@@ -3,6 +3,10 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Login from "@/views/Login/Login.vue";
 import Gallery from "@/views/Gallery/Gallery.vue";
 
+/**
+ * Routing
+ */
+
 export const router = createRouter({
   history: createWebHashHistory(),
   routes: [

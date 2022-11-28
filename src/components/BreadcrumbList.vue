@@ -11,10 +11,11 @@ import { defineComponent } from "vue";
 
 import Breadcrumb from "./Breadcrumb.vue";
 
-import { Folder } from "@/interfaces/folder";
-
 import { exampleFolders } from "@/store/dummyData";
 
+/**
+ * Ścieżka folderów
+ */
 export default defineComponent({
   components: {
     Breadcrumb,

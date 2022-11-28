@@ -1,6 +1,6 @@
 <template>
   <div v-if="active" class="modal">
-    <button @click="close">powrót</button>
+    <button @click="$emit('close')">powrót</button>
     <slot> </slot>
   </div>
 </template>
@@ -8,21 +8,24 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+/**
+ * Generalny modal
+ */
 export default defineComponent({
   props: {
+    /**
+     * Czy widoczny
+     */
     active: {
       type: Boolean,
       default: false,
     },
   },
   emits: {
+    /**
+     * Zamknięcie modala
+     */
     close: null,
-  },
-  setup(_, { emit }) {
-    function close(): void {
-      emit("close");
-    }
-    return { close };
   },
 });
 </script>

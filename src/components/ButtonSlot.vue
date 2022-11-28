@@ -5,7 +5,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-
+/**
+ * TODO
+ * Komponent na większość guzików w aplikacji
+ */
 export default defineComponent({});
 </script>
 
