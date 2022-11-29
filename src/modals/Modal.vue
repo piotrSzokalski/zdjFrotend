@@ -34,8 +34,13 @@ export default defineComponent({
 .modal {
   position: absolute;
   background-color: gray;
-  width: 90wh;
-  height: 90ch;
+  width: 100%;
+  height: 100%;
   z-index: 100;
+  top: 10%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 </style>

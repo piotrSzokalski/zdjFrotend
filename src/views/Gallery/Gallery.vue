@@ -1,17 +1,8 @@
 <template>
-  Galeria {{ activeImageIndex }}
+  <h1>Galeria</h1>
   <div class="gallery">
     <breadcrumb-list />
-
-    <div class="actions">
-      <button-slot><button>Filtruj</button></button-slot>
-      <button-slot><button>Usuń</button></button-slot>
-      <button-slot
-        ><button @click="toggleSelectMode">Zaznacz</button></button-slot
-      >
-      <button-slot><button>Dodaj</button></button-slot>
-    </div>
-
+    <ActionBar @multiSelect="toggleSelectMode" />
     <div class="pictures">
       <ImageComponent
         v-for="(image, index) in exampleImages"
@@ -39,8 +30,8 @@ import { defineComponent, ref } from "vue";
 
 import ImageComponent from "@/components/ImageComponent.vue";
 import BreadcrumbList from "@/components/BreadcrumbList.vue";
-import ButtonSlot from "@/components/ButtonSlot.vue";
 import ImageViewer from "@/modals/ImageViewer.vue";
+import ActionBar from "@/components/ActionBar.vue";
 
 import { exampleImages } from "@/store/dummyData";
 import { Image } from "@/interfaces/image";
@@ -52,8 +43,8 @@ export default defineComponent({
   components: {
     ImageComponent,
     BreadcrumbList,
-    ButtonSlot,
     ImageViewer,
+    ActionBar,
   },
   setup() {
     const selectMode = ref(false);
@@ -122,15 +113,14 @@ export default defineComponent({
 .gallery {
   padding: 20px;
   border: 5px solid;
-  border-radius: 10%;
+  border-radius: 5%;
 }
 .pictures {
-  position: absolute;
-
+  position: relative;
   display: flex;
+  flex-wrap: wrap;
   padding: 10px;
-}
-.actions {
-  display: flex;
+  max-height: 700px;
+  overflow: auto;
 }
 </style>

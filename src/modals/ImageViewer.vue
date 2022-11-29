@@ -1,6 +1,6 @@
 <template>
   <modal :active="active" @close="$emit('close')">
-    <img :src="image.path" width="600" height="600" />
+    <img :src="image.path" width="1000" height="800" />
     <button v-if="!last" @click="$emit('previous')">Poprzedni</button>
     <button v-if="!first" @click="$emit('next')">Następny</button>
   </modal>

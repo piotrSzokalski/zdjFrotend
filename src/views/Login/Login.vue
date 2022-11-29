@@ -1,5 +1,5 @@
 <template>
-  <p>Strona logowania</p>
+  <h1>Strona logowania</h1>
   <label for="email">E-mail</label>
 
   <input id="email" type="text" />
