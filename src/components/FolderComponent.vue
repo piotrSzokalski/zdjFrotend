@@ -1,5 +1,5 @@
 <template>
-  <div id="breadcrumb">
+  <div id="folder">
     <ButtonSlot>
       <button>{{ folder.name }}</button>
     </ButtonSlot>
@@ -25,4 +25,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.folder {
+  padding: 5px;
+}
 </style>

@@ -1,15 +1,13 @@
 <template>
   <div class="breadcrumbs">
-    <div v-for="(folder, index) in exampleFolders" :key="index">
-      <breadcrumb :folder="folder" />
-    </div>
+    <h3>BREADCRUMB TODO</h3>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import Breadcrumb from "./Breadcrumb.vue";
+import FolderComponent from "./FolderComponent.vue";
 
 import { exampleFolders } from "@/store/dummyData";
 
@@ -17,9 +15,7 @@ import { exampleFolders } from "@/store/dummyData";
  * Ścieżka folderów
  */
 export default defineComponent({
-  components: {
-    Breadcrumb,
-  },
+  components: {},
 
   setup() {
     return { exampleFolders };

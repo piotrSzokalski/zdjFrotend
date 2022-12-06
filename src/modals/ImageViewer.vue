@@ -1,5 +1,6 @@
 <template>
   <modal :active="active" @close="$emit('close')">
+    <action-bar />
     <img :src="image.path" width="1000" height="800" />
     <button v-if="!last" @click="$emit('previous')">Poprzedni</button>
     <button v-if="!first" @click="$emit('next')">Następny</button>
@@ -12,6 +13,7 @@ import { defineComponent, PropType } from "vue";
 import { Image } from "@/interfaces/image";
 
 import Modal from "./Modal.vue";
+import ActionBar from "@/components/ActionBar.vue";
 
 /**
  * Podgląd zdjęcia
@@ -19,6 +21,7 @@ import Modal from "./Modal.vue";
 export default defineComponent({
   components: {
     Modal,
+    ActionBar,
   },
   props: {
     /**

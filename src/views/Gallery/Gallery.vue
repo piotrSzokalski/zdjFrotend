@@ -2,10 +2,16 @@
   <h1>Galeria</h1>
   <div class="gallery">
     <breadcrumb-list />
-    <ActionBar @multiSelect="toggleSelectMode" />
+    <ActionBar
+      @multiSelect="toggleSelectMode"
+      @open-photo-filter="photoFilterOpen = true"
+      @close-photo-filter="photoFilterOpen = false"
+    />
+    <picture-filter :open="photoFilterOpen" @filter="filterPhotos" />
+    <sub-folder-list />
     <div class="pictures">
       <ImageComponent
-        v-for="(image, index) in exampleImages"
+        v-for="(image, index) in exampleImagesFiltered"
         :key="index"
         :image="image"
         :select-mode="selectMode"
@@ -28,10 +34,13 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 
+// komponenty
 import ImageComponent from "@/components/ImageComponent.vue";
 import BreadcrumbList from "@/components/BreadcrumbList.vue";
 import ImageViewer from "@/modals/ImageViewer.vue";
 import ActionBar from "@/components/ActionBar.vue";
+import SubFolderList from "@/components/SubFolderList.vue";
+import PictureFilter from "@/components/PictureFilter.vue";
 
 import { exampleImages } from "@/store/dummyData";
 import { Image } from "@/interfaces/image";
@@ -45,6 +54,8 @@ export default defineComponent({
     BreadcrumbList,
     ImageViewer,
     ActionBar,
+    SubFolderList,
+    PictureFilter,
   },
   setup() {
     const selectMode = ref(false);
@@ -54,6 +65,10 @@ export default defineComponent({
     const activeImage = ref<Image>();
 
     const activeImageIndex = ref(-1);
+
+    const exampleImagesFiltered = ref(exampleImages.value);
+
+    const photoFilterOpen = ref(false);
 
     /**
      * Włącza/Wyłącza podgląd tryb zaznaczania
@@ -75,11 +90,11 @@ export default defineComponent({
      * Zmienia podglądane zdjęcie na następne
      */
     function nextImage(): void {
-      if (activeImageIndex.value + 1 >= exampleImages.value.length) {
+      if (activeImageIndex.value + 1 >= exampleImagesFiltered.value.length) {
         return;
       }
       activeImageIndex.value++;
-      activeImage.value = exampleImages.value[activeImageIndex.value];
+      activeImage.value = exampleImagesFiltered.value[activeImageIndex.value];
     }
 
     /**
@@ -90,20 +105,37 @@ export default defineComponent({
         return;
       }
       activeImageIndex.value--;
-      activeImage.value = exampleImages.value[activeImageIndex.value];
+      activeImage.value = exampleImagesFiltered.value[activeImageIndex.value];
+    }
+
+    function filterPhotos(fromDateString: string, toDateString: string): void {
+      const fromDate = new Date(fromDateString || "1980-01-01");
+      const toDate = new Date(toDateString);
+
+      console.log("filter photos:", fromDate + "   |    " + toDate);
+      console.log(exampleImagesFiltered.value);
+
+      exampleImagesFiltered.value = exampleImages.value.filter(
+        (image) =>
+          (image.date >= fromDate && image.date <= toDate) || new Date()
+      );
+
+      console.log(exampleImagesFiltered.value);
     }
 
     return {
-      exampleImages,
+      exampleImagesFiltered,
       selectMode,
       imageViewerActive,
       activeImage,
       activeImageIndex,
+      photoFilterOpen,
 
       toggleSelectMode,
       viewImage,
       nextImage,
       previousImage,
+      filterPhotos,
     };
   },
 });
