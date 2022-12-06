@@ -1,6 +1,7 @@
 <template>
-  <div class="button"></div>
-  <slot> </slot>
+  <div class="button">
+    <slot> <button>Test</button></slot>
+  </div>
 </template>
 
 <script lang="ts">
@@ -16,5 +17,6 @@ export default defineComponent({});
 .button {
   color: aqua;
   border: 1px solid;
+  border-radius: 2px;
 }
 </style>
