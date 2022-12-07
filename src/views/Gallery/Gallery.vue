@@ -103,14 +103,16 @@ export default defineComponent({
 
     function filterPhotos(fromDateString: string, toDateString: string): void {
       const fromDate = new Date(fromDateString || "1980-01-01");
-      const toDate = new Date(toDateString);
+      const toDate = new Date(toDateString) || new Date();
 
       console.log("filter photos:", fromDate + "   |    " + toDate);
       console.log(imagesFiltered.value);
 
-      imagesFiltered.value = images.value?.filter(
-        (image) =>
-          (image.date >= fromDate && image.date <= toDate) || new Date()
+      imagesFiltered.value = images.value?.filter(photo => {
+        console.log(photo.date + '|' + fromDate + '||||', photo.date >= fromDate);
+        console.log(photo.date + '|' + toDate + '||||', photo.date <= toDate);
+        return photo.date >= fromDate && photo.date <= toDate;
+      }
       ) || [];
 
       console.log(imagesFiltered.value);
