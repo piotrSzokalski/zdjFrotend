@@ -44,8 +44,9 @@ export default defineComponent({
      */
     imageClicked: null,
   },
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     function click(): void {
+      console.log(props.image);
       emit("imageClicked");
     }
     return { click };

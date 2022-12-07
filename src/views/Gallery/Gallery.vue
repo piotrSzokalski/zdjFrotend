@@ -71,7 +71,7 @@ export default defineComponent({
 
     const activeImageIndex = ref(-1);
 
-    const exampleImagesFiltered = ref(exampleImages.value);
+    const imagesFiltered = ref(images.value || []);
 
     const photoFilterOpen = ref(false);
 
@@ -97,11 +97,11 @@ export default defineComponent({
      * Zmienia podglądane zdjęcie na następne
      */
     function nextImage(): void {
-      if (activeImageIndex.value + 1 >= exampleImagesFiltered.value.length) {
+      if (activeImageIndex.value + 1 >= imagesFiltered.value.length) {
         return;
       }
       activeImageIndex.value++;
-      activeImage.value = exampleImagesFiltered.value[activeImageIndex.value];
+      activeImage.value = imagesFiltered.value[activeImageIndex.value];
     }
 
     /**
@@ -112,7 +112,7 @@ export default defineComponent({
         return;
       }
       activeImageIndex.value--;
-      activeImage.value = exampleImagesFiltered.value[activeImageIndex.value];
+      activeImage.value = imagesFiltered.value[activeImageIndex.value];
     }
 
     function filterPhotos(fromDateString: string, toDateString: string): void {
@@ -120,14 +120,14 @@ export default defineComponent({
       const toDate = new Date(toDateString);
 
       console.log("filter photos:", fromDate + "   |    " + toDate);
-      console.log(exampleImagesFiltered.value);
+      console.log(imagesFiltered.value);
 
-      exampleImagesFiltered.value = exampleImages.value.filter(
+      imagesFiltered.value = exampleImages.value.filter(
         (image) =>
           (image.date >= fromDate && image.date <= toDate) || new Date()
       );
 
-      console.log(exampleImagesFiltered.value);
+      console.log(imagesFiltered.value);
     }
 
     function test(): void {
@@ -135,7 +135,7 @@ export default defineComponent({
     }
 
     return {
-      exampleImagesFiltered,
+      exampleImagesFiltered: imagesFiltered,
       selectMode,
       imageViewerActive,
       activeImage,

@@ -34,6 +34,7 @@ import { defineComponent, ref } from "vue";
 
 import FolderSelector from "@/modals/FolderSelector.vue";
 import { exampleImages } from "@/store/dummyData";
+import { images } from "@/store/imageStore";
 
 export default defineComponent({
   components: {
@@ -71,13 +72,13 @@ export default defineComponent({
       console.log("sort");
       sortingMode.value = (sortingMode.value + 1) % 3;
       if (sortingMode.value === 0) {
-        exampleImages.value.sort((a, b) => (a.id > b.id ? 1 : -1));
+        images.value?.sort((a, b) => (a.id > b.id ? 1 : -1));
       }
       if (sortingMode.value === 1) {
-        exampleImages.value.sort((a, b) => (a.date > b.date ? -1 : 1));
+        images.value?.sort((a, b) => (a.date > b.date ? -1 : 1));
       }
       if (sortingMode.value === 2) {
-        exampleImages.value.sort((a, b) => (a.date > b.date ? 1 : -1));
+        images.value?.sort((a, b) => (a.date > b.date ? 1 : -1));
       }
     }
 
