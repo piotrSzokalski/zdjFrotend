@@ -6,27 +6,19 @@
 
     <button @click="togglePhotoFilterOpenClose">Filtruj</button>
 
-    <button>Usuń</button>
+    <button @click="removeMarkedPictures">Usuń</button>
 
     <button @click="$emit('multiSelect')">Zaznacz</button>
 
     <button @click="folderSelectorActive = true">Przenieś</button>
 
-    <input
-      type="file"
-      ref="pictureFiles"
-      style="display: none"
-      @change="addPicture"
-    />
+    <input type="file" ref="pictureFiles" style="display: none" @change="addPicture" />
     <button @click="$refs.pictureFiles.click()">Dodaj</button>
 
     <button v-if="false" @click="test">Test</button>
   </div>
 
-  <folder-selector
-    :active="folderSelectorActive"
-    @close="folderSelectorActive = false"
-  />
+  <folder-selector :active="folderSelectorActive" @close="folderSelectorActive = false" />
 </template>
 
 <script lang="ts">
@@ -34,7 +26,8 @@ import { defineComponent, ref } from "vue";
 
 import FolderSelector from "@/modals/FolderSelector.vue";
 import { exampleImages } from "@/store/dummyData";
-import { images } from "@/store/imageStore";
+import { images, markedImageIndexes, loadImages } from "@/store/imageStore";
+import { remove } from '@/services/photoService';
 
 export default defineComponent({
   components: {
@@ -91,6 +84,10 @@ export default defineComponent({
         : emit("openPhotoFilter");
     }
 
+    function removeMarkedPictures() {
+      return remove(markedImageIndexes.value).then(() => console.log('removed')).then(() => loadImages())
+    }
+
     return {
       pictureFiles,
       folderSelectorActive,
@@ -102,6 +99,7 @@ export default defineComponent({
       addPicture,
       test,
       togglePhotoFilterOpenClose,
+      removeMarkedPictures
     };
   },
 });
@@ -114,6 +112,7 @@ export default defineComponent({
   border: 3px solid;
   border-radius: 5%;
 }
+
 button {
   font-size: 30px;
   border-radius: 10%;

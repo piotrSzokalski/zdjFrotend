@@ -3,33 +3,18 @@
   <h1>Galeria</h1>
   <div class="gallery">
     <breadcrumb-list />
-    <ActionBar
-      @multiSelect="toggleSelectMode"
-      @open-photo-filter="photoFilterOpen = true"
-      @close-photo-filter="photoFilterOpen = false"
-    />
+    <ActionBar @multiSelect="toggleSelectMode" @open-photo-filter="photoFilterOpen = true"
+      @close-photo-filter="photoFilterOpen = false" />
     <picture-filter :open="photoFilterOpen" @filter="filterPhotos" />
     <sub-folder-list />
     <div class="pictures">
-      <ImageComponent
-        v-for="(image, index) in images"
-        :key="index"
-        :image="image"
-        :select-mode="selectMode"
-        @image-clicked="viewImage(image, index)"
-      />
+      <ImageComponent v-for="(image, index) in imagesFiltered" :key="index" :image="image" :select-mode="selectMode"
+        @image-clicked="viewImage(image, index)" />
     </div>
   </div>
 
-  <ImageViewer
-    :active="imageViewerActive"
-    :image="activeImage"
-    :last="false"
-    :first="false"
-    @close="imageViewerActive = false"
-    @next="nextImage"
-    @previous="previousImage"
-  />
+  <ImageViewer :active="imageViewerActive" :image="activeImage" :last="false" :first="false"
+    @close="imageViewerActive = false" @next="nextImage" @previous="previousImage" />
 </template>
 
 <script lang="ts">
@@ -43,7 +28,6 @@ import ActionBar from "@/components/ActionBar.vue";
 import SubFolderList from "@/components/SubFolderList.vue";
 import PictureFilter from "@/components/PictureFilter.vue";
 
-import { exampleImages } from "@/store/dummyData";
 import { Image } from "@/interfaces/image";
 import { getImages } from "@/services/photoService";
 import { images, loadImages } from "@/store/imageStore";
@@ -71,11 +55,13 @@ export default defineComponent({
 
     const activeImageIndex = ref(-1);
 
-    const imagesFiltered = ref(images.value || []);
+    const imagesFiltered = ref<Image[]>([]);
 
     const photoFilterOpen = ref(false);
 
-    onMounted(() => loadImages());
+    onMounted(() => {
+      loadImages().then(() => imagesFiltered.value = images.value || []);
+    });
 
     /**
      * Włącza/Wyłącza podgląd tryb zaznaczania
@@ -122,10 +108,10 @@ export default defineComponent({
       console.log("filter photos:", fromDate + "   |    " + toDate);
       console.log(imagesFiltered.value);
 
-      imagesFiltered.value = exampleImages.value.filter(
+      imagesFiltered.value = images.value?.filter(
         (image) =>
           (image.date >= fromDate && image.date <= toDate) || new Date()
-      );
+      ) || [];
 
       console.log(imagesFiltered.value);
     }
@@ -135,7 +121,7 @@ export default defineComponent({
     }
 
     return {
-      exampleImagesFiltered: imagesFiltered,
+      imagesFiltered,
       selectMode,
       imageViewerActive,
       activeImage,
@@ -160,6 +146,7 @@ export default defineComponent({
   border: 5px solid;
   border-radius: 5%;
 }
+
 .pictures {
   position: relative;
   display: flex;
