@@ -109,9 +109,10 @@ export default defineComponent({
       console.log(imagesFiltered.value);
 
       imagesFiltered.value = images.value?.filter(photo => {
-        console.log(photo.date + '|' + fromDate + '||||', photo.date >= fromDate);
-        console.log(photo.date + '|' + toDate + '||||', photo.date <= toDate);
-        return photo.date >= fromDate && photo.date <= toDate;
+        // console.log(photo.date.getTime() + '|' + fromDate.getTime() + '|', photo.date.getTime() >= fromDate.getTime());
+        //console.log(photo.date.getTime() + '|' + toDate.getTime() + '|', photo.date.getTime() <= toDate.getTime());
+        console.log(photo);
+        return new Date(photo.date).getTime() >= fromDate.getTime() && new Date(photo.date).getTime() <= toDate.getTime();
       }
       ) || [];
 
