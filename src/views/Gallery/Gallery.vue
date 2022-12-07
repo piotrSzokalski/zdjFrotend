@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 
 // komponenty
 import ImageComponent from "@/components/ImageComponent.vue";
@@ -45,8 +45,8 @@ import PictureFilter from "@/components/PictureFilter.vue";
 
 import { exampleImages } from "@/store/dummyData";
 import { Image } from "@/interfaces/image";
-import { loadImages } from "@/services/photoService";
-import { images } from "@/store/imageStore";
+import { getImages } from "@/services/photoService";
+import { images, loadImages } from "@/store/imageStore";
 
 /**
  * Galeria ze zdjęciami
@@ -74,6 +74,8 @@ export default defineComponent({
     const exampleImagesFiltered = ref(exampleImages.value);
 
     const photoFilterOpen = ref(false);
+
+    onMounted(() => loadImages());
 
     /**
      * Włącza/Wyłącza podgląd tryb zaznaczania
@@ -129,7 +131,7 @@ export default defineComponent({
     }
 
     function test(): void {
-      loadImages();
+      getImages();
     }
 
     return {

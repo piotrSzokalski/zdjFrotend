@@ -1,7 +1,7 @@
 import { Image } from "@/interfaces/image";
 
 
-export function loadImages() {
+export function getImages() {
     return fetch('https://localhost:44355/api/zdjecia').then(res =>res.json()).then(data => {
       let index = 0;
       const images :Image[] = [];
