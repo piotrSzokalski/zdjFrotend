@@ -1,4 +1,5 @@
 <template>
+  <button @click="test">Test</button>
   <h1>Galeria</h1>
   <div class="gallery">
     <breadcrumb-list />
@@ -11,7 +12,7 @@
     <sub-folder-list />
     <div class="pictures">
       <ImageComponent
-        v-for="(image, index) in exampleImagesFiltered"
+        v-for="(image, index) in images"
         :key="index"
         :image="image"
         :select-mode="selectMode"
@@ -44,6 +45,8 @@ import PictureFilter from "@/components/PictureFilter.vue";
 
 import { exampleImages } from "@/store/dummyData";
 import { Image } from "@/interfaces/image";
+import { loadImages } from "@/services/photoService";
+import { images } from "@/store/imageStore";
 
 /**
  * Galeria ze zdjęciami
@@ -58,6 +61,8 @@ export default defineComponent({
     PictureFilter,
   },
   setup() {
+    console.log(images);
+
     const selectMode = ref(false);
 
     const imageViewerActive = ref(false);
@@ -123,6 +128,10 @@ export default defineComponent({
       console.log(exampleImagesFiltered.value);
     }
 
+    function test(): void {
+      loadImages();
+    }
+
     return {
       exampleImagesFiltered,
       selectMode,
@@ -130,12 +139,14 @@ export default defineComponent({
       activeImage,
       activeImageIndex,
       photoFilterOpen,
+      images,
 
       toggleSelectMode,
       viewImage,
       nextImage,
       previousImage,
       filterPhotos,
+      test,
     };
   },
 });
