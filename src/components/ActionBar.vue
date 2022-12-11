@@ -1,16 +1,26 @@
 <template>
   <div class="actions">
     <button @click="sortPictures">
+      <font-awesome-icon icon="sort" />
       Sortuj: {{ nextSortingName[sortingMode] }}
     </button>
 
-    <button @click="togglePhotoFilterOpenClose">Filtruj</button>
+    <button @click="togglePhotoFilterOpenClose">
+      <font-awesome-icon icon="filter" />
+      Filtruj
+    </button>
 
-    <button>Usuń</button>
+    <button><font-awesome-icon icon="trash" />Usuń</button>
 
-    <button @click="$emit('multiSelect')">Zaznacz</button>
+    <button @click="$emit('multiSelect')">
+      <font-awesome-icon icon="mark" />
+      Zaznacz
+    </button>
 
-    <button @click="folderSelectorActive = true">Przenieś</button>
+    <button @click="folderSelectorActive = true">
+      <font-awesome-icon icon="move" />
+      Przenieś
+    </button>
 
     <input
       type="file"
@@ -18,7 +28,10 @@
       style="display: none"
       @change="addPicture"
     />
-    <button @click="$refs.pictureFiles.click()">Dodaj</button>
+    <button @click="$refs.pictureFiles.click()">
+      <font-awesome-icon icon="add" />
+      Dodaj Zdjęcie
+    </button>
 
     <button v-if="false" @click="test">Test</button>
   </div>
@@ -32,12 +45,15 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import FolderSelector from "@/modals/FolderSelector.vue";
+
 import { exampleImages } from "@/store/dummyData";
 
 export default defineComponent({
   components: {
     FolderSelector,
+    FontAwesomeIcon,
   },
   emits: {
     multiSelect: null,
@@ -118,5 +134,8 @@ button {
   border-radius: 10%;
   width: 10%;
   right: 0px;
+}
+button:hover {
+  background-color: red;
 }
 </style>
