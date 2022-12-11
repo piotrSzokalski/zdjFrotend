@@ -1,5 +1,6 @@
 <template>
   <div class="breadcrumbs">
+    <folder-component :folder="exampleFolders[0]" />
     <h3>BREADCRUMB TODO</h3>
   </div>
 </template>
@@ -15,7 +16,7 @@ import { exampleFolders } from "@/store/dummyData";
  * Ścieżka folderów
  */
 export default defineComponent({
-  components: {},
+  components: { FolderComponent },
 
   setup() {
     return { exampleFolders };

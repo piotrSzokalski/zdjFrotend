@@ -1,6 +1,6 @@
 <template>
+  <breadcrumb-list />
   <div class="gallery">
-    <breadcrumb-list />
     <ActionBar
       @multiSelect="toggleSelectMode"
       @open-photo-filter="photoFilterOpen = true"
@@ -152,13 +152,12 @@ body {
 }
 
 .gallery {
-  padding: 20px;
   border: 5px solid;
   border-radius: 5%;
   position: absolute;
-  top: 0%;
 }
 .pictures {
+  gap: 10px;
   position: relative;
   display: flex;
   flex-wrap: wrap;

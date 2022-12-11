@@ -124,15 +124,15 @@ export default defineComponent({
 
 <style scoped>
 .actions {
+  padding: 10px;
   display: flex;
   position: sticky;
-  border: 3px solid;
   border-radius: 5%;
 }
 button {
   font-size: 30px;
-  border-radius: 10%;
-  width: 10%;
+  border-radius: 30%;
+  width: 15%;
   right: 0px;
 }
 button:hover {

@@ -6,7 +6,7 @@
       {{ folder.name }}
     </button>
 
-    <button @click="$emit('edit')">
+    <button @click="$emit('edit', folder)">
       <font-awesome-icon icon="pen" />
     </button>
   </div>

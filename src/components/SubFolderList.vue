@@ -8,7 +8,7 @@
       v-for="(folder, index) in exampleFolders"
       :key="index"
       :folder="folder"
-      @edit="folderEditorActive = true"
+      @edit="openFolderEditor"
     />
     <button class="arrows"><font-awesome-icon icon="arrow-right" /></button>
   </div>
@@ -17,6 +17,7 @@
   </div>
   <folder-editor
     :active="folderEditorActive"
+    :folder-name="selectedFolder"
     @close="folderEditorActive = false"
   />
 </template>
@@ -29,6 +30,7 @@ import FolderComponent from "./FolderComponent.vue";
 import FolderEditor from "@/modals/FolderEditor.vue";
 
 import { exampleFolders } from "@/store/dummyData";
+import { Folder } from "@/interfaces/folder";
 
 /**
  * Podfoldery
@@ -43,16 +45,27 @@ export default defineComponent({
   setup() {
     const folderEditorActive = ref(false);
 
+    const selectedFolder = ref("brak");
+
     function test() {
       console.log("hwere");
+      folderEditorActive.value = true;
+    }
+
+    function openFolderEditor(folder: Folder) {
+      console.log(folder);
+      selectedFolder.value = folder.name;
+
       folderEditorActive.value = true;
     }
 
     return {
       exampleFolders,
       folderEditorActive,
+      selectedFolder,
 
       test,
+      openFolderEditor,
     };
   },
 });
@@ -60,7 +73,6 @@ export default defineComponent({
   
   <style scoped>
 .title {
-  background: rgb(33, 205, 131);
   font-size: 24;
 }
 .subFolders {
@@ -68,7 +80,6 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   border: 1px sold;
-  background: rgb(33, 205, 131);
 }
 .add {
   font-size: 24;
