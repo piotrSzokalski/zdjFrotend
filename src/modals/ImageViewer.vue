@@ -1,9 +1,22 @@
 <template>
-  <modal :active="active" @close="$emit('close')">
-    <action-bar />
-    <img :src="image.path" width="1000" height="800" />
-    <button v-if="!last" @click="$emit('previous')">Poprzedni</button>
-    <button v-if="!first" @click="$emit('next')">Następny</button>
+  <modal
+    :active="active"
+    :background="'background-color: rgb(0, 0, 0)'"
+    @close="$emit('close')"
+  >
+    <!--
+ <action-bar />
+    -->
+    <div class="image">
+      <img :src="image.path" />
+    </div>
+
+    <div class="pre">
+      <button v-if="!last" @click="$emit('previous')">Poprzedni</button>
+    </div>
+    <div class="next">
+      <button v-if="!first" @click="$emit('next')">Następny</button>
+    </div>
   </modal>
 </template>
 
@@ -21,7 +34,7 @@ import ActionBar from "@/components/ActionBar.vue";
 export default defineComponent({
   components: {
     Modal,
-    ActionBar,
+    //ActionBar,
   },
   props: {
     /**
@@ -69,3 +82,35 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 50%;
+  height: 80%;
+}
+
+.pre {
+  position: absolute;
+  left: 1%;
+  bottom: 20%;
+  /* visibility: hidden; */
+}
+.pre:hover {
+  visibility: visible;
+}
+
+.next {
+  position: absolute;
+  right: 1%;
+  bottom: 20%;
+  /* visibility: hidden; */
+}
+
+.next:hover {
+  visibility: visible;
+  background-color: red;
+}
+</style>

@@ -1,13 +1,12 @@
 <template>
   <div class="picture">
     <input v-if="selectMode" type="checkbox" />
-    {{ image.id }}
     <img
       :src="image.path"
       alt="tu powinno być zdjęcie"
-      width="300"
-      height="300"
       @click="click"
+      height="250"
+      width="250"
     />
   </div>
 </template>
@@ -53,9 +52,12 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 .picture {
-  padding: 10px;
   border: 2px solid;
+}
+img {
+  object-fit: cover;
+  vertical-align: bottom;
 }
 </style>

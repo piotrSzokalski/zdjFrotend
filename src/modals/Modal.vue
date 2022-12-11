@@ -1,7 +1,8 @@
 <template>
   <div v-if="active" class="modal">
     <button @click="$emit('close')">powrót</button>
-    <slot> </slot>
+
+    <slot :style="background"> </slot>
   </div>
 </template>
 
@@ -27,20 +28,27 @@ export default defineComponent({
      */
     close: null,
   },
+  background: {
+    type: String,
+    default: "rgba(0, 0, 0, 0.4)",
+  },
 });
 </script>
 
 <style >
 .modal {
-  position: absolute;
-  background-color: gray;
-  width: 100%;
-  height: 100%;
-  z-index: 100;
-  top: 10%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  /* background-color: rgba(0, 0, 0, 0.4); Black w/ opacity */
+}
+button {
+  top: 0px;
 }
 </style>

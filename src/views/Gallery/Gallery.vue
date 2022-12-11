@@ -1,7 +1,6 @@
 <template>
-  <h1>Galeria</h1>
+  <breadcrumb-list />
   <div class="gallery">
-    <breadcrumb-list />
     <ActionBar
       @multiSelect="toggleSelectMode"
       @open-photo-filter="photoFilterOpen = true"
@@ -29,6 +28,8 @@
     @next="nextImage"
     @previous="previousImage"
   />
+
+  <modal :active="false"></modal>
 </template>
 
 <script lang="ts">
@@ -41,6 +42,8 @@ import ImageViewer from "@/modals/ImageViewer.vue";
 import ActionBar from "@/components/ActionBar.vue";
 import SubFolderList from "@/components/SubFolderList.vue";
 import PictureFilter from "@/components/PictureFilter.vue";
+
+import Modal from "@/modals/Modal.vue";
 
 import { exampleImages } from "@/store/dummyData";
 import { Image } from "@/interfaces/image";
@@ -56,6 +59,8 @@ export default defineComponent({
     ActionBar,
     SubFolderList,
     PictureFilter,
+
+    Modal,
   },
   setup() {
     const selectMode = ref(false);
@@ -142,17 +147,22 @@ export default defineComponent({
 </script>
 
 <style >
+body {
+  overflow: hidden;
+}
+
 .gallery {
-  padding: 20px;
   border: 5px solid;
   border-radius: 5%;
+  position: absolute;
 }
 .pictures {
+  gap: 10px;
   position: relative;
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
-  max-height: 700px;
+  max-height: 625px;
   overflow: auto;
 }
 </style>
