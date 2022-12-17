@@ -1,7 +1,7 @@
-export interface Image {
+export interface Photo {
     id: number,
     name: string
     path: string,
     date: Date,
-    folder: number
+    folder: string
 }

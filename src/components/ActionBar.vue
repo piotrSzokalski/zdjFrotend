@@ -48,7 +48,8 @@ import { defineComponent, ref } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import FolderSelector from "@/modals/FolderSelector.vue";
 
-import { exampleImages } from "@/store/dummyData";
+//import { exampleImages } from "@/store/dummyData";
+import { photos } from "@/store/photos";
 
 export default defineComponent({
   components: {
@@ -87,13 +88,13 @@ export default defineComponent({
       console.log("sort");
       sortingMode.value = (sortingMode.value + 1) % 3;
       if (sortingMode.value === 0) {
-        exampleImages.value.sort((a, b) => (a.id > b.id ? 1 : -1));
+        photos.value.sort((a, b) => (a.id > b.id ? 1 : -1));
       }
       if (sortingMode.value === 1) {
-        exampleImages.value.sort((a, b) => (a.date > b.date ? -1 : 1));
+        photos.value.sort((a, b) => (a.date > b.date ? -1 : 1));
       }
       if (sortingMode.value === 2) {
-        exampleImages.value.sort((a, b) => (a.date > b.date ? 1 : -1));
+        photos.value.sort((a, b) => (a.date > b.date ? 1 : -1));
       }
     }
 

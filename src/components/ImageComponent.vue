@@ -14,7 +14,8 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-import { Image } from "@/interfaces/image";
+// import { Image } from "@/interfaces/image";
+import { Photo } from "@/interfaces/photo";
 
 /**
  * Zdjęcie
@@ -25,7 +26,7 @@ export default defineComponent({
      * Obraz do wyświetlenia w src
      */
     image: {
-      type: Object as PropType<Image>,
+      type: Object as PropType<Photo>,
       required: true,
     },
     /**
