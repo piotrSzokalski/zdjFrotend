@@ -1,6 +1,10 @@
 <template>
   <div class="picture">
-    <input v-if="selectMode" type="checkbox" />
+    <input
+      v-if="selectMode"
+      type="checkbox"
+      @change="togglePhotoSelected(image.id)"
+    />
     <img
       :src="image.path"
       alt="tu powinno być zdjęcie"
@@ -14,7 +18,10 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-import { Image } from "@/interfaces/image";
+// import { Image } from "@/interfaces/image";
+import { Photo } from "@/interfaces/photo";
+
+import { togglePhotoSelected } from "@/store/photos";
 
 /**
  * Zdjęcie
@@ -25,7 +32,7 @@ export default defineComponent({
      * Obraz do wyświetlenia w src
      */
     image: {
-      type: Object as PropType<Image>,
+      type: Object as PropType<Photo>,
       required: true,
     },
     /**
@@ -47,7 +54,11 @@ export default defineComponent({
     function click(): void {
       emit("imageClicked");
     }
-    return { click };
+    return {
+      click,
+
+      togglePhotoSelected,
+    };
   },
 });
 </script>

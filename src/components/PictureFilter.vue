@@ -19,7 +19,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 
-import { exampleImages } from "@/store/dummyData";
+//import { exampleImages } from "@/store/dummyData";
 
 export default defineComponent({
   emits: {

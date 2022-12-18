@@ -10,7 +10,7 @@
     <sub-folder-list />
     <div class="pictures">
       <ImageComponent
-        v-for="(image, index) in exampleImagesFiltered"
+        v-for="(image, index) in photos"
         :key="index"
         :image="image"
         :select-mode="selectMode"
@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 
 // komponenty
 import ImageComponent from "@/components/ImageComponent.vue";
@@ -45,8 +45,11 @@ import PictureFilter from "@/components/PictureFilter.vue";
 
 import Modal from "@/modals/Modal.vue";
 
-import { exampleImages } from "@/store/dummyData";
-import { Image } from "@/interfaces/image";
+//import { exampleImages } from "@/store/dummyData";
+
+import { photos, loadPhotos, selectedPhotosId } from "@/store/photos";
+
+import { Photo } from "@/interfaces/photo";
 
 /**
  * Galeria ze zdjęciami
@@ -67,13 +70,15 @@ export default defineComponent({
 
     const imageViewerActive = ref(false);
 
-    const activeImage = ref<Image>();
+    const activeImage = ref<Photo>();
 
     const activeImageIndex = ref(-1);
 
-    const exampleImagesFiltered = ref(exampleImages.value);
+    const photosFiltered = ref(photos.value);
 
     const photoFilterOpen = ref(false);
+
+    onMounted(() => loadPhotos());
 
     /**
      * Włącza/Wyłącza podgląd tryb zaznaczania
@@ -85,7 +90,7 @@ export default defineComponent({
     /**
      * Włącza/Wyłącza podgląd zdjęcia
      */
-    function viewImage(image: Image, index: number): void {
+    function viewImage(image: Photo, index: number): void {
       imageViewerActive.value = true;
       activeImage.value = image;
       activeImageIndex.value = index;
@@ -95,11 +100,11 @@ export default defineComponent({
      * Zmienia podglądane zdjęcie na następne
      */
     function nextImage(): void {
-      if (activeImageIndex.value + 1 >= exampleImagesFiltered.value.length) {
+      if (activeImageIndex.value + 1 >= photosFiltered.value.length) {
         return;
       }
       activeImageIndex.value++;
-      activeImage.value = exampleImagesFiltered.value[activeImageIndex.value];
+      activeImage.value = photosFiltered.value[activeImageIndex.value];
     }
 
     /**
@@ -110,7 +115,7 @@ export default defineComponent({
         return;
       }
       activeImageIndex.value--;
-      activeImage.value = exampleImagesFiltered.value[activeImageIndex.value];
+      activeImage.value = photosFiltered.value[activeImageIndex.value];
     }
 
     function filterPhotos(fromDateString: string, toDateString: string): void {
@@ -118,23 +123,26 @@ export default defineComponent({
       const toDate = new Date(toDateString);
 
       console.log("filter photos:", fromDate + "   |    " + toDate);
-      console.log(exampleImagesFiltered.value);
+      console.log(photosFiltered.value);
 
-      exampleImagesFiltered.value = exampleImages.value.filter(
+      photosFiltered.value = photos.value.filter(
         (image) =>
           (image.date >= fromDate && image.date <= toDate) || new Date()
       );
 
-      console.log(exampleImagesFiltered.value);
+      console.log(photosFiltered.value);
     }
 
     return {
-      exampleImagesFiltered,
+      photosFiltered,
       selectMode,
       imageViewerActive,
       activeImage,
       activeImageIndex,
       photoFilterOpen,
+
+      photos,
+      selectedPhotosId,
 
       toggleSelectMode,
       viewImage,
