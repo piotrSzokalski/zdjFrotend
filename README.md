@@ -9,6 +9,10 @@ Node.js
  Vue CLI
  
  https://cli.vuejs.org/guide/installation.html
+ 
+ Font Awesome
+ 
+ https://fontawesome.com/docs/web/use-with/vue/
 
 ## Project setup
 ```
