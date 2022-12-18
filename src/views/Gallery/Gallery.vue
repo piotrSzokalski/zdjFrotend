@@ -1,5 +1,4 @@
 <template>
-  {{ photos }}
   <breadcrumb-list />
   <div class="gallery">
     <ActionBar
@@ -11,7 +10,7 @@
     <sub-folder-list />
     <div class="pictures">
       <ImageComponent
-        v-for="(image, index) in photosFiltered"
+        v-for="(image, index) in photos"
         :key="index"
         :image="image"
         :select-mode="selectMode"
@@ -48,7 +47,7 @@ import Modal from "@/modals/Modal.vue";
 
 //import { exampleImages } from "@/store/dummyData";
 
-import { photos, loadPhotos } from "@/store/photos";
+import { photos, loadPhotos, selectedPhotosId } from "@/store/photos";
 
 import { Photo } from "@/interfaces/photo";
 
@@ -143,6 +142,7 @@ export default defineComponent({
       photoFilterOpen,
 
       photos,
+      selectedPhotosId,
 
       toggleSelectMode,
       viewImage,

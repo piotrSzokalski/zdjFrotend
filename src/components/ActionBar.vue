@@ -10,7 +10,9 @@
       Filtruj
     </button>
 
-    <button><font-awesome-icon icon="trash" />Usuń</button>
+    <button @click="removePhotos">
+      <font-awesome-icon icon="trash" />Usuń
+    </button>
 
     <button @click="$emit('multiSelect')">
       <font-awesome-icon icon="mark" />
@@ -26,11 +28,12 @@
       type="file"
       ref="pictureFiles"
       style="display: none"
-      @change="addPicture"
+      @change="addPictures"
+      multiple
     />
     <button @click="$refs.pictureFiles.click()">
       <font-awesome-icon icon="add" />
-      Dodaj Zdjęcie
+      Dodaj Zdjęcia
     </button>
 
     <button v-if="false" @click="test">Test</button>
@@ -49,6 +52,9 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import FolderSelector from "@/modals/FolderSelector.vue";
 
 //import { exampleImages } from "@/store/dummyData";
+
+import { photoService } from "@/services/photoService";
+import { loadPhotos } from "@/store/photos";
 import { photos } from "@/store/photos";
 
 export default defineComponent({
@@ -67,11 +73,35 @@ export default defineComponent({
     const folderSelectorActive = ref(false);
 
     function test() {
+      console.log(test);
       console.log(pictureFiles.value?.files);
     }
 
-    function addPicture(): void {
-      //console.log(pictureFiles.value?.files);
+    async function addPictures() {
+      if (pictureFiles.value?.files) {
+        const results = await photoService.addPhotos(pictureFiles.value.files);
+        // do wyextraktoania
+        for (const res of results) {
+          if (res.ok) {
+            loadPhotos();
+            return;
+          }
+        }
+      }
+    }
+
+    async function removePhotos() {
+      const results = await photoService.removePhotos();
+      // do wyextraktoania
+      console.log(results);
+      for (const res of results) {
+        console.log(res.ok);
+        if (res.ok) {
+          console.log("here1");
+          loadPhotos();
+          return;
+        }
+      }
     }
 
     /**
@@ -113,9 +143,10 @@ export default defineComponent({
       sortingMode,
       nextSortingName,
       photoFilterOpen,
+      removePhotos,
 
       sortPictures,
-      addPicture,
+      addPictures,
       test,
       togglePhotoFilterOpenClose,
     };
