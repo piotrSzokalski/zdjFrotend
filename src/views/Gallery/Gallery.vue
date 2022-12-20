@@ -1,4 +1,6 @@
 <template>
+  Abcdefg
+  {{ selectedPhotosId }}
   <breadcrumb-list />
   <div class="gallery">
     <ActionBar
