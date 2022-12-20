@@ -11,16 +11,17 @@
     </button>
 
     <button @click="removePhotos">
-      <font-awesome-icon icon="trash" />Usuń
+      <font-awesome-icon icon="trash" />
+        Usuń
     </button>
 
     <button @click="$emit('multiSelect')">
-      <font-awesome-icon icon="mark" />
+      <font-awesome-icon icon="fa-solid fa-circle-check" />
       Zaznacz
     </button>
 
     <button @click="folderSelectorActive = true">
-      <font-awesome-icon icon="move" />
+        <font-awesome-icon icon="fa-solid fa-share-from-square" />
       Przenieś
     </button>
 
@@ -162,12 +163,14 @@ export default defineComponent({
   border-radius: 5%;
 }
 button {
-  font-size: 30px;
-  border-radius: 30%;
-  width: 15%;
+  font-size: 20px;
+  font-weight: 400;
+  border-radius: 50px;
+  width: 6%;
   right: 0px;
+  padding: 10px;
 }
 button:hover {
-  background-color: red;
+  background-color: darkslateblue;
 }
 </style>

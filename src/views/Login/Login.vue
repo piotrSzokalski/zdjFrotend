@@ -1,14 +1,19 @@
 <template>
-  <h1>Strona logowania</h1>
-  <label for="email">E-mail</label>
+  <h1>Witaj!</h1>
+  <div id="container">
+      <form>
+          <label for="email">E-mail</label>
+          <br /><br />
+          <input id="email" type="text" />
+          <br /><br />
+          <label for="password">Haslo</label>
+          <br /><br />
+          <input id="password" type="text" />
+          <br /><br />
 
-  <input id="email" type="text" />
-
-  <label for="password">Haslo</label>
-
-  <input id="password" type="text" />
-
-  <button @click="login">Zaloguj</button>
+          <button @click="login">Zaloguj się</button>
+      </form>
+  </div>
 </template>
 
 
@@ -38,5 +43,40 @@ export default defineComponent({
 });
 </script>
 
-<style lang="css">
+<style>
+    body{
+        overflow:hidden;
+    }
+    container {
+        border: 2px solid #ddd;
+        background-color:darkgrey;
+        width: 300px;
+        padding: 50px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 100px;
+    }
+    input{
+        width: 300px;
+        background-color: #efefef;
+        color: #666;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-size: 20px;
+        padding: 10px;
+    }
+    label {
+        font-size: 15px;
+
+    }
+    button{
+        width: 325px;
+        color: white;
+        background-color: cornflowerblue;
+        border: 2px solid #808080;
+        border-radius: 5px;
+        font-size: 20px;
+        font-weight: 600;
+        padding: 10px;
+    }
 </style>

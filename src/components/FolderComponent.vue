@@ -34,13 +34,18 @@ export default defineComponent({
 </script>
 
 <style scoped>
-button {
-  font-size: 24px;
-}
+    button {
+        font-size: 40px;
+        font-weight: 400;
+        font-size: 15px;
+        border-radius: 10px;
+        border: 3px thin #293250;
+        width: 200px;
+    }
 button:hover {
-  background-color: yellow;
+  background-color: darkslateblue;
 }
 .folder {
-  padding: 5px;
+  padding: 10px;
 }
 </style>
