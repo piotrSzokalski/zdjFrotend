@@ -6,7 +6,7 @@
     </button>
 
     <button @click="togglePhotoFilterOpenClose">
-      <font-awesome-icon icon="filter" />
+      <font-awesome-icon icon="images" />
       Filtruj
     </button>
 

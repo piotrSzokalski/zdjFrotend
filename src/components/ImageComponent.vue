@@ -1,6 +1,5 @@
 <template>
   {{ image.date }}
-  {{ selectMode }}
   <div class="picture" @click="selectMode ? select(image.id) : click()">
     <input v-if="selectMode" v-model="selected" type="checkbox" />
     <img

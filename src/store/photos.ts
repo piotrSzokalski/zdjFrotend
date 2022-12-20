@@ -21,10 +21,8 @@ export function togglePhotoSelected(id: number) {
         _selectedPhotosId.value.push(id);
     }
    
-
 }
 
 export function loadPhotos() {
-    console.log('here2');
-    photoService.getPhotos().then(res => _photos.value = res);
+    return photoService.getPhotos().then(res => _photos.value = res);
 }

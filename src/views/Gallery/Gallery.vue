@@ -1,6 +1,5 @@
 <template>
-  Abcdefg
-  {{ selectedPhotosId }}
+  {{ photosFiltered.length }}
   <breadcrumb-list />
   <div class="gallery">
     <ActionBar
@@ -8,11 +7,15 @@
       @open-photo-filter="photoFilterOpen = true"
       @close-photo-filter="photoFilterOpen = false"
     />
-    <picture-filter :open="photoFilterOpen" @filter="filterPhotos" />
+    <picture-filter
+      :open="photoFilterOpen"
+      @filter="filterPhotos"
+      @clear-filter="clearFilter"
+    />
     <sub-folder-list />
     <div class="pictures">
       <ImageComponent
-        v-for="(image, index) in photos"
+        v-for="(image, index) in photosFiltered"
         :key="index"
         :image="image"
         :select-mode="selectMode"
@@ -35,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, computed, watch } from "vue";
 
 // komponenty
 import ImageComponent from "@/components/ImageComponent.vue";
@@ -76,11 +79,16 @@ export default defineComponent({
 
     const activeImageIndex = ref(-1);
 
-    const photosFiltered = ref(photos.value);
+    const photosFiltered = ref<Photo[]>([]);
 
     const photoFilterOpen = ref(false);
 
     onMounted(() => loadPhotos());
+
+    watch(
+      () => photos.value,
+      () => (photosFiltered.value = photos.value || [])
+    );
 
     /**
      * Włącza/Wyłącza podgląd tryb zaznaczania
@@ -127,12 +135,31 @@ export default defineComponent({
       console.log("filter photos:", fromDate + "   |    " + toDate);
       console.log(photosFiltered.value);
 
-      photosFiltered.value = photos.value.filter(
-        (image) =>
-          (image.date >= fromDate && image.date <= toDate) || new Date()
-      );
+      for (const photo of photos.value) {
+        // console.log(new Date(photo.date));
+        // console.log(fromDate);
+        // console.log("++++++++++++++++++++++++++++++++++++++");
+        // console.log(new Date(photo.date) >= fromDate);
+        // console.log("______________________");
 
-      console.log(photosFiltered.value);
+        if (
+          new Date(photo.date) >= fromDate &&
+          new Date(photo.date) <= toDate
+        ) {
+          photosFiltered.value.push(photo);
+        }
+      }
+
+      // photosFiltered.value = photos.value.filter(
+      //   (image) =>
+      //     (new Date(image.date) >= fromDate &&
+      //       new Date(image.date) <= toDate) ||
+      //     new Date()
+      // );
+    }
+
+    function clearFilter() {
+      photosFiltered.value = photos.value;
     }
 
     return {
@@ -151,6 +178,7 @@ export default defineComponent({
       nextImage,
       previousImage,
       filterPhotos,
+      clearFilter,
     };
   },
 });

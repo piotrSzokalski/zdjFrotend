@@ -24,10 +24,6 @@ class PhotoService {
     }
 
     async addPhotos(photos: FileList) {
-
-        console.log(photos[0]);
-        console.log(new Date(photos[0].lastModified));
-
         const results: Response[] = [];
     
         for(let index = 0; index < photos.length; index++) {
