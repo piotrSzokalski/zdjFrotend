@@ -1,4 +1,5 @@
 <template>
+    XDDDD
   <breadcrumb-list />
   <div class="gallery">
     <ActionBar
