@@ -1,6 +1,6 @@
 import { Photo } from "@/interfaces/photo";
 
-import { selectedPhotosId } from "@/store/photos";
+import { selectedPhotosId, togglePhotoSelected } from "@/store/photos";
 
 class PhotoService {
     getPhotos(): Promise<Photo[]> {
@@ -25,20 +25,26 @@ class PhotoService {
 
     async addPhotos(photos: FileList) {
 
-        console.log(photos[0].lastModified);
-        
+        console.log(photos[0]);
+        console.log(new Date(photos[0].lastModified));
 
         const results: Response[] = [];
     
         for(let index = 0; index < photos.length; index++) {
+
+             if(! photos[index].name.includes('.jpg') && ! photos[index].name.includes('.png') && ! photos[index].name.includes('.bmp')) {
+                 continue;
+             }
+
             const formData = new FormData();
     
             formData.append('PhotoName', 'brak');
             formData.append('PhotoFolder', 'brak')
-            formData.append('PhotoDate', '2004-12-10');
+            formData.append('PhotoDate', new Date(photos[index].lastModified).toISOString().slice(0, 19).replace('T', ' '));
             formData.append('PhotoFile', photos[index]);
     
             await fetch('https://localhost:7002/api/Photos', { method: 'POST', body: formData} ).then(res => results.push(res));
+
         }
         return results;
     }
@@ -49,7 +55,11 @@ class PhotoService {
         for(const id of selectedPhotosId.value) {
             const formData = new FormData();
             //formData.append('id', JSON.stringify(id));
-            await fetch('https://localhost:7002/api/Photos/' + id, { method: 'DELETE' }).then(res => results.push(res));
+            const res = await fetch('https://localhost:7002/api/Photos/' + id, { method: 'DELETE' });
+            results.push(res);
+            if(res.ok) {
+                togglePhotoSelected(id);
+            }
         }
      return results;
     }

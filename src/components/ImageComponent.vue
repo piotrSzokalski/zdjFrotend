@@ -55,7 +55,6 @@ export default defineComponent({
     }
 
     function select(id: number) {
-      console.log("here");
       selected.value = !selected.value;
       togglePhotoSelected(id);
     }

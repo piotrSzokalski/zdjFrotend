@@ -93,11 +93,8 @@ export default defineComponent({
     async function removePhotos() {
       const results = await photoService.removePhotos();
       // do wyextraktoania
-      console.log(results);
       for (const res of results) {
-        console.log(res.ok);
         if (res.ok) {
-          console.log("here1");
           loadPhotos();
           return;
         }
