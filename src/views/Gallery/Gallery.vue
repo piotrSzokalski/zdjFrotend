@@ -190,8 +190,8 @@ body {
 }
 
 .gallery {
-  border: 5px solid;
-  border-radius: 5%;
+  border: 1px solid;
+  border-radius: 20px;
   position: absolute;
 }
 .pictures {
@@ -203,4 +203,11 @@ body {
   max-height: 625px;
   overflow: auto;
 }
+    button {
+        background-color: ;
+        border: 2px solid #2130ae;
+        border-radius: 5px;
+        font-size: 15px;
+        padding: 20px;
+    }
 </style>

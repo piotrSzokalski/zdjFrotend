@@ -1,5 +1,7 @@
 <template>
-  <div class="title">Podfoldery</div>
+  <div class="title">
+      Podfoldery
+    </div>
 
   <div class="subFolders">
     <button class="arrows"><font-awesome-icon icon="arrow-left" /></button>
@@ -73,20 +75,24 @@ export default defineComponent({
   
   <style scoped>
 .title {
-  font-size: 24;
+  font-size: 25px;
+  text-align:left;
 }
 .subFolders {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px sold;
+
 }
 .add {
-  font-size: 24;
+  font-size: 24px;
+  position: relative;
+  right: 43.9%;
 }
 
 .arrows button {
   background-color: blue;
+  width:10px;
 }
 </style>
   

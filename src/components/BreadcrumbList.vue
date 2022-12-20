@@ -1,7 +1,7 @@
 <template>
   <div class="breadcrumbs">
     <folder-component :folder="exampleFolders[0]" />
-    <h3>BREADCRUMB TODO</h3>
+    <h3>BREADCRUMB</h3>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default defineComponent({
 <style>
 .breadcrumbs {
   display: flex;
-  border: 1px sold;
-  background: rgb(131, 205, 131);
+  border: 1px unset #808080;
+  background-color: lavender;
 }
 </style>
