@@ -1,38 +1,19 @@
 <template>
-  {{ firstImage }}
+
   <breadcrumb-list />
   <div class="gallery">
-    <ActionBar
-      @multiSelect="toggleSelectMode"
-      @open-photo-filter="photoFilterOpen = true"
-      @close-photo-filter="photoFilterOpen = false"
-    />
-    <picture-filter
-      :open="photoFilterOpen"
-      @filter="filterPhotos"
-      @clear-filter="clearFilter"
-    />
+    <ActionBar @multiSelect="toggleSelectMode" @open-photo-filter="photoFilterOpen = true"
+      @close-photo-filter="photoFilterOpen = false" />
+    <picture-filter :open="photoFilterOpen" @filter="filterPhotos" @clear-filter="clearFilter" />
     <sub-folder-list />
     <div class="pictures">
-      <ImageComponent
-        v-for="(image, index) in photosFiltered"
-        :key="index"
-        :image="image"
-        :select-mode="selectMode"
-        @image-clicked="viewImage(image, index)"
-      />
+      <ImageComponent v-for="(image, index) in photosFiltered" :key="index" :image="image" :select-mode="selectMode"
+        @image-clicked="viewImage(image, index)" />
     </div>
   </div>
 
-  <ImageViewer
-    :active="imageViewerActive"
-    :image="activeImage"
-    :last="lastImage"
-    :first="firstImage"
-    @close="imageViewerActive = false"
-    @next="nextImage"
-    @previous="previousImage"
-  />
+  <ImageViewer :active="imageViewerActive" :image="activeImage" :last="lastImage" :first="firstImage"
+    @close="imageViewerActive = false" @next="nextImage" @previous="previousImage" />
 
   <modal :active="false"></modal>
 </template>
@@ -133,33 +114,14 @@ export default defineComponent({
     }
 
     function filterPhotos(fromDateString: string, toDateString: string): void {
-      const fromDate = new Date(fromDateString || "1980-01-01");
-      const toDate = new Date(toDateString);
 
-      console.log("filter photos:", fromDate + "   |    " + toDate);
-      console.log(photosFiltered.value);
+      const fromDate = new Date(fromDateString || 0).getTime();
+      const toDate = new Date(toDateString).getTime() || new Date().getTime();
 
-      for (const photo of photos.value) {
-        // console.log(new Date(photo.date));
-        // console.log(fromDate);
-        // console.log("++++++++++++++++++++++++++++++++++++++");
-        // console.log(new Date(photo.date) >= fromDate);
-        // console.log("______________________");
-
-        if (
-          new Date(photo.date) >= fromDate &&
-          new Date(photo.date) <= toDate
-        ) {
-          photosFiltered.value.push(photo);
-        }
-      }
-
-      // photosFiltered.value = photos.value.filter(
-      //   (image) =>
-      //     (new Date(image.date) >= fromDate &&
-      //       new Date(image.date) <= toDate) ||
-      //     new Date()
-      // );
+      photosFiltered.value = photos.value.filter(photo => {
+        const photoDate = new Date(photo.date).getTime();
+        return photoDate >= fromDate && photoDate <= toDate;
+      });
     }
 
     function clearFilter() {
@@ -199,6 +161,7 @@ body {
   border-radius: 20px;
   position: relative;
 }
+
 .pictures {
   gap: 10px;
   position: relative;
@@ -209,6 +172,7 @@ body {
   max-width: 2000px;
   overflow: auto;
 }
+
 button {
   border: 2px solid #2130ae;
   border-radius: 5px;
