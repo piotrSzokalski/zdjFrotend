@@ -6,6 +6,10 @@
       @close-photo-filter="photoFilterOpen = false" />
     <picture-filter :open="photoFilterOpen" @filter="filterPhotos" @clear-filter="clearFilter" />
     <sub-folder-list />
+    <div class="selectButtons">
+      <button>Zaznacz wszystkie</button>
+      <button>Anuluj zaznaczanie</button>
+    </div>
     <div class="pictures">
       <ImageComponent v-for="(image, index) in photosFiltered" :key="index" :image="image" :select-mode="selectMode"
         @image-clicked="viewImage(image, index)" />
@@ -168,7 +172,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
-  max-height: 500px;
+  max-height: 600px;
   max-width: 2000px;
   overflow: auto;
 }
@@ -176,6 +180,18 @@ body {
 button {
   border: 2px solid #2130ae;
   border-radius: 5px;
+  font-size: 15px;
+  padding: 20px;
+}
+
+.selectButtons {
+  background-color: aliceblue;
+}
+
+.selectButtons button {
+  border: 2px solid aliceblue;
+  background-color: green;
+  border-radius: 10px;
   font-size: 15px;
   padding: 20px;
 }

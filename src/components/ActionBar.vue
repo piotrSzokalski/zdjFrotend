@@ -25,13 +25,7 @@
       Przenieś
     </button>
 
-    <input
-      type="file"
-      ref="pictureFiles"
-      style="display: none"
-      @change="addPictures"
-      multiple
-    />
+    <input type="file" ref="pictureFiles" style="display: none" @change="addPictures" multiple />
     <button @click="$refs.pictureFiles.click()">
       <font-awesome-icon icon="add" />
       Dodaj Zdjęcia
@@ -40,15 +34,8 @@
     <button v-if="false" @click="test">Test</button>
   </div>
 
-  <folder-selector
-    :active="folderSelectorActive"
-    @close="folderSelectorActive = false"
-  />
-  <removal-warning
-    :active="removalWarningActive"
-    @close="removalWarningActive = false"
-    @remove="removePhotos"
-  />
+  <folder-selector :active="folderSelectorActive" @close="folderSelectorActive = false" />
+  <removal-warning :active="removalWarningActive" @close="removalWarningActive = false" @remove="removePhotos" />
 </template>
 
 <script lang="ts">
@@ -173,6 +160,7 @@ export default defineComponent({
   border-radius: 5%;
   position: relative;
 }
+
 button {
   font-size: 20px;
   font-weight: 400;
@@ -181,6 +169,7 @@ button {
   right: 0px;
   padding: 10px;
 }
+
 button:hover {
   background-color: darkslateblue;
 }

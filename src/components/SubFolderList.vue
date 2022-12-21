@@ -4,12 +4,8 @@
   <div class="subFolders">
     <button class="arrows"><font-awesome-icon icon="arrow-left" /></button>
 
-    <folder-component
-      v-for="(folder, index) in exampleFolders"
-      :key="index"
-      :folder="folder"
-      @edit="openFolderEditor(folder)"
-    />
+    <folder-component v-for="(folder, index) in exampleFolders" :key="index" :folder="folder"
+      @edit="openFolderEditor(folder)" />
     <button class="arrows"><font-awesome-icon icon="arrow-right" /></button>
   </div>
   <div class="add">
@@ -17,15 +13,11 @@
       <font-awesome-icon icon="folder-plus" />Dodaj Folder
     </button>
   </div>
-  <folder-editor
-    :active="folderEditorActive"
-    :folder-name="selectedFolder"
-    :edit-mode="folderEditorEditMode"
-    @close="folderEditorActive = false"
-  />
+  <folder-editor :active="folderEditorActive" :folder-name="selectedFolder" :edit-mode="folderEditorEditMode"
+    @close="folderEditorActive = false" />
 </template>
   
-  <script lang="ts">
+<script lang="ts">
 import { defineComponent, ref } from "vue";
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -84,18 +76,20 @@ export default defineComponent({
 });
 </script>
   
-  <style scoped>
+<style scoped>
 .title {
   font-size: 25px;
   text-align: left;
   position: relative;
 }
+
 .subFolders {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
 }
+
 .add {
   font-size: 24px;
   position: relative;
@@ -105,6 +99,14 @@ export default defineComponent({
 .arrows button {
   background-color: blue;
   width: 10px;
+}
+
+
+button {
+  border: 2px solid #2130ae;
+  border-radius: 5px;
+  font-size: 15px;
+  padding: 20px;
 }
 </style>
   

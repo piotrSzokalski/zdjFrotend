@@ -1,12 +1,8 @@
 <template>
-  <div class="picture" @click="selectMode ? select(image.id) : click()">
+  <div :class="{ picture: !selectMode, pictureSelected: selectMode, isSelected: selected && selectMode }"
+    @click="selectMode ? select(image.id) : click()">
     <input v-if="selectMode" v-model="selected" type="checkbox" />
-    <img
-      :src="image.path"
-      alt="tu powinno być zdjęcie"
-      height="250"
-      width="250"
-    />
+    <img :src="image.path" alt="tu powinno być zdjęcie" height="250" width="250" />
   </div>
 </template>
 
@@ -78,16 +74,55 @@ export default defineComponent({
 .picture {
   border: 2px solid;
 }
-img {
+
+.picture img {
   object-fit: cover;
   vertical-align: bottom;
 }
 
-img:hover {
+
+
+.picture img:hover {
   object-fit: cover;
   vertical-align: bottom;
   border-radius: 20%;
   opacity: 90%;
   transform: scale(1.5);
+}
+
+.pictureSelected {
+  border: 10px solid;
+}
+
+.pictureSelected img {
+  object-fit: cover;
+  vertical-align: bottom;
+}
+
+.pictureSelected img:hover {
+  object-fit: cover;
+  vertical-align: bottom;
+  border-radius: 20%;
+  opacity: 90%;
+  transform: scale(2);
+}
+
+.isSelected {
+  border: 5px solid red;
+}
+
+
+.isSelected img {
+  object-fit: cover;
+  vertical-align: bottom;
+  background-color: red;
+}
+
+.isSelected img:hover {
+  object-fit: cover;
+  vertical-align: bottom;
+  border-radius: 20%;
+  opacity: 90%;
+  transform: scale(2);
 }
 </style>
