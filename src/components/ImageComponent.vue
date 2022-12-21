@@ -1,5 +1,4 @@
 <template>
-  {{ image.date }}
   <div class="picture" @click="selectMode ? select(image.id) : click()">
     <input v-if="selectMode" v-model="selected" type="checkbox" />
     <img
@@ -12,12 +11,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, computed } from "vue";
 
 // import { Image } from "@/interfaces/image";
 import { Photo } from "@/interfaces/photo";
 
-import { togglePhotoSelected } from "@/store/photos";
+import { togglePhotoSelected, selectedPhotosId } from "@/store/photos";
 
 /**
  * Zdjęcie
@@ -46,15 +45,16 @@ export default defineComponent({
      */
     imageClicked: null,
   },
-  setup(_, { emit }) {
-    const selected = ref(false);
+  setup(props, { emit }) {
+    const selected = computed(() =>
+      selectedPhotosId.value.includes(props.image.id)
+    );
 
     function click(): void {
       emit("imageClicked");
     }
 
     function select(id: number) {
-      selected.value = !selected.value;
       togglePhotoSelected(id);
     }
 
@@ -81,5 +81,13 @@ export default defineComponent({
 img {
   object-fit: cover;
   vertical-align: bottom;
+}
+
+img:hover {
+  object-fit: cover;
+  vertical-align: bottom;
+  border-radius: 20%;
+  opacity: 90%;
+  transform: scale(1.5);
 }
 </style>

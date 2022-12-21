@@ -1,5 +1,5 @@
 <template>
-  {{ photosFiltered.length }}
+  {{ firstImage }}
   <breadcrumb-list />
   <div class="gallery">
     <ActionBar
@@ -27,8 +27,8 @@
   <ImageViewer
     :active="imageViewerActive"
     :image="activeImage"
-    :last="false"
-    :first="false"
+    :last="lastImage"
+    :first="firstImage"
     @close="imageViewerActive = false"
     @next="nextImage"
     @previous="previousImage"
@@ -82,6 +82,10 @@ export default defineComponent({
     const photosFiltered = ref<Photo[]>([]);
 
     const photoFilterOpen = ref(false);
+
+    const lastImage = computed(() => false);
+
+    const firstImage = computed(() => false);
 
     onMounted(() => loadPhotos());
 
@@ -169,9 +173,10 @@ export default defineComponent({
       activeImage,
       activeImageIndex,
       photoFilterOpen,
-
       photos,
       selectedPhotosId,
+      lastImage,
+      firstImage,
 
       toggleSelectMode,
       viewImage,
@@ -192,7 +197,7 @@ body {
 .gallery {
   border: 1px solid;
   border-radius: 20px;
-  position: absolute;
+  position: relative;
 }
 .pictures {
   gap: 10px;
@@ -201,13 +206,13 @@ body {
   flex-wrap: wrap;
   padding: 10px;
   max-height: 625px;
+  max-width: 2000px;
   overflow: auto;
 }
-    button {
-        background-color: ;
-        border: 2px solid #2130ae;
-        border-radius: 5px;
-        font-size: 15px;
-        padding: 20px;
-    }
+button {
+  border: 2px solid #2130ae;
+  border-radius: 5px;
+  font-size: 15px;
+  padding: 20px;
+}
 </style>

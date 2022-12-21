@@ -1,7 +1,5 @@
 <template>
-  <div class="title">
-      Podfoldery
-    </div>
+  <div class="title">Podfoldery</div>
 
   <div class="subFolders">
     <button class="arrows"><font-awesome-icon icon="arrow-left" /></button>
@@ -10,16 +8,19 @@
       v-for="(folder, index) in exampleFolders"
       :key="index"
       :folder="folder"
-      @edit="openFolderEditor"
+      @edit="openFolderEditor(folder)"
     />
     <button class="arrows"><font-awesome-icon icon="arrow-right" /></button>
   </div>
   <div class="add">
-    <button><font-awesome-icon icon="folder-plus" />Dodaj Folder</button>
+    <button @click="openFolderEditor()">
+      <font-awesome-icon icon="folder-plus" />Dodaj Folder
+    </button>
   </div>
   <folder-editor
     :active="folderEditorActive"
     :folder-name="selectedFolder"
+    :edit-mode="folderEditorEditMode"
     @close="folderEditorActive = false"
   />
 </template>
@@ -49,22 +50,32 @@ export default defineComponent({
 
     const selectedFolder = ref("brak");
 
+    const folderEditorEditMode = ref(false);
+
     function test() {
-      console.log("hwere");
       folderEditorActive.value = true;
     }
 
-    function openFolderEditor(folder: Folder) {
-      console.log(folder);
-      selectedFolder.value = folder.name;
-
+    function openFolderEditor(folder?: Folder) {
+      console.log("hwere");
       folderEditorActive.value = true;
+      // ? TODO
+      folderEditorEditMode.value = folder ? false : true;
+      if (folder) {
+        console.log("folder present");
+      }
+
+      // if (folder) {
+      //   selectedFolder.value = folder.name;
+      // }
+      // folderEditorActive.value = false;
     }
 
     return {
       exampleFolders,
       folderEditorActive,
       selectedFolder,
+      folderEditorEditMode,
 
       test,
       openFolderEditor,
@@ -76,13 +87,14 @@ export default defineComponent({
   <style scoped>
 .title {
   font-size: 25px;
-  text-align:left;
+  text-align: left;
+  position: relative;
 }
 .subFolders {
   display: flex;
   align-items: center;
   justify-content: center;
-
+  position: relative;
 }
 .add {
   font-size: 24px;
@@ -92,7 +104,7 @@ export default defineComponent({
 
 .arrows button {
   background-color: blue;
-  width:10px;
+  width: 10px;
 }
 </style>
   
