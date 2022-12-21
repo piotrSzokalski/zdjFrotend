@@ -205,7 +205,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
-  max-height: 625px;
+  max-height: 500px;
   max-width: 2000px;
   overflow: auto;
 }
