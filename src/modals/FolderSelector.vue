@@ -81,3 +81,10 @@ export default defineComponent({
   },
 });
 </script>
+
+
+<style scoped>
+.folderSelector {
+  background: white;
+}
+</style>

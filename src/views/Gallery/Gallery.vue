@@ -1,39 +1,29 @@
 <template>
+
   <breadcrumb-list />
   <div class="gallery">
-    <ActionBar
-      @multiSelect="toggleSelectMode"
-      @open-photo-filter="photoFilterOpen = true"
-      @close-photo-filter="photoFilterOpen = false"
-    />
-    <picture-filter :open="photoFilterOpen" @filter="filterPhotos" />
+    <ActionBar @multiSelect="toggleSelectMode" @open-photo-filter="photoFilterOpen = true"
+      @close-photo-filter="photoFilterOpen = false" />
+    <picture-filter :open="photoFilterOpen" @filter="filterPhotos" @clear-filter="clearFilter" />
     <sub-folder-list />
+    <div class="selectButtons">
+      <button>Zaznacz wszystkie</button>
+      <button>Anuluj zaznaczanie</button>
+    </div>
     <div class="pictures">
-      <ImageComponent
-        v-for="(image, index) in photos"
-        :key="index"
-        :image="image"
-        :select-mode="selectMode"
-        @image-clicked="viewImage(image, index)"
-      />
+      <ImageComponent v-for="(image, index) in photosFiltered" :key="index" :image="image" :select-mode="selectMode"
+        @image-clicked="viewImage(image, index)" />
     </div>
   </div>
 
-  <ImageViewer
-    :active="imageViewerActive"
-    :image="activeImage"
-    :last="false"
-    :first="false"
-    @close="imageViewerActive = false"
-    @next="nextImage"
-    @previous="previousImage"
-  />
+  <ImageViewer :active="imageViewerActive" :image="activeImage" :last="lastImage" :first="firstImage"
+    @close="imageViewerActive = false" @next="nextImage" @previous="previousImage" />
 
   <modal :active="false"></modal>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, computed, watch } from "vue";
 
 // komponenty
 import ImageComponent from "@/components/ImageComponent.vue";
@@ -74,11 +64,20 @@ export default defineComponent({
 
     const activeImageIndex = ref(-1);
 
-    const photosFiltered = ref(photos.value);
+    const photosFiltered = ref<Photo[]>([]);
 
     const photoFilterOpen = ref(false);
 
+    const lastImage = computed(() => false);
+
+    const firstImage = computed(() => false);
+
     onMounted(() => loadPhotos());
+
+    watch(
+      () => photos.value,
+      () => (photosFiltered.value = photos.value || [])
+    );
 
     /**
      * Włącza/Wyłącza podgląd tryb zaznaczania
@@ -119,18 +118,18 @@ export default defineComponent({
     }
 
     function filterPhotos(fromDateString: string, toDateString: string): void {
-      const fromDate = new Date(fromDateString || "1980-01-01");
-      const toDate = new Date(toDateString);
 
-      console.log("filter photos:", fromDate + "   |    " + toDate);
-      console.log(photosFiltered.value);
+      const fromDate = new Date(fromDateString || 0).getTime();
+      const toDate = new Date(toDateString).getTime() || new Date().getTime();
 
-      photosFiltered.value = photos.value.filter(
-        (image) =>
-          (image.date >= fromDate && image.date <= toDate) || new Date()
-      );
+      photosFiltered.value = photos.value.filter(photo => {
+        const photoDate = new Date(photo.date).getTime();
+        return photoDate >= fromDate && photoDate <= toDate;
+      });
+    }
 
-      console.log(photosFiltered.value);
+    function clearFilter() {
+      photosFiltered.value = photos.value;
     }
 
     return {
@@ -140,15 +139,17 @@ export default defineComponent({
       activeImage,
       activeImageIndex,
       photoFilterOpen,
-
       photos,
       selectedPhotosId,
+      lastImage,
+      firstImage,
 
       toggleSelectMode,
       viewImage,
       nextImage,
       previousImage,
       filterPhotos,
+      clearFilter,
     };
   },
 });
@@ -162,22 +163,36 @@ body {
 .gallery {
   border: 1px solid;
   border-radius: 20px;
-  position: absolute;
+  position: relative;
 }
+
 .pictures {
   gap: 10px;
   position: relative;
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
-  max-height: 625px;
+  max-height: 600px;
+  max-width: 2000px;
   overflow: auto;
 }
-    button {
-        background-color: ;
-        border: 2px solid #2130ae;
-        border-radius: 5px;
-        font-size: 15px;
-        padding: 20px;
-    }
+
+button {
+  border: 2px solid #2130ae;
+  border-radius: 5px;
+  font-size: 15px;
+  padding: 20px;
+}
+
+.selectButtons {
+  background-color: aliceblue;
+}
+
+.selectButtons button {
+  border: 2px solid aliceblue;
+  background-color: green;
+  border-radius: 10px;
+  font-size: 15px;
+  padding: 20px;
+}
 </style>

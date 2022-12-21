@@ -1,10 +1,16 @@
 <template>
   <modal :active="active" @close="$emit('close')">
     <div class="folderEditor">
-      Zmień nazwę folderu
+      {{ folderName }}
+      <div v-if="editMode">Utwórz nowy folder folderu</div>
+
+      <div v-else>Zmień nazwę folderu</div>
 
       <input v-model="fName" type="text" />
-      {{ fName }}
+
+      <button>
+        {{ editMode ? "Utwurz" : "Zmień" }}
+      </button>
     </div>
   </modal>
 </template>
@@ -32,7 +38,11 @@ export default defineComponent({
      */
     folderName: {
       type: String,
-      required: true,
+      required: false,
+    },
+    editMode: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {
