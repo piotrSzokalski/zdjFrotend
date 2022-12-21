@@ -1,18 +1,10 @@
 <template>
   <div v-if="open" class="picFilter">
     Data: Od:
-    <input
-      v-model="fromDateString"
-      type="date"
-      @change="$emit('filter', fromDateString, toDateString)"
-    />
+    <input v-model="fromDateString" type="date" @change="$emit('filter', fromDateString, toDateString)" />
     Do:
-    <input
-      v-model="toDateString"
-      type="date"
-      @change="$emit('filter', fromDateString, toDateString)"
-    />
-    <button @click="$emit('clearFilter')">Wyczyść filtr</button>
+    <input v-model="toDateString" type="date" @change="$emit('filter', fromDateString, toDateString)" />
+    <button @click="clearFilter">Wyczyść filtr</button>
   </div>
 </template>
 
@@ -32,13 +24,21 @@ export default defineComponent({
       default: false,
     },
   },
-  setup() {
+  setup(_, { emit }) {
     const fromDateString = ref();
     const toDateString = ref();
+
+    function clearFilter() {
+      fromDateString.value = '';
+      toDateString.value = '';
+      emit('clearFilter');
+    }
 
     return {
       fromDateString,
       toDateString,
+
+      clearFilter,
     };
   },
 });
