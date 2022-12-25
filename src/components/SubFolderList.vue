@@ -4,8 +4,12 @@
   <div class="subFolders">
     <button class="arrows"><font-awesome-icon icon="arrow-left" /></button>
 
-    <folder-component v-for="(folder, index) in exampleFolders" :key="index" :folder="folder"
-      @edit="openFolderEditor(folder)" />
+    <folder-component
+      v-for="(folder, index) in folders"
+      :key="index"
+      :folder="folder"
+      @edit="openFolderEditor(folder)"
+    />
     <button class="arrows"><font-awesome-icon icon="arrow-right" /></button>
   </div>
   <div class="add">
@@ -13,8 +17,12 @@
       <font-awesome-icon icon="folder-plus" />Dodaj Folder
     </button>
   </div>
-  <folder-editor :active="folderEditorActive" :folder-name="selectedFolder" :edit-mode="folderEditorEditMode"
-    @close="folderEditorActive = false" />
+  <folder-editor
+    :active="folderEditorActive"
+    :folder-name="selectedFolder"
+    :edit-mode="folderEditorEditMode"
+    @close="folderEditorActive = false"
+  />
 </template>
   
 <script lang="ts">
@@ -24,7 +32,8 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import FolderComponent from "./FolderComponent.vue";
 import FolderEditor from "@/modals/FolderEditor.vue";
 
-import { exampleFolders } from "@/store/dummyData";
+//import { exampleFolders } from "@/store/dummyData";
+import { folders } from "@/store/folders";
 import { Folder } from "@/interfaces/folder";
 
 /**
@@ -64,7 +73,7 @@ export default defineComponent({
     }
 
     return {
-      exampleFolders,
+      folders,
       folderEditorActive,
       selectedFolder,
       folderEditorEditMode,
@@ -100,7 +109,6 @@ export default defineComponent({
   background-color: blue;
   width: 10px;
 }
-
 
 button {
   border: 2px solid #2130ae;

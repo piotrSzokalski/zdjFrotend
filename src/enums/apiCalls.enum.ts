@@ -1,0 +1,7 @@
+ export enum APICalls {
+    PHOTOS,
+    PHOTOS_GET_PHOTO,
+    FOLDERS,
+    FOLDERS_RENAME,
+    FOLDER_CHANGE_PARENT
+}

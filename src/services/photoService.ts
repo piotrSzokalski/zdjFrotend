@@ -1,12 +1,18 @@
 import { Photo } from "@/interfaces/photo";
+import { APIurl } from "@/const/photoAPI";
 
 import { selectedPhotosId, togglePhotoSelected } from "@/store/photos";
+import { APICalls } from "@/enums/apiCalls.enum";
 
 class PhotoService {
   getPhotos(): Promise<Photo[]> {
-    return fetch("https://localhost:7002/api/Photos")
+    return fetch(APIurl[APICalls.PHOTOS])
       .then((res) => res.json())
       .then((data) => {
+      //   for(const i of data) {
+      //     console.log(i);
+      // }w
+        
         const phots: Photo[] = [];
         let index = 0;
         while (data[index]) {
@@ -40,8 +46,8 @@ class PhotoService {
 
       const formData = new FormData();
 
-      formData.append("PhotoName", "brak");
-      formData.append("PhotoFolder", "brak");
+      formData.append("PhotoName", photos[index].name);
+      formData.append("FolderID", "0");
       formData.append(
         "PhotoDate",
         new Date(photos[index].lastModified)
@@ -77,6 +83,5 @@ class PhotoService {
   }
 }
 
-const photoService = new PhotoService();
+export const photoService = new PhotoService();
 
-export { photoService };

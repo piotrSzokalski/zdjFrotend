@@ -12,48 +12,49 @@ const _exampleFolders = ref<Folder[]>([
     {
         id: 1,
         name: 'folder1',
-        parent: 0
+        creationDate: new Date(),
+        parentId: 0
     },
-    {
-        id: 2,
-        name: 'koty',
-        parent: 0
-    },
-    {
-        id: 3,
-        name: 'Polska',
-        parent: 0
-    },
-    {
-        id: 4,
-        name: 'Pomorze',
-        parent: 3
-    },
-    {
-        id: 5,
-        name: 'Słupsk',
-        parent: 4
-    },
-    {
-        id: 6,
-        name: 'Albania',
-        parent: 4
-    },
-    {
-        id: 7,
-        name: 'Argentyna',
-        parent: 4
-    },
-    {
-        id: 8,
-        name: 'Szczecin',
-        parent: 4
-    },
-    {
-        id: 9,
-        name: 'Ghana',
-        parent: 4
-    },
+    // {
+    //     id: 2,
+    //     name: 'koty',
+    //     parent: 0
+    // },
+    // {
+    //     id: 3,
+    //     name: 'Polska',
+    //     parent: 0
+    // },
+    // {
+    //     id: 4,
+    //     name: 'Pomorze',
+    //     parent: 3
+    // },
+    // {
+    //     id: 5,
+    //     name: 'Słupsk',
+    //     parent: 4
+    // },
+    // {
+    //     id: 6,
+    //     name: 'Albania',
+    //     parent: 4
+    // },
+    // {
+    //     id: 7,
+    //     name: 'Argentyna',
+    //     parent: 4
+    // },
+    // {
+    //     id: 8,
+    //     name: 'Szczecin',
+    //     parent: 4
+    // },
+    // {
+    //     id: 9,
+    //     name: 'Ghana',
+    //     parent: 4
+    // },
 ]);
 
 export const exampleFolders = computed(() => _exampleFolders.value);

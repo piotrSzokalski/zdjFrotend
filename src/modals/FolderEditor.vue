@@ -11,6 +11,8 @@
       <button>
         {{ editMode ? "Utwurz" : "Zmień" }}
       </button>
+
+      <button v-if="editMode">Usuń</button>
     </div>
   </modal>
 </template>
