@@ -30,8 +30,11 @@ class PhotoService {
       });
   }
 
+
   async addPhotos(photos: FileList) {
     const results: Response[] = [];
+
+    
 
     for (let index = 0; index < photos.length; index++) {
       if (
@@ -42,11 +45,13 @@ class PhotoService {
       ) {
         continue;
       }
-
+      
       const formData = new FormData();
 
       formData.append("PhotoName", photos[index].name);
-      formData.append("FolderID", JSON.stringify(currentFolder));
+      console.log('here 1');
+      formData.append("FolderID", JSON.stringify(currentFolder.value));
+      console.log('here 2');
       formData.append(
         "PhotoDate",
         new Date(photos[index].lastModified)
@@ -54,13 +59,19 @@ class PhotoService {
           .slice(0, 19)
           .replace("T", " ")
       );
-      formData.append("PhotoFile", photos[index]);
 
+      console.log('here 1');
+      formData.append("PhotoPath", 'e');
+
+      console.log('here 4');
+      formData.append("PhotoFile", photos[index]);
+      console.log('here 5');
       await fetch("https://localhost:7002/api/Photos", {
         method: "POST",
         body: formData,
-      }).then((res) => results.push(res));
+      }).then((res) => { console.log(res);results.push(res)});
     }
+    console.log(results);
     return results;
   }
 
