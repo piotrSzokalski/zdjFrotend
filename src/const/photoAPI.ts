@@ -9,12 +9,3 @@ export const APIurl = [
     url + 'Folder/Rename',
     url + 'Folder/ChangeParent'
 ]
-
-
-
-const x = APIurl[APICalls.PHOTOS];
-
-
-const y = [1,2,3];
-
-const tt = y[0];

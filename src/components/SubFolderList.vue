@@ -61,7 +61,8 @@ export default defineComponent({
       console.log("hwere");
       folderEditorActive.value = true;
       // ? TODO
-      folderEditorEditMode.value = folder ? false : true;
+
+      folderEditorEditMode.value = folder ? true : false;
       if (folder) {
         console.log("folder present");
       }

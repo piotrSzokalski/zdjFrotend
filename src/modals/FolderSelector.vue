@@ -16,7 +16,9 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
 
-import { exampleFolders } from "@/store/dummyData";
+// import { exampleFolders } from "@/store/dummyData";
+
+import { folders } from "@/store/folders";
 
 import Modal from "@/modals/Modal.vue";
 import FolderComponent from "@/components/FolderComponent.vue";
@@ -39,7 +41,7 @@ export default defineComponent({
     const searchValue = ref("");
 
     const folderList = computed(() =>
-      exampleFolders.value.filter((folder) =>
+      folders.value.filter((folder) =>
         folder.name
           .toLocaleLowerCase()
           .includes(searchValue.value.trim().toLocaleLowerCase())

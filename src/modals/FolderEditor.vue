@@ -1,15 +1,15 @@
 <template>
   <modal :active="active" @close="$emit('close')">
     <div class="folderEditor">
+      {{ editMode }}
       {{ folderName }}
-      <div v-if="editMode">Utwórz nowy folder folderu</div>
-
-      <div v-else>Zmień nazwę folderu</div>
+      <p v-if="editMode">Zmień nazwę folderu</p>
+      <p v-else>Utwórz nowy folder folderu</p>
 
       <input v-model="fName" type="text" />
 
-      <button>
-        {{ editMode ? "Utwurz" : "Zmień" }}
+      <button @click="save">
+        {{ editMode ? "Utwórz" : "Zmień" }}
       </button>
 
       <button v-if="editMode">Usuń</button>
@@ -19,6 +19,9 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+
+import { folderService } from "@/services/folderService";
+import { currentFolder } from "@/store/folders";
 
 import Modal from "./Modal.vue";
 
@@ -50,8 +53,26 @@ export default defineComponent({
   setup(props) {
     const fName = ref(props.folderName);
 
+    function save() {
+      if (!fName.value) {
+        return;
+      }
+      props.editMode ? edit() : create();
+    }
+
+    function create() {
+      folderService
+        .createFolder(fName.value || "")
+        ?.then((res) => console.log(res));
+    }
+
+    function edit() {
+      console.log("abc");
+    }
+
     return {
       fName,
+      save,
     };
   },
 });
