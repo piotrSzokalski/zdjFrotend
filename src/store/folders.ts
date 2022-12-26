@@ -19,15 +19,20 @@ export const filePath = computed(() => _filePath.value);
 export const currentFolder = computed(() => _filePath.value[_filePath.value.length - 1]);
 
 
-export function appendPath(id: number) {
+export function changePath(id: number) {
+    if(_filePath.value[_filePath.value.length - 1] === id) {
+        return;
+    }
+    if(id == 0 ) {
+        _filePath.value = [0];
+        return;
+    }
+    if(_filePath.value.includes(id)) {
+        
+        const index = _filePath.value.indexOf(id);
+        _filePath.value = _filePath.value.splice(0, index + 1);
+        return;
+    }
     _filePath.value.push(id);
 }
 
-export function pathCutOff(id: number)
-{   
-    if(id == 0 || _filePath.value.length < 2) {
-        return;
-    }
-    const index = _filePath.value.indexOf(id);
-    _filePath.value = _filePath.value.splice(0, index + 1);
-}

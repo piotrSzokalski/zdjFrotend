@@ -6,7 +6,7 @@
       {{ folder.name }}
     </button>
 
-    <button @click="$emit('edit', folder)">
+    <button v-if="!root" @click="$emit('edit', folder)">
       <font-awesome-icon icon="pen" />
     </button>
   </div>
@@ -17,7 +17,7 @@ import { defineComponent, PropType } from "vue";
 
 import { Folder } from "@/interfaces/folder";
 
-import { appendPath } from "@/store/folders";
+import { changePath } from "@/store/folders";
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -31,10 +31,11 @@ export default defineComponent({
   },
   props: {
     folder: { type: Object as PropType<Folder>, required: true },
+    root: { type: Boolean, default: false },
   },
   setup(props) {
     function open() {
-      appendPath(props.folder.id);
+      changePath(props.folder.id);
     }
     return {
       open,
