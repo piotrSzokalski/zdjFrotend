@@ -1,6 +1,6 @@
 <template>
   <div class="folder">
-    <button>
+    <button @click="open">
       <font-awesome-icon icon="folder" />
 
       {{ folder.name }}
@@ -17,6 +17,8 @@ import { defineComponent, PropType } from "vue";
 
 import { Folder } from "@/interfaces/folder";
 
+import { appendPath } from "@/store/folders";
+
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 /**
@@ -30,18 +32,26 @@ export default defineComponent({
   props: {
     folder: { type: Object as PropType<Folder>, required: true },
   },
+  setup(props) {
+    function open() {
+      appendPath(props.folder.id);
+    }
+    return {
+      open,
+    };
+  },
 });
 </script>
 
 <style scoped>
-    button {
-        font-size: 40px;
-        font-weight: 400;
-        font-size: 15px;
-        border-radius: 10px;
-        border: 3px thin #293250;
-        width: 200px;
-    }
+button {
+  font-size: 40px;
+  font-weight: 400;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 3px thin #293250;
+  width: 200px;
+}
 button:hover {
   background-color: darkslateblue;
 }

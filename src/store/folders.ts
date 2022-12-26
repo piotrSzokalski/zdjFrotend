@@ -13,8 +13,8 @@ export function loadFolders() {
 }
 
 const _filePath = ref([0]);
-
-const filePath = computed(() => _filePath.value);
+ 
+export const filePath = computed(() => _filePath.value);
 
 export const currentFolder = computed(() => _filePath.value[_filePath.value.length - 1]);
 

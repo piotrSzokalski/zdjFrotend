@@ -1,4 +1,5 @@
 <template>
+  {{ currentFolder }}
   <breadcrumb-list />
   <div class="gallery">
     <ActionBar
@@ -16,7 +17,7 @@
       <button>Zaznacz wszystkie</button>
       <button>Anuluj zaznaczanie</button>
     </div>
-    <div class="pictures">
+    <div v-if="photosFiltered.length" class="pictures">
       <ImageComponent
         v-for="(image, index) in photosFiltered"
         :key="index"
@@ -24,6 +25,9 @@
         :select-mode="selectMode"
         @image-clicked="viewImage(image, index)"
       />
+    </div>
+    <div v-else>
+      <h2>Brak zdjęć w tym folderze</h2>
     </div>
   </div>
 
@@ -56,9 +60,7 @@ import Modal from "@/modals/Modal.vue";
 //import { exampleImages } from "@/store/dummyData";
 
 import { photos, loadPhotos, selectedPhotosId } from "@/store/photos";
-import { folders, loadFolders } from "@/store/folders";
-
-import { folderService } from "@/services/folderService";
+import { folders, loadFolders, currentFolder } from "@/store/folders";
 
 import { Photo } from "@/interfaces/photo";
 
@@ -167,6 +169,7 @@ export default defineComponent({
       lastImage,
       firstImage,
       folders,
+      currentFolder,
 
       toggleSelectMode,
       viewImage,

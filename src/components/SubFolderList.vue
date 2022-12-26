@@ -2,16 +2,22 @@
   <div class="title">Podfoldery</div>
 
   <div class="subFolders">
-    <button class="arrows"><font-awesome-icon icon="arrow-left" /></button>
+    <section v-if="subFolders.length">
+      <button class="arrows"><font-awesome-icon icon="arrow-left" /></button>
 
-    <folder-component
-      v-for="(folder, index) in folders"
-      :key="index"
-      :folder="folder"
-      @edit="openFolderEditor(folder)"
-    />
-    <button class="arrows"><font-awesome-icon icon="arrow-right" /></button>
+      <folder-component
+        v-for="(folder, index) in subFolders"
+        :key="index"
+        :folder="folder"
+        @edit="openFolderEditor(folder)"
+      />
+      <button class="arrows"><font-awesome-icon icon="arrow-right" /></button>
+    </section>
+    <section v-else>
+      <h3>Brak podfolderów</h3>
+    </section>
   </div>
+
   <div class="add">
     <button @click="openFolderEditor()">
       <font-awesome-icon icon="folder-plus" />Dodaj Folder
@@ -26,14 +32,14 @@
 </template>
   
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import FolderComponent from "./FolderComponent.vue";
 import FolderEditor from "@/modals/FolderEditor.vue";
 
 //import { exampleFolders } from "@/store/dummyData";
-import { folders } from "@/store/folders";
+import { currentFolder, folders } from "@/store/folders";
 import { Folder } from "@/interfaces/folder";
 
 /**
@@ -52,6 +58,10 @@ export default defineComponent({
     const selectedFolder = ref("brak");
 
     const folderEditorEditMode = ref(false);
+
+    const subFolders = computed(() =>
+      folders.value.filter((folder) => folder.parentId === currentFolder.value)
+    );
 
     function test() {
       folderEditorActive.value = true;
@@ -74,10 +84,10 @@ export default defineComponent({
     }
 
     return {
-      folders,
       folderEditorActive,
       selectedFolder,
       folderEditorEditMode,
+      subFolders,
 
       test,
       openFolderEditor,

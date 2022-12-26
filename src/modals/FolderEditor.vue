@@ -21,7 +21,7 @@
 import { defineComponent, ref } from "vue";
 
 import { folderService } from "@/services/folderService";
-import { currentFolder } from "@/store/folders";
+import { currentFolder, loadFolders } from "@/store/folders";
 
 import Modal from "./Modal.vue";
 
@@ -50,7 +50,7 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const fName = ref(props.folderName);
 
     function save() {
@@ -60,10 +60,10 @@ export default defineComponent({
       props.editMode ? edit() : create();
     }
 
-    function create() {
-      folderService
-        .createFolder(fName.value || "")
-        ?.then((res) => console.log(res));
+    async function create() {
+      const result = await folderService.createFolder(fName.value || "");
+      loadFolders();
+      emit("close");
     }
 
     function edit() {

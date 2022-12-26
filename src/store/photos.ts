@@ -4,9 +4,12 @@ import { Photo } from "@/interfaces/photo";
 
 import { photoService } from "@/services/photoService";
 
+import { currentFolder } from "./folders";
+
+
 const _photos = ref<Photo[]>([]);
 
-export const photos = computed(() => _photos.value);
+export const photos = computed(() => _photos.value.filter(photo => photo.folder === currentFolder.value));
 
 const _selectedPhotosId = ref<number[]>([]);
 

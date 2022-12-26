@@ -1,16 +1,21 @@
 <template>
   <div class="breadcrumbs">
-    <folder-component :folder="exampleFolders[0]" />
+    {{ filePath }}
+    <folder-component
+      v-for="(breadcrumb, index) in breadcrumbs"
+      :key="index"
+      :folder="breadcrumb"
+    />
     <h3>BREADCRUMB</h3>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
+
+import { folders, filePath, pathCutOff } from "@/store/folders";
 
 import FolderComponent from "./FolderComponent.vue";
-
-import { exampleFolders } from "@/store/dummyData";
 
 /**
  * Ścieżka folderów
@@ -19,7 +24,14 @@ export default defineComponent({
   components: { FolderComponent },
 
   setup() {
-    return { exampleFolders };
+    const breadcrumbs = computed(() =>
+      folders.value.filter((folder) => filePath.value.includes(folder.id))
+    );
+
+    return {
+      filePath,
+      breadcrumbs,
+    };
   },
 });
 </script>

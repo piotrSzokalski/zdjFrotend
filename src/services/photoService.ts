@@ -4,6 +4,8 @@ import { APIurl } from "@/const/photoAPI";
 import { selectedPhotosId, togglePhotoSelected } from "@/store/photos";
 import { APICalls } from "@/enums/apiCalls.enum";
 
+import { currentFolder } from "@/store/folders";
+
 class PhotoService {
   getPhotos(): Promise<Photo[]> {
     return fetch(APIurl[APICalls.PHOTOS])
@@ -19,11 +21,8 @@ class PhotoService {
           phots.push({
             id: data[index].PhotoID,
             name: data[index].PhotoName,
-            path:
-              "https://localhost:7002/api/Photos/GetPhoto/" +
-              data[index].PhotoID,
             date: data[index].PhotoDate,
-            folder: data[index].PhotoPath,
+            folder: data[index].FolderID,
           });
           index++;
         }
@@ -47,7 +46,7 @@ class PhotoService {
       const formData = new FormData();
 
       formData.append("PhotoName", photos[index].name);
-      formData.append("FolderID", "0");
+      formData.append("FolderID", JSON.stringify(currentFolder));
       formData.append(
         "PhotoDate",
         new Date(photos[index].lastModified)
