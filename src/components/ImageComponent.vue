@@ -1,8 +1,19 @@
 <template>
-  <div :class="{ picture: !selectMode, pictureSelected: selectMode, isSelected: selected && selectMode }"
-    @click="selectMode ? select(image.id) : click()">
+  <div
+    :class="{
+      picture: !selectMode,
+      pictureSelected: selectMode,
+      isSelected: selected && selectMode,
+    }"
+    @click="selectMode ? select(image.id) : click()"
+  >
     <input v-if="selectMode" v-model="selected" type="checkbox" />
-    <img :src="image.path" alt="tu powinno być zdjęcie" height="250" width="250" />
+    <img
+      :src="photoPath"
+      alt="tu powinno być zdjęcie"
+      height="250"
+      width="250"
+    />
   </div>
 </template>
 
@@ -13,6 +24,8 @@ import { defineComponent, PropType, computed } from "vue";
 import { Photo } from "@/interfaces/photo";
 
 import { togglePhotoSelected, selectedPhotosId } from "@/store/photos";
+import { APICalls } from "@/enums/apiCalls.enum";
+import { APIurl } from "@/const/photoAPI";
 
 /**
  * Zdjęcie
@@ -46,6 +59,10 @@ export default defineComponent({
       selectedPhotosId.value.includes(props.image.id)
     );
 
+    const photoPath = computed(
+      () => APIurl[APICalls.PHOTOS_GET_PHOTO] + props.image.id
+    );
+
     function click(): void {
       emit("imageClicked");
     }
@@ -59,6 +76,7 @@ export default defineComponent({
     }
     return {
       selected,
+      photoPath,
 
       click,
 
@@ -79,8 +97,6 @@ export default defineComponent({
   object-fit: cover;
   vertical-align: bottom;
 }
-
-
 
 .picture img:hover {
   object-fit: cover;
@@ -110,7 +126,6 @@ export default defineComponent({
 .isSelected {
   border: 5px solid red;
 }
-
 
 .isSelected img {
   object-fit: cover;

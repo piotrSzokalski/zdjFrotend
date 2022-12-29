@@ -1,23 +1,44 @@
 <template>
-
   <breadcrumb-list />
   <div class="gallery">
-    <ActionBar @multiSelect="toggleSelectMode" @open-photo-filter="photoFilterOpen = true"
-      @close-photo-filter="photoFilterOpen = false" />
-    <picture-filter :open="photoFilterOpen" @filter="filterPhotos" @clear-filter="clearFilter" />
+    <ActionBar
+      @multiSelect="toggleSelectMode"
+      @open-photo-filter="photoFilterOpen = true"
+      @close-photo-filter="photoFilterOpen = false"
+    />
+    <picture-filter
+      :open="photoFilterOpen"
+      @filter="filterPhotos"
+      @clear-filter="clearFilter"
+    />
     <sub-folder-list />
     <div class="selectButtons">
       <button>Zaznacz wszystkie</button>
       <button>Anuluj zaznaczanie</button>
     </div>
-    <div class="pictures">
-      <ImageComponent v-for="(image, index) in photosFiltered" :key="index" :image="image" :select-mode="selectMode"
-        @image-clicked="viewImage(image, index)" />
+    <div v-if="photosFiltered.length" class="pictures">
+      <ImageComponent
+        v-for="(image, index) in photosFiltered"
+        :key="index"
+        :image="image"
+        :select-mode="selectMode"
+        @image-clicked="viewImage(image, index)"
+      />
+    </div>
+    <div v-else>
+      <h2>Brak zdjęć w tym folderze</h2>
     </div>
   </div>
 
-  <ImageViewer :active="imageViewerActive" :image="activeImage" :last="lastImage" :first="firstImage"
-    @close="imageViewerActive = false" @next="nextImage" @previous="previousImage" />
+  <ImageViewer
+    :active="imageViewerActive"
+    :image="activeImage"
+    :last="lastImage"
+    :first="firstImage"
+    @close="imageViewerActive = false"
+    @next="nextImage"
+    @previous="previousImage"
+  />
 
   <modal :active="false"></modal>
 </template>
@@ -38,6 +59,7 @@ import Modal from "@/modals/Modal.vue";
 //import { exampleImages } from "@/store/dummyData";
 
 import { photos, loadPhotos, selectedPhotosId } from "@/store/photos";
+import { folders, loadFolders, currentFolder } from "@/store/folders";
 
 import { Photo } from "@/interfaces/photo";
 
@@ -72,7 +94,10 @@ export default defineComponent({
 
     const firstImage = computed(() => false);
 
-    onMounted(() => loadPhotos());
+    onMounted(() => {
+      loadPhotos();
+      loadFolders();
+    });
 
     watch(
       () => photos.value,
@@ -118,11 +143,10 @@ export default defineComponent({
     }
 
     function filterPhotos(fromDateString: string, toDateString: string): void {
-
       const fromDate = new Date(fromDateString || 0).getTime();
       const toDate = new Date(toDateString).getTime() || new Date().getTime();
 
-      photosFiltered.value = photos.value.filter(photo => {
+      photosFiltered.value = photos.value.filter((photo) => {
         const photoDate = new Date(photo.date).getTime();
         return photoDate >= fromDate && photoDate <= toDate;
       });
@@ -143,6 +167,8 @@ export default defineComponent({
       selectedPhotosId,
       lastImage,
       firstImage,
+      folders,
+      currentFolder,
 
       toggleSelectMode,
       viewImage,

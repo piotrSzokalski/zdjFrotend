@@ -9,7 +9,7 @@
     -->
     <div class="content">
       <div class="image">
-        <img :src="image.path" />
+        <img :src="photoPath" />
       </div>
 
       <div class="pre">
@@ -28,12 +28,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { computed, defineComponent, PropType } from "vue";
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 // import { Image } from "@/interfaces/image";
 import { Photo } from "@/interfaces/photo";
+
+import { APIurl } from "@/const/photoAPI";
+import { APICalls } from "@/enums/apiCalls.enum";
 
 import Modal from "./Modal.vue";
 import ActionBar from "@/components/ActionBar.vue";
@@ -90,6 +93,14 @@ export default defineComponent({
      * Wciśnięcie przycisku następny
      */
     next: null,
+  },
+  setup(props) {
+    const photoPath = computed(
+      () => APIurl[APICalls.PHOTOS_GET_PHOTO] + props.image.id
+    );
+    return {
+      photoPath,
+    };
   },
 });
 </script>
