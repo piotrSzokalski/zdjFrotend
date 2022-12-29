@@ -7,7 +7,8 @@
         v-for="(folder, index) in folderList"
         :key="index"
         :folder="folder"
-        move-phots-mode
+        :move-phots-mode="moveFolder ? 2 : 1"
+        :child-folder-id="childFolderId"
         @moved="$emit('close')"
       />
       {{ sortingMode }}
@@ -38,16 +39,23 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    moveFolder: {
+      type: Boolean,
+      default: false,
+    },
+    childFolderId: { type: Number, required: false },
   },
-  setup() {
+  setup(props) {
     const searchValue = ref("");
 
     const folderList = computed(() =>
-      folders.value.filter((folder) =>
-        folder.name
-          .toLocaleLowerCase()
-          .includes(searchValue.value.trim().toLocaleLowerCase())
-      )
+      folders.value
+        .filter((folder) => folder.id !== props.childFolderId)
+        .filter((folder) =>
+          folder.name
+            .toLocaleLowerCase()
+            .includes(searchValue.value.trim().toLocaleLowerCase())
+        )
     );
 
     /**

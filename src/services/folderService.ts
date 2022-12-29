@@ -31,22 +31,33 @@ class FolderService {
     }
 
     removeFolder(id: number) {
-        if(id < 0){
+        if(id < 1){
             return;
         }
         return fetch(APIurl[APICalls.FOLDERS] + '/' + id ,  { method: 'DELETE' });
     }
 
     renameFolder(id: number, newName: string) {
-        if(id < 0 || !newName) {
+        if(id < 1 || !newName) {
             return;
         }
-        console.log("renaming");
         const formData = new FormData();
         formData.append('FolderID', JSON.stringify(id));
         formData.append('NewName', newName);
 
         return fetch(APIurl[APICalls.FOLDERS_RENAME], {method: 'POST', body: formData});
+    }
+
+    async moveFolder(id: number, newParentID: number) {
+        if(id < 1 ) {
+            return;
+        }
+        console.log("here 2");
+        const formData = new FormData();
+        formData.append('FolderID', JSON.stringify(id));
+        formData.append('ParentID', JSON.stringify(newParentID));
+        const res = await fetch(APIurl[APICalls.FOLDERS_CHANGE_PARENT], {method: 'POST', body: formData});
+        console.log(res);
     }
 }
 

@@ -1,6 +1,5 @@
 <template>
   <div class="breadcrumbs">
-    {{ filePath }}
     <folder-component :folder="rootFolder" />
     <folder-component
       v-for="(breadcrumb, index) in breadcrumbs"

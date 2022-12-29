@@ -10,9 +10,16 @@
         {{ editMode ? "Zmień" : "Utwórz" }}
       </button>
 
+      <button v-if="editMode" @click="moveFolder">Przenieś</button>
       <button v-if="editMode" @click="remove">Usuń</button>
     </div>
   </modal>
+  <folder-selector
+    move-folder
+    :active="folderSelectorActive"
+    :child-folder-id="folder?.id"
+    @close="folderSelectorActive = false"
+  />
 </template>
 
 <script lang="ts">
@@ -21,11 +28,15 @@ import { defineComponent, PropType, ref, watch } from "vue";
 import { folderService } from "@/services/folderService";
 import { currentFolder, loadFolders } from "@/store/folders";
 
+import FolderSelector from "./FolderSelector.vue";
 import Modal from "./Modal.vue";
 import { Folder } from "@/interfaces/folder";
 
 export default defineComponent({
-  components: { Modal },
+  components: {
+    Modal,
+    FolderSelector,
+  },
   emits: {
     close: null,
   },
@@ -57,6 +68,8 @@ export default defineComponent({
       () => (fName.value = props.folder?.name || "")
     );
 
+    const folderSelectorActive = ref(false);
+
     function save() {
       if (!fName.value) {
         return;
@@ -86,6 +99,10 @@ export default defineComponent({
       }
     }
 
+    function moveFolder() {
+      folderSelectorActive.value = true;
+    }
+
     function close() {
       fName.value = "";
       emit("close");
@@ -93,9 +110,12 @@ export default defineComponent({
 
     return {
       fName,
+      folderSelectorActive,
+
       save,
       remove,
       close,
+      moveFolder,
     };
   },
 });
