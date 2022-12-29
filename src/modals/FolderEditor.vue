@@ -1,15 +1,13 @@
 <template>
-  <modal :active="active" @close="$emit('close')">
+  <modal :active="active" @close="close">
     <div class="folderEditor">
-      {{ editMode }}
-      {{ folder?.name }}
       <p v-if="editMode">Zmień nazwę folderu</p>
-      <p v-else>Utwórz nowy folder folderu</p>
+      <p v-else>Utwórz nowy folder</p>
 
       <input v-model="fName" type="text" />
 
       <button @click="save">
-        {{ editMode ? "Utwórz" : "Zmień" }}
+        {{ editMode ? "Zmień" : "Utwórz" }}
       </button>
 
       <button v-if="editMode" @click="remove">Usuń</button>
@@ -18,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, ref, watch } from "vue";
 
 import { folderService } from "@/services/folderService";
 import { currentFolder, loadFolders } from "@/store/folders";
@@ -54,6 +52,11 @@ export default defineComponent({
   setup(props, { emit }) {
     const fName = ref(props.folder?.name);
 
+    watch(
+      () => props.folder,
+      () => (fName.value = props.folder?.name || "")
+    );
+
     function save() {
       if (!fName.value) {
         return;
@@ -64,27 +67,35 @@ export default defineComponent({
     async function create() {
       const result = await folderService.createFolder(fName.value || "");
       loadFolders();
-      emit("close");
+      close();
     }
 
-    function edit() {
-      console.log("abc");
+    async function edit() {
+      if (props.folder && fName.value) {
+        await folderService.renameFolder(props.folder.id, fName.value);
+        loadFolders();
+        close();
+      }
     }
 
     async function remove() {
-      console.log("r");
       if (props.folder) {
-        console.log("here");
         await folderService.removeFolder(props.folder.id);
         loadFolders();
-        emit("close");
+        close();
       }
+    }
+
+    function close() {
+      fName.value = "";
+      emit("close");
     }
 
     return {
       fName,
       save,
       remove,
+      close,
     };
   },
 });

@@ -34,8 +34,6 @@ class PhotoService {
   async addPhotos(photos: FileList) {
     const results: Response[] = [];
 
-    
-
     for (let index = 0; index < photos.length; index++) {
       if (
         !photos[index].name.includes(".jpg") &&
@@ -75,12 +73,27 @@ class PhotoService {
     return results;
   }
 
-  async removePhotos() {
+  async movePhotos(folderID: number) {
     const results: Response[] = [];
 
     for (const id of selectedPhotosId.value) {
       const formData = new FormData();
-      //formData.append('id', JSON.stringify(id));
+      formData.append('ParentID', JSON.stringify(id));
+      formData.append('FolderID', JSON.stringify(folderID));
+
+      const res = await fetch(APIurl[APICalls.PHOTOS_CHANGE_FOLDER] , { method: "POST", body: formData });
+      results.push(res);
+      if (res.ok) {
+        togglePhotoSelected(id);
+      }
+    }
+    return results;
+  }
+
+  async removePhotos() {
+    const results: Response[] = [];
+
+    for (const id of selectedPhotosId.value) {
       const res = await fetch("https://localhost:7002/api/Photos/" + id, {
         method: "DELETE",
       });

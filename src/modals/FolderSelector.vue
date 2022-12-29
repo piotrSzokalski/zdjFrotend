@@ -7,6 +7,8 @@
         v-for="(folder, index) in folderList"
         :key="index"
         :folder="folder"
+        move-phots-mode
+        @moved="$emit('close')"
       />
       {{ sortingMode }}
     </div>

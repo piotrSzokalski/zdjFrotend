@@ -1,6 +1,6 @@
 <template>
   <div class="folder">
-    <button @click="open">
+    <button @click="openOrMove">
       <font-awesome-icon icon="folder" />
 
       {{ folder.name }}
@@ -21,6 +21,10 @@ import { changePath } from "@/store/folders";
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
+import { photoService } from "@/services/photoService";
+
+import { loadPhotos } from "@/store/photos";
+
 /**
  * Pojedynczy folder w ścieżce
  */
@@ -28,17 +32,25 @@ export default defineComponent({
   components: { FontAwesomeIcon },
   emits: {
     edit: null,
+    moved: null,
   },
   props: {
     folder: { type: Object as PropType<Folder>, required: true },
     editable: { type: Boolean, default: false },
+    movePhotsMode: { type: Boolean, default: false },
   },
-  setup(props) {
-    function open() {
-      changePath(props.folder.id);
+  setup(props, { emit }) {
+    async function openOrMove() {
+      if (!props.movePhotsMode) {
+        changePath(props.folder.id);
+        return;
+      }
+      await photoService.movePhotos(props.folder.id);
+      loadPhotos();
+      emit("moved");
     }
     return {
-      open,
+      openOrMove,
     };
   },
 });

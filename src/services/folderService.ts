@@ -27,10 +27,7 @@ class FolderService {
             .replace("T", " "));
         formData.append("ParentID", JSON.stringify(currentFolder.value));
 
-        return fetch(APIurl[APICalls.FOLDERS],{
-            method: 'POST',
-            body: formData
-        })
+        return fetch(APIurl[APICalls.FOLDERS], { method: 'POST', body: formData })
     }
 
     removeFolder(id: number) {
@@ -38,6 +35,18 @@ class FolderService {
             return;
         }
         return fetch(APIurl[APICalls.FOLDERS] + '/' + id ,  { method: 'DELETE' });
+    }
+
+    renameFolder(id: number, newName: string) {
+        if(id < 0 || !newName) {
+            return;
+        }
+        console.log("renaming");
+        const formData = new FormData();
+        formData.append('FolderID', JSON.stringify(id));
+        formData.append('NewName', newName);
+
+        return fetch(APIurl[APICalls.FOLDERS_RENAME], {method: 'POST', body: formData});
     }
 }
 
