@@ -7,6 +7,7 @@
 
       <folder-component
         v-for="(folder, index) in subFolders"
+        editable
         :key="index"
         :folder="folder"
         @edit="openFolderEditor(folder)"
@@ -25,7 +26,7 @@
   </div>
   <folder-editor
     :active="folderEditorActive"
-    :folder-name="selectedFolder"
+    :folder="selectedFolder"
     :edit-mode="folderEditorEditMode"
     @close="folderEditorActive = false"
   />
@@ -55,7 +56,7 @@ export default defineComponent({
   setup() {
     const folderEditorActive = ref(false);
 
-    const selectedFolder = ref("brak");
+    const selectedFolder = ref<Folder>();
 
     const folderEditorEditMode = ref(false);
 
@@ -70,10 +71,10 @@ export default defineComponent({
     function openFolderEditor(folder?: Folder) {
       console.log("hwere");
       folderEditorActive.value = true;
-      // ? TODO
 
       folderEditorEditMode.value = folder ? true : false;
       if (folder) {
+        selectedFolder.value = folder;
         console.log("folder present");
       }
 

@@ -6,7 +6,7 @@
       {{ folder.name }}
     </button>
 
-    <button v-if="!root" @click="$emit('edit', folder)">
+    <button v-if="editable" @click="$emit('edit', folder)">
       <font-awesome-icon icon="pen" />
     </button>
   </div>
@@ -31,7 +31,7 @@ export default defineComponent({
   },
   props: {
     folder: { type: Object as PropType<Folder>, required: true },
-    root: { type: Boolean, default: false },
+    editable: { type: Boolean, default: false },
   },
   setup(props) {
     function open() {

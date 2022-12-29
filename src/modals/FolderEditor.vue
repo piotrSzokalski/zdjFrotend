@@ -2,7 +2,7 @@
   <modal :active="active" @close="$emit('close')">
     <div class="folderEditor">
       {{ editMode }}
-      {{ folderName }}
+      {{ folder?.name }}
       <p v-if="editMode">Zmień nazwę folderu</p>
       <p v-else>Utwórz nowy folder folderu</p>
 
@@ -12,18 +12,19 @@
         {{ editMode ? "Utwórz" : "Zmień" }}
       </button>
 
-      <button v-if="editMode">Usuń</button>
+      <button v-if="editMode" @click="remove">Usuń</button>
     </div>
   </modal>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 
 import { folderService } from "@/services/folderService";
 import { currentFolder, loadFolders } from "@/store/folders";
 
 import Modal from "./Modal.vue";
+import { Folder } from "@/interfaces/folder";
 
 export default defineComponent({
   components: { Modal },
@@ -41,8 +42,8 @@ export default defineComponent({
     /**
      * Nazwa folderu
      */
-    folderName: {
-      type: String,
+    folder: {
+      type: Object as PropType<Folder>,
       required: false,
     },
     editMode: {
@@ -51,7 +52,7 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const fName = ref(props.folderName);
+    const fName = ref(props.folder?.name);
 
     function save() {
       if (!fName.value) {
@@ -70,9 +71,20 @@ export default defineComponent({
       console.log("abc");
     }
 
+    async function remove() {
+      console.log("r");
+      if (props.folder) {
+        console.log("here");
+        await folderService.removeFolder(props.folder.id);
+        loadFolders();
+        emit("close");
+      }
+    }
+
     return {
       fName,
       save,
+      remove,
     };
   },
 });

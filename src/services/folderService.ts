@@ -32,6 +32,13 @@ class FolderService {
             body: formData
         })
     }
+
+    removeFolder(id: number) {
+        if(id < 0){
+            return;
+        }
+        return fetch(APIurl[APICalls.FOLDERS] + '/' + id ,  { method: 'DELETE' });
+    }
 }
 
 export const folderService = new FolderService();

@@ -1,6 +1,4 @@
 <template>
-  Test
-  {{ currentFolder }}
   <breadcrumb-list />
   <div class="gallery">
     <ActionBar
