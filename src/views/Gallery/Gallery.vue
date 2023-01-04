@@ -158,7 +158,6 @@ export default defineComponent({
 body {
   overflow: hidden;
 }
-
 .gallery {
   border: 1px solid;
   border-radius: 20px;
@@ -173,11 +172,9 @@ body {
   max-height: 625px;
   overflow: auto;
 }
-    button {
-        background-color: ;
-        border: 2px solid #2130ae;
-        border-radius: 5px;
-        font-size: 15px;
-        padding: 20px;
-    }
+button{
+    margin: 5px;
+
+}
+
 </style>

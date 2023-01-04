@@ -1,6 +1,6 @@
 <template>
   <div class="title">
-      Podfoldery
+      Foldery
     </div>
 
   <div class="subFolders">
@@ -77,6 +77,7 @@ export default defineComponent({
 .title {
   font-size: 25px;
   text-align:left;
+  margin-left: 20px;
 }
 .subFolders {
   display: flex;
@@ -86,13 +87,16 @@ export default defineComponent({
 }
 .add {
   font-size: 24px;
-  position: relative;
-  right: 43.9%;
+  
 }
 
-.arrows button {
-  background-color: blue;
-  width:10px;
+.arrows {
+  background-color: darkblue ;
+  width: 50px;
+  border: darkblue;
+  border-radius: 50px;
 }
+
+
 </style>
   

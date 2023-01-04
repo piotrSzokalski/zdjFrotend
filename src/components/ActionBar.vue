@@ -166,11 +166,11 @@ button {
   font-size: 20px;
   font-weight: 400;
   border-radius: 50px;
-  width: 6%;
+  width: 8%;
   right: 0px;
   padding: 10px;
+  background-color: #ffffff;
+  color: #808080;
 }
-button:hover {
-  background-color: darkslateblue;
-}
+
 </style>

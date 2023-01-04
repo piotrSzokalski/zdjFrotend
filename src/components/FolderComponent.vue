@@ -4,11 +4,12 @@
       <font-awesome-icon icon="folder" />
 
       {{ folder.name }}
+
     </button>
 
-    <button @click="$emit('edit', folder)">
+    <button2 @click="$emit('edit', folder)">
       <font-awesome-icon icon="pen" />
-    </button>
+    </button2>
   </div>
 </template>
 
@@ -40,7 +41,11 @@ export default defineComponent({
         font-size: 15px;
         border-radius: 10px;
         border: 3px thin #293250;
-        width: 200px;
+        width: 150px;
+
+    }
+    button2 {
+        vertical-align: inherit;
     }
 button:hover {
   background-color: darkslateblue;
