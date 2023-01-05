@@ -7,6 +7,9 @@
         v-for="(folder, index) in folderList"
         :key="index"
         :folder="folder"
+        :move-phots-mode="moveFolder ? 2 : 1"
+        :child-folder-id="childFolderId"
+        @moved="$emit('close')"
       />
       {{ sortingMode }}
     </div>
@@ -16,7 +19,9 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from "vue";
 
-import { exampleFolders } from "@/store/dummyData";
+// import { exampleFolders } from "@/store/dummyData";
+
+import { folders } from "@/store/folders";
 
 import Modal from "@/modals/Modal.vue";
 import FolderComponent from "@/components/FolderComponent.vue";
@@ -34,16 +39,23 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    moveFolder: {
+      type: Boolean,
+      default: false,
+    },
+    childFolderId: { type: Number, required: false },
   },
-  setup() {
+  setup(props) {
     const searchValue = ref("");
 
     const folderList = computed(() =>
-      exampleFolders.value.filter((folder) =>
-        folder.name
-          .toLocaleLowerCase()
-          .includes(searchValue.value.trim().toLocaleLowerCase())
-      )
+      folders.value
+        .filter((folder) => folder.id !== props.childFolderId)
+        .filter((folder) =>
+          folder.name
+            .toLocaleLowerCase()
+            .includes(searchValue.value.trim().toLocaleLowerCase())
+        )
     );
 
     /**
@@ -81,3 +93,10 @@ export default defineComponent({
   },
 });
 </script>
+
+
+<style scoped>
+.folderSelector {
+  background: white;
+}
+</style>

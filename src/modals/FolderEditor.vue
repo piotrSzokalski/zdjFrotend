@@ -1,21 +1,42 @@
 <template>
-  <modal :active="active" @close="$emit('close')">
+  <modal :active="active" @close="close">
     <div class="folderEditor">
-      Zmień nazwę folderu
+      <p v-if="editMode">Zmień nazwę folderu</p>
+      <p v-else>Utwórz nowy folder</p>
 
       <input v-model="fName" type="text" />
-      {{ fName }}
+
+      <button @click="save">
+        {{ editMode ? "Zmień" : "Utwórz" }}
+      </button>
+
+      <button v-if="editMode" @click="moveFolder">Przenieś</button>
+      <button v-if="editMode" @click="remove">Usuń</button>
     </div>
   </modal>
+  <folder-selector
+    move-folder
+    :active="folderSelectorActive"
+    :child-folder-id="folder?.id"
+    @close="folderSelectorActive = false"
+  />
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, PropType, ref, watch } from "vue";
 
+import { folderService } from "@/services/folderService";
+import { currentFolder, loadFolders } from "@/store/folders";
+
+import FolderSelector from "./FolderSelector.vue";
 import Modal from "./Modal.vue";
+import { Folder } from "@/interfaces/folder";
 
 export default defineComponent({
-  components: { Modal },
+  components: {
+    Modal,
+    FolderSelector,
+  },
   emits: {
     close: null,
   },
@@ -30,16 +51,71 @@ export default defineComponent({
     /**
      * Nazwa folderu
      */
-    folderName: {
-      type: String,
-      required: true,
+    folder: {
+      type: Object as PropType<Folder>,
+      required: false,
+    },
+    editMode: {
+      type: Boolean,
+      default: false,
     },
   },
-  setup(props) {
-    const fName = ref(props.folderName);
+  setup(props, { emit }) {
+    const fName = ref(props.folder?.name);
+
+    watch(
+      () => props.folder,
+      () => (fName.value = props.folder?.name || "")
+    );
+
+    const folderSelectorActive = ref(false);
+
+    function save() {
+      if (!fName.value) {
+        return;
+      }
+      props.editMode ? edit() : create();
+    }
+
+    async function create() {
+      const result = await folderService.createFolder(fName.value || "");
+      loadFolders();
+      close();
+    }
+
+    async function edit() {
+      if (props.folder && fName.value) {
+        await folderService.renameFolder(props.folder.id, fName.value);
+        loadFolders();
+        close();
+      }
+    }
+
+    async function remove() {
+      if (props.folder) {
+        await folderService.removeFolder(props.folder.id);
+        loadFolders();
+        close();
+      }
+    }
+
+    function moveFolder() {
+      folderSelectorActive.value = true;
+    }
+
+    function close() {
+      fName.value = "";
+      emit("close");
+    }
 
     return {
       fName,
+      folderSelectorActive,
+
+      save,
+      remove,
+      close,
+      moveFolder,
     };
   },
 });

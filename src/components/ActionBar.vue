@@ -6,13 +6,13 @@
     </button>
 
     <button @click="togglePhotoFilterOpenClose">
-      <font-awesome-icon icon="filter" />
+      <font-awesome-icon icon="images" />
       Filtruj
     </button>
 
-    <button @click="removePhotos">
+    <button @click="removalWarningActive = true">
       <font-awesome-icon icon="trash" />
-        Usuń
+      Usuń
     </button>
 
     <button @click="$emit('multiSelect')">
@@ -21,7 +21,7 @@
     </button>
 
     <button @click="folderSelectorActive = true">
-        <font-awesome-icon icon="fa-solid fa-share-from-square" />
+      <font-awesome-icon icon="fa-solid fa-share-from-square" />
       Przenieś
     </button>
 
@@ -44,6 +44,11 @@
     :active="folderSelectorActive"
     @close="folderSelectorActive = false"
   />
+  <removal-warning
+    :active="removalWarningActive"
+    @close="removalWarningActive = false"
+    @remove="removePhotos"
+  />
 </template>
 
 <script lang="ts">
@@ -51,6 +56,8 @@ import { defineComponent, ref } from "vue";
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import FolderSelector from "@/modals/FolderSelector.vue";
+
+import RemovalWarning from "@/modals/RemovalWarning.vue";
 
 //import { exampleImages } from "@/store/dummyData";
 
@@ -62,6 +69,7 @@ export default defineComponent({
   components: {
     FolderSelector,
     FontAwesomeIcon,
+    RemovalWarning,
   },
   emits: {
     multiSelect: null,
@@ -72,6 +80,8 @@ export default defineComponent({
     const pictureFiles = ref<HTMLInputElement>();
 
     const folderSelectorActive = ref(false);
+
+    const removalWarningActive = ref(false);
 
     function test() {
       console.log(test);
@@ -92,13 +102,12 @@ export default defineComponent({
     }
 
     async function removePhotos() {
+      removalWarningActive.value = false;
+
       const results = await photoService.removePhotos();
       // do wyextraktoania
-      console.log(results);
       for (const res of results) {
-        console.log(res.ok);
         if (res.ok) {
-          console.log("here1");
           loadPhotos();
           return;
         }
@@ -144,8 +153,9 @@ export default defineComponent({
       sortingMode,
       nextSortingName,
       photoFilterOpen,
-      removePhotos,
+      removalWarningActive,
 
+      removePhotos,
       sortPictures,
       addPictures,
       test,
@@ -161,7 +171,9 @@ export default defineComponent({
   display: flex;
   position: sticky;
   border-radius: 5%;
+  position: relative;
 }
+
 button {
   font-size: 20px;
   font-weight: 400;
@@ -172,5 +184,4 @@ button {
   background-color: #ffffff;
   color: #808080;
 }
-
 </style>

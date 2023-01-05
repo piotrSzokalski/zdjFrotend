@@ -7,24 +7,36 @@
     <!--
  <action-bar />
     -->
-    <div class="image">
-      <img :src="image.path" />
-    </div>
+    <div class="content">
+      <div class="image">
+        <img :src="photoPath" />
+      </div>
 
-    <div class="pre">
-      <button v-if="!last" @click="$emit('previous')">Poprzedni</button>
-    </div>
-    <div class="next">
-      <button v-if="!first" @click="$emit('next')">Następny</button>
+      <div class="pre">
+        <button v-if="!last" @click="$emit('previous')">
+          <font-awesome-icon icon="arrow-left" />
+          Poprzednie
+        </button>
+      </div>
+      <div class="next">
+        <button v-if="!first" @click="$emit('next')">
+          Następne <font-awesome-icon icon="arrow-right" />
+        </button>
+      </div>
     </div>
   </modal>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { computed, defineComponent, PropType } from "vue";
+
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 // import { Image } from "@/interfaces/image";
 import { Photo } from "@/interfaces/photo";
+
+import { APIurl } from "@/const/photoAPI";
+import { APICalls } from "@/enums/apiCalls.enum";
 
 import Modal from "./Modal.vue";
 import ActionBar from "@/components/ActionBar.vue";
@@ -34,6 +46,7 @@ import ActionBar from "@/components/ActionBar.vue";
  */
 export default defineComponent({
   components: {
+    FontAwesomeIcon,
     Modal,
     //ActionBar,
   },
@@ -81,16 +94,28 @@ export default defineComponent({
      */
     next: null,
   },
+  setup(props) {
+    const photoPath = computed(
+      () => APIurl[APICalls.PHOTOS_GET_PHOTO] + props.image.id
+    );
+    return {
+      photoPath,
+    };
+  },
 });
 </script>
 
 <style scoped>
+.content {
+  background-color: rgb(0, 0, 0); /* Fallback color */
+}
+
 img {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
-  width: 50%;
-  height: 80%;
+  width: 1400px;
+  height: 850px;
 }
 
 .pre {

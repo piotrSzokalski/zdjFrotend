@@ -6,24 +6,35 @@
       @open-photo-filter="photoFilterOpen = true"
       @close-photo-filter="photoFilterOpen = false"
     />
-    <picture-filter :open="photoFilterOpen" @filter="filterPhotos" />
+    <picture-filter
+      :open="photoFilterOpen"
+      @filter="filterPhotos"
+      @clear-filter="clearFilter"
+    />
     <sub-folder-list />
-    <div class="pictures">
+    <div class="selectButtons">
+      <button>Zaznacz wszystkie</button>
+      <button>Anuluj zaznaczanie</button>
+    </div>
+    <div v-if="photosFiltered.length" class="pictures">
       <ImageComponent
-        v-for="(image, index) in photos"
+        v-for="(image, index) in photosFiltered"
         :key="index"
         :image="image"
         :select-mode="selectMode"
         @image-clicked="viewImage(image, index)"
       />
     </div>
+    <div v-else>
+      <h2>Brak zdjęć w tym folderze</h2>
+    </div>
   </div>
 
   <ImageViewer
     :active="imageViewerActive"
     :image="activeImage"
-    :last="false"
-    :first="false"
+    :last="lastImage"
+    :first="firstImage"
     @close="imageViewerActive = false"
     @next="nextImage"
     @previous="previousImage"
@@ -33,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, computed, watch } from "vue";
 
 // komponenty
 import ImageComponent from "@/components/ImageComponent.vue";
@@ -48,6 +59,7 @@ import Modal from "@/modals/Modal.vue";
 //import { exampleImages } from "@/store/dummyData";
 
 import { photos, loadPhotos, selectedPhotosId } from "@/store/photos";
+import { folders, loadFolders, currentFolder } from "@/store/folders";
 
 import { Photo } from "@/interfaces/photo";
 
@@ -74,11 +86,23 @@ export default defineComponent({
 
     const activeImageIndex = ref(-1);
 
-    const photosFiltered = ref(photos.value);
+    const photosFiltered = ref<Photo[]>([]);
 
     const photoFilterOpen = ref(false);
 
-    onMounted(() => loadPhotos());
+    const lastImage = computed(() => false);
+
+    const firstImage = computed(() => false);
+
+    onMounted(() => {
+      loadPhotos();
+      loadFolders();
+    });
+
+    watch(
+      () => photos.value,
+      () => (photosFiltered.value = photos.value || [])
+    );
 
     /**
      * Włącza/Wyłącza podgląd tryb zaznaczania
@@ -119,18 +143,17 @@ export default defineComponent({
     }
 
     function filterPhotos(fromDateString: string, toDateString: string): void {
-      const fromDate = new Date(fromDateString || "1980-01-01");
-      const toDate = new Date(toDateString);
+      const fromDate = new Date(fromDateString || 0).getTime();
+      const toDate = new Date(toDateString).getTime() || new Date().getTime();
 
-      console.log("filter photos:", fromDate + "   |    " + toDate);
-      console.log(photosFiltered.value);
+      photosFiltered.value = photos.value.filter((photo) => {
+        const photoDate = new Date(photo.date).getTime();
+        return photoDate >= fromDate && photoDate <= toDate;
+      });
+    }
 
-      photosFiltered.value = photos.value.filter(
-        (image) =>
-          (image.date >= fromDate && image.date <= toDate) || new Date()
-      );
-
-      console.log(photosFiltered.value);
+    function clearFilter() {
+      photosFiltered.value = photos.value;
     }
 
     return {
@@ -140,15 +163,19 @@ export default defineComponent({
       activeImage,
       activeImageIndex,
       photoFilterOpen,
-
       photos,
       selectedPhotosId,
+      lastImage,
+      firstImage,
+      folders,
+      currentFolder,
 
       toggleSelectMode,
       viewImage,
       nextImage,
       previousImage,
       filterPhotos,
+      clearFilter,
     };
   },
 });
@@ -161,20 +188,20 @@ body {
 .gallery {
   border: 1px solid;
   border-radius: 20px;
-  position: absolute;
+  position: relative;
 }
+
 .pictures {
   gap: 10px;
   position: relative;
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
-  max-height: 625px;
+  max-height: 600px;
+  max-width: 2000px;
   overflow: auto;
 }
-button{
-    margin: 5px;
-
+button {
+  margin: 5px;
 }
-
 </style>
