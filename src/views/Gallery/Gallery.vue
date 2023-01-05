@@ -185,7 +185,6 @@ export default defineComponent({
 body {
   overflow: hidden;
 }
-
 .gallery {
   border: 1px solid;
   border-radius: 20px;
@@ -202,23 +201,7 @@ body {
   max-width: 2000px;
   overflow: auto;
 }
-
 button {
-  border: 2px solid #2130ae;
-  border-radius: 5px;
-  font-size: 15px;
-  padding: 20px;
-}
-
-.selectButtons {
-  background-color: aliceblue;
-}
-
-.selectButtons button {
-  border: 2px solid aliceblue;
-  background-color: green;
-  border-radius: 10px;
-  font-size: 15px;
-  padding: 20px;
+  margin: 5px;
 }
 </style>
