@@ -1,14 +1,16 @@
 <template>
-  <div class="picture">
-    <input
-      v-if="selectMode"
-      type="checkbox"
-      @change="togglePhotoSelected(image.id)"
-    />
+  <div
+    :class="{
+      picture: !selectMode,
+      pictureSelected: selectMode,
+      isSelected: selected && selectMode,
+    }"
+    @click="selectMode ? select(image.id) : click()"
+  >
+    <input v-if="selectMode" v-model="selected" type="checkbox" />
     <img
-      :src="image.path"
+      :src="photoPath"
       alt="tu powinno być zdjęcie"
-      @click="click"
       height="250"
       width="250"
     />
@@ -16,12 +18,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, computed } from "vue";
 
 // import { Image } from "@/interfaces/image";
 import { Photo } from "@/interfaces/photo";
 
-import { togglePhotoSelected } from "@/store/photos";
+import { togglePhotoSelected, selectedPhotosId } from "@/store/photos";
+import { APICalls } from "@/enums/apiCalls.enum";
+import { APIurl } from "@/const/photoAPI";
 
 /**
  * Zdjęcie
@@ -50,14 +54,35 @@ export default defineComponent({
      */
     imageClicked: null,
   },
-  setup(_, { emit }) {
+  setup(props, { emit }) {
+    const selected = computed(() =>
+      selectedPhotosId.value.includes(props.image.id)
+    );
+
+    const photoPath = computed(
+      () => APIurl[APICalls.PHOTOS_GET_PHOTO] + props.image.id
+    );
+
     function click(): void {
       emit("imageClicked");
     }
+
+    function select(id: number) {
+      togglePhotoSelected(id);
+    }
+
+    function test() {
+      console.log("test");
+    }
     return {
+      selected,
+      photoPath,
+
       click,
 
       togglePhotoSelected,
+      select,
+      test,
     };
   },
 });
@@ -67,8 +92,52 @@ export default defineComponent({
 .picture {
   border: 2px solid;
 }
-img {
+
+.picture img {
   object-fit: cover;
   vertical-align: bottom;
+}
+
+.picture img:hover {
+  object-fit: cover;
+  vertical-align: bottom;
+  border-radius: 20%;
+  opacity: 90%;
+  transform: scale(1.5);
+}
+
+.pictureSelected {
+  border: 10px solid;
+}
+
+.pictureSelected img {
+  object-fit: cover;
+  vertical-align: bottom;
+}
+
+.pictureSelected img:hover {
+  object-fit: cover;
+  vertical-align: bottom;
+  border-radius: 20%;
+  opacity: 90%;
+  transform: scale(2);
+}
+
+.isSelected {
+  border: 5px solid red;
+}
+
+.isSelected img {
+  object-fit: cover;
+  vertical-align: bottom;
+  background-color: red;
+}
+
+.isSelected img:hover {
+  object-fit: cover;
+  vertical-align: bottom;
+  border-radius: 20%;
+  opacity: 90%;
+  transform: scale(2);
 }
 </style>
