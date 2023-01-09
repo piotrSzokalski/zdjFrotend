@@ -4,11 +4,11 @@
       <div v-if="canRemove">
         <h1>Czy na pewno chcesz usunąć te piękne zdjęcia</h1>
         <button @click="unSelect">Anuluj</button>
-        <button @click="$emit('remove')">Tak wiem co robię</button>
+        <button @click="$emit('remove')">Tak, chcę usunąć wybrane zdjęcia</button>
       </div>
 
       <div v-else>
-        <h1>Żadne zdjęcia nie zostaały zanaczone</h1>
+        <h1>Nie wybrano zdjęć do usunięcia</h1>
       </div>
     </div>
   </modal>
@@ -59,5 +59,6 @@ export default defineComponent({
 <style scoped>
 .content {
   background: white;
+  
 }
 </style>
