@@ -2,7 +2,7 @@
   <modal :active="active" @close="$emit('close')">
     <div class="content">
       <div v-if="canRemove">
-        <h1>Czy na pewno chcesz usunąć te piękne zdjęcia</h1>
+        <h1>Czy na pewno chcesz usunąć to piękne zdjęcia</h1>
         <button @click="unSelect">Anuluj</button>
         <button @click="$emit('remove')">Tak, chcę usunąć wybrane zdjęcia</button>
       </div>

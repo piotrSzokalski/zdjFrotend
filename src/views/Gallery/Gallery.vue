@@ -202,6 +202,7 @@ body {
   max-height: 600px;
   max-width: 2000px;
   overflow: auto;
+  border-color:white;
 }
 button {
   margin: 5px;
