@@ -17,6 +17,6 @@ export default defineComponent({});
 .button {
   color: aqua;
   border: 1px solid;
-  border-radius: 2px;
+  border-radius: 5px;
 }
 </style>

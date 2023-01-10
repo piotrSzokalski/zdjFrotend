@@ -3,7 +3,7 @@
 
   <div class="subFolders">
     <section v-if="subFolders.length">
-      <button class="arrows"><font-awesome-icon icon="arrow-left" /></button>
+      <button class="arrowL"><font-awesome-icon icon="arrow-left" /></button>
 
       <folder-component
         v-for="(folder, index) in subFolders"
@@ -12,7 +12,7 @@
         :folder="folder"
         @edit="openFolderEditor(folder)"
       />
-      <button class="arrows"><font-awesome-icon icon="arrow-right" /></button>
+      <button class="arrowR"><font-awesome-icon icon="arrow-right" /></button>
     </section>
     <section v-else>
       <h3>Brak podfolderów</h3>
@@ -115,11 +115,22 @@ export default defineComponent({
   font-size: 24px;
 }
 
-.arrows {
+.arrowR {
   background-color: darkblue;
   width: 50px;
   border: darkblue;
   border-radius: 50px;
+  position:absolute;
+  left:95%;
 }
+    .arrowL {
+        background-color: darkblue;
+        width: 50px;
+        border: darkblue;
+        border-radius: 50px;
+        position: absolute;
+        right: 95%;
+    }
+
 </style>
   

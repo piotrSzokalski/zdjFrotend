@@ -26,7 +26,7 @@
       />
     </div>
     <div v-else>
-      <h2>Brak zdjęć w tym folderze</h2>
+      <h3>Brak zdjęć w tym folderze</h3>
     </div>
   </div>
 
@@ -184,11 +184,13 @@ export default defineComponent({
 <style >
 body {
   overflow: hidden;
+  background-color: lavender;
 }
 .gallery {
   border: 1px solid;
   border-radius: 20px;
   position: relative;
+  background-color: white;
 }
 
 .pictures {

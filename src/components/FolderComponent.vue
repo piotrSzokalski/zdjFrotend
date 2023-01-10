@@ -81,9 +81,7 @@ button {
   border: 3px thin #293250;
   width: 150px;
 }
-button2 {
-  vertical-align: inherit;
-}
+
 button:hover {
   background-color: darkslateblue;
 }

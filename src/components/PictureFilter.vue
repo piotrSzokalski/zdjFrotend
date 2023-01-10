@@ -1,6 +1,6 @@
 <template>
   <div v-if="open" class="picFilter">
-    <h3>Filter</h3>
+    <h3>Filtuj</h3>
     Data: Od:
     <input v-model="fromDateString" type="date" @change="$emit('filter', fromDateString, toDateString)" />
     Do:
@@ -54,7 +54,13 @@ export default defineComponent({
 <style scoped>
 .picFilter {
   display: block;
-  border: 2px solid;
+  border: 1px solid;
   width: 900px;
+  border-radius: 5px;
+  position: relative;
+  left: 20%;
+  right: 25%;
+  
 }
+
 </style>

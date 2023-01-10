@@ -5,7 +5,7 @@
       <p v-else>Utwórz nowy folder</p>
 
       <input v-model="fName" type="text" />
-
+        
       <button @click="save">
         {{ editMode ? "Zmień" : "Utwórz" }}
       </button>
@@ -126,5 +126,6 @@ export default defineComponent({
   display: block;
   padding: 10px;
   background: white;
+  font-size:30px;
 }
 </style>
