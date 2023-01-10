@@ -114,7 +114,7 @@ export default defineComponent({
 
 .pictureSelected img {
   object-fit: cover;
-  vertical-align: text-bottom;
+  vertical-align: ;
 
 }
 
@@ -144,4 +144,13 @@ export default defineComponent({
   opacity: 90%;
   transform: scale(1.1);
 }
+    input[type= 'checkbox'] {
+        background: lightblue;
+        padding: 0;
+        border: 0;
+        width: 0px;
+        height: 0px;
+        display: none;
+    }
+
 </style>
