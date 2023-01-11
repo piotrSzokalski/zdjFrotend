@@ -13,7 +13,7 @@
       @clear-filter="clearFilter"
     />
 
-    <div class="selectButtons">
+    <div v-if="false" class="selectButtons">
       <button>Zaznacz wszystkie</button>
       <button>Anuluj zaznaczanie</button>
     </div>

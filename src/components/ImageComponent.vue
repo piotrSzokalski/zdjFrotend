@@ -7,7 +7,6 @@
     }"
     @click="selectMode ? select(image.id) : click()"
   >
-    {{ image.date }}
     <input v-if="selectMode" v-model="selected" type="checkbox" />
     <img
       :src="photoPath"
@@ -92,7 +91,6 @@ export default defineComponent({
 <style scoped>
 .picture {
   border: 1px #fff;
-  
 }
 
 .picture img {
@@ -108,15 +106,14 @@ export default defineComponent({
   transform: scale(1.1);
 }
 
-    .pictureSelected {
-        border: 8px solid white;
-        border-radius: 5px;
-    }
+.pictureSelected {
+  border: 8px solid white;
+  border-radius: 5px;
+}
 
 .pictureSelected img {
   object-fit: cover;
   vertical-align: ;
-
 }
 
 .pictureSelected img:hover {
@@ -128,7 +125,7 @@ export default defineComponent({
 }
 
 .isSelected {
-  border: 5px solid lightblue;
+  border: 10px solid rgb(151, 212, 233);
   width: auto;
 }
 
@@ -145,13 +142,12 @@ export default defineComponent({
   opacity: 90%;
   transform: scale(1.1);
 }
-    input[type= 'checkbox'] {
-        background: lightblue;
-        padding: 0;
-        border: 0;
-        width: 0px;
-        height: 0px;
-        display: none;
-    }
-
+input[type="checkbox"] {
+  background: lightblue;
+  padding: 0;
+  border: 0;
+  width: 0px;
+  height: 0px;
+  display: none;
+}
 </style>

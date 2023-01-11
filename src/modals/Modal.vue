@@ -49,7 +49,25 @@ export default defineComponent({
 
   /* background-color: rgba(0, 0, 0, 0.4); Black w/ opacity */
 }
-button {
-  top: 0px;
+
+.modal input {
+  width: 300px;
+  background-color: #efefef;
+  color: #666;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.modal button {
+  width: 325px;
+  color: white;
+  background-color: cornflowerblue;
+  border: 2px solid #808080;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 10px;
 }
 </style>
