@@ -7,6 +7,7 @@
     }"
     @click="selectMode ? select(image.id) : click()"
   >
+    {{ image.date }}
     <input v-if="selectMode" v-model="selected" type="checkbox" />
     <img
       :src="photoPath"

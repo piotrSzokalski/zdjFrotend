@@ -1,6 +1,7 @@
 <template>
   <breadcrumb-list />
   <div class="gallery">
+    <sub-folder-list />
     <ActionBar
       @multiSelect="toggleSelectMode"
       @open-photo-filter="photoFilterOpen = true"
@@ -8,10 +9,10 @@
     />
     <picture-filter
       :open="photoFilterOpen"
-      @filter="filterPhotos"
+      @filter="filter"
       @clear-filter="clearFilter"
     />
-    <sub-folder-list />
+
     <div class="selectButtons">
       <button>Zaznacz wszystkie</button>
       <button>Anuluj zaznaczanie</button>
@@ -58,7 +59,14 @@ import Modal from "@/modals/Modal.vue";
 
 //import { exampleImages } from "@/store/dummyData";
 
-import { photos, loadPhotos, selectedPhotosId } from "@/store/photos";
+import {
+  photos,
+  filteredPhotos,
+  filterPhotos,
+  loadPhotos,
+  selectedPhotosId,
+  unFilterPhots,
+} from "@/store/photos";
 import { folders, loadFolders, currentFolder } from "@/store/folders";
 
 import { Photo } from "@/interfaces/photo";
@@ -100,8 +108,8 @@ export default defineComponent({
     });
 
     watch(
-      () => photos.value,
-      () => (photosFiltered.value = photos.value || [])
+      () => filteredPhotos.value,
+      () => (photosFiltered.value = filteredPhotos.value || [])
     );
 
     /**
@@ -142,18 +150,12 @@ export default defineComponent({
       activeImage.value = photosFiltered.value[activeImageIndex.value];
     }
 
-    function filterPhotos(fromDateString: string, toDateString: string): void {
-      const fromDate = new Date(fromDateString || 0).getTime();
-      const toDate = new Date(toDateString).getTime() || new Date().getTime();
-
-      photosFiltered.value = photos.value.filter((photo) => {
-        const photoDate = new Date(photo.date).getTime();
-        return photoDate >= fromDate && photoDate <= toDate;
-      });
+    function filter(fromDateString: string, toDateString: string): void {
+      filterPhotos(fromDateString, toDateString);
     }
 
     function clearFilter() {
-      photosFiltered.value = photos.value;
+      unFilterPhots();
     }
 
     return {
@@ -163,7 +165,7 @@ export default defineComponent({
       activeImage,
       activeImageIndex,
       photoFilterOpen,
-      photos,
+      filteredPhotos,
       selectedPhotosId,
       lastImage,
       firstImage,
@@ -174,7 +176,7 @@ export default defineComponent({
       viewImage,
       nextImage,
       previousImage,
-      filterPhotos,
+      filter,
       clearFilter,
     };
   },

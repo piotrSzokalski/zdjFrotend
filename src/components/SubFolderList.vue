@@ -1,10 +1,13 @@
 <template>
-  <div class="title">Podfoldery</div>
+  <div class="title">
+    Podfoldery
+    <button @click="openFolderEditor()">
+      <font-awesome-icon icon="folder-plus" />Dodaj Folder
+    </button>
+  </div>
 
-  <div class="subFolders">
-    <section v-if="subFolders.length">
-      <button class="arrows"><font-awesome-icon icon="arrow-left" /></button>
-
+  <div>
+    <section v-if="subFolders.length" class="subFolders">
       <folder-component
         v-for="(folder, index) in subFolders"
         editable
@@ -12,18 +15,13 @@
         :folder="folder"
         @edit="openFolderEditor(folder)"
       />
-      <button class="arrows"><font-awesome-icon icon="arrow-right" /></button>
     </section>
     <section v-else>
       <h3>Brak podfolderów</h3>
     </section>
   </div>
 
-  <div class="add">
-    <button @click="openFolderEditor()">
-      <font-awesome-icon icon="folder-plus" />Dodaj Folder
-    </button>
-  </div>
+  <div class="add"></div>
   <folder-editor
     :active="folderEditorActive"
     :folder="selectedFolder"
@@ -101,14 +99,17 @@ export default defineComponent({
 .title {
   font-size: 25px;
   text-align: left;
-  position: relative;
 }
 
 .subFolders {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  position: relative;
+  height: 100px;
+  background: rgb(236, 186, 186);
+  border: 1px solid;
+  overflow: auto;
 }
 
 .add {

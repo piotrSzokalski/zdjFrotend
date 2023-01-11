@@ -25,7 +25,13 @@
       Przenieś
     </button>
 
-    <input type="file" ref="pictureFiles" style="display: none" @change="addPictures" multiple />
+    <input
+      type="file"
+      ref="pictureFiles"
+      style="display: none"
+      @change="addPictures"
+      multiple
+    />
     <button @click="$refs.pictureFiles.click()">
       <font-awesome-icon icon="add" />
       Dodaj Zdjęcia
@@ -34,8 +40,15 @@
     <button v-if="false" @click="test">Test</button>
   </div>
 
-  <folder-selector :active="folderSelectorActive" @close="folderSelectorActive = false" />
-  <removal-warning :active="removalWarningActive" @close="removalWarningActive = false" @remove="removePhotos" />
+  <folder-selector
+    :active="folderSelectorActive"
+    @close="folderSelectorActive = false"
+  />
+  <removal-warning
+    :active="removalWarningActive"
+    @close="removalWarningActive = false"
+    @remove="removePhotos"
+  />
 </template>
 
 <script lang="ts">
@@ -50,7 +63,7 @@ import RemovalWarning from "@/modals/RemovalWarning.vue";
 
 import { photoService } from "@/services/photoService";
 import { loadPhotos } from "@/store/photos";
-import { photos } from "@/store/photos";
+import { filteredPhotos } from "@/store/photos";
 
 export default defineComponent({
   components: {
@@ -115,13 +128,13 @@ export default defineComponent({
       console.log("sort");
       sortingMode.value = (sortingMode.value + 1) % 3;
       if (sortingMode.value === 0) {
-        photos.value.sort((a, b) => (a.id > b.id ? 1 : -1));
+        filteredPhotos.value.sort((a, b) => (a.id > b.id ? 1 : -1));
       }
       if (sortingMode.value === 1) {
-        photos.value.sort((a, b) => (a.date > b.date ? -1 : 1));
+        filteredPhotos.value.sort((a, b) => (a.date > b.date ? -1 : 1));
       }
       if (sortingMode.value === 2) {
-        photos.value.sort((a, b) => (a.date > b.date ? 1 : -1));
+        filteredPhotos.value.sort((a, b) => (a.date > b.date ? 1 : -1));
       }
     }
 
@@ -156,12 +169,11 @@ export default defineComponent({
 .actions {
   padding: 10px;
   display: flex;
-  position: sticky;
+
   border-radius: 5%;
-  position: relative;
 }
 
-button {
+.actions button {
   font-size: 20px;
   font-weight: 400;
   border-radius: 50px;
@@ -170,7 +182,7 @@ button {
   padding: 10px;
 }
 
-button:hover {
-  background-color: darkslateblue;
+.actions button:hover {
+  background-color: rgb(133, 131, 146);
 }
 </style>
