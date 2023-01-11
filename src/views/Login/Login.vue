@@ -1,12 +1,12 @@
 <template>
   <h1>Witaj!</h1>
-  <div id="container">
+  <div class="container">
     <form>
       <label for="email">E-mail</label>
       <br /><br />
       <input id="email" type="text" />
       <br /><br />
-      <label for="password">Haslo</label>
+      <label for="password">Hasło</label>
       <br /><br />
       <input id="password" type="text" />
       <br /><br />
@@ -54,6 +54,8 @@ body {
   margin-left: auto;
   margin-right: auto;
   margin-top: 100px;
+  border-radius: 5px;
+  background-color: #bfd3f0;
 }
 .container input {
   width: 300px;

@@ -27,7 +27,7 @@
       />
     </div>
     <div v-else>
-      <h2>Brak zdjęć w tym folderze</h2>
+      <h3>Brak zdjęć w tym folderze</h3>
     </div>
   </div>
 
@@ -186,12 +186,13 @@ export default defineComponent({
 <style >
 body {
   overflow: hidden;
+  background-color: lavender;
 }
-
 .gallery {
   border: 1px solid;
   border-radius: 20px;
   position: relative;
+  background-color: white;
 }
 
 .pictures {
@@ -204,23 +205,7 @@ body {
   max-width: 2000px;
   overflow: auto;
 }
-
 button {
-  border: 2px solid #2130ae;
-  border-radius: 5px;
-  font-size: 15px;
-  padding: 20px;
-}
-
-.selectButtons {
-  background-color: aliceblue;
-}
-
-.selectButtons button {
-  border: 2px solid aliceblue;
-  background-color: green;
-  border-radius: 10px;
-  font-size: 15px;
-  padding: 20px;
+  margin: 5px;
 }
 </style>

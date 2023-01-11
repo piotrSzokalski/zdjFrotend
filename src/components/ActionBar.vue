@@ -32,6 +32,13 @@
       @change="addPictures"
       multiple
     />
+    <input
+      type="file"
+      ref="pictureFiles"
+      style="display: none"
+      @change="addPictures"
+      multiple
+    />
     <button @click="$refs.pictureFiles.click()">
       <font-awesome-icon icon="add" />
       Dodaj Zdjęcia
@@ -177,12 +184,10 @@ export default defineComponent({
   font-size: 20px;
   font-weight: 400;
   border-radius: 50px;
-  width: 6%;
+  width: 8%;
   right: 0px;
   padding: 10px;
-}
-
-.actions button:hover {
-  background-color: rgb(133, 131, 146);
+  background-color: #ffffff;
+  color: #808080;
 }
 </style>

@@ -15,12 +15,11 @@
       <div class="pre">
         <button v-if="!last" @click="$emit('previous')">
           <font-awesome-icon icon="arrow-left" />
-          Poprzednie
         </button>
       </div>
       <div class="next">
         <button v-if="!first" @click="$emit('next')">
-          Następne <font-awesome-icon icon="arrow-right" />
+          <font-awesome-icon icon="arrow-right" />
         </button>
       </div>
     </div>
@@ -111,8 +110,8 @@ export default defineComponent({
 }
 
 img {
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px #ddd;
+  border-radius: 5px;
   padding: 5px;
   width: 1400px;
   height: 850px;
@@ -126,6 +125,8 @@ img {
 }
 .pre:hover {
   visibility: visible;
+  background-color: lightblue;
+  border-radius:50px;
 }
 
 .next {
@@ -137,6 +138,13 @@ img {
 
 .next:hover {
   visibility: visible;
-  background-color: red;
+  background-color: lightblue;
+  border-radius:50px;
+}
+button{
+  background-color: darkblue;
+  width: 50px;
+  border: darkblue;
+  border-radius: 50px;
 }
 </style>

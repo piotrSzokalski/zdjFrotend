@@ -99,6 +99,7 @@ export default defineComponent({
 .title {
   font-size: 25px;
   text-align: left;
+  margin-left: 20px;
 }
 
 .subFolders {
@@ -114,20 +115,23 @@ export default defineComponent({
 
 .add {
   font-size: 24px;
-  position: relative;
-  right: 43.9%;
 }
 
-.arrows button {
-  background-color: blue;
-  width: 10px;
+.arrowR {
+  background-color: darkblue;
+  width: 50px;
+  border: darkblue;
+  border-radius: 50px;
+  position: absolute;
+  left: 95%;
 }
-
-button {
-  border: 2px solid #2130ae;
-  border-radius: 5px;
-  font-size: 15px;
-  padding: 20px;
+.arrowL {
+  background-color: darkblue;
+  width: 50px;
+  border: darkblue;
+  border-radius: 50px;
+  position: absolute;
+  right: 95%;
 }
 </style>
   
