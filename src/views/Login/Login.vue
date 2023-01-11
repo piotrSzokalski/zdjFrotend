@@ -50,7 +50,7 @@ export default defineComponent({
     .container {
         border: 2px solid #ddd;
         border-radius:5px;
-        background-color: #c7e9f0;
+        background-color: #bfd3f0;
         width: 300px;
         padding: 50px;
         margin-left: auto;
@@ -72,6 +72,7 @@ export default defineComponent({
         position: absolute;
         font-size: 15px;
         text-indent: -250px;
+        
         
     }
     button{

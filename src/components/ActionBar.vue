@@ -169,9 +169,10 @@ export default defineComponent({
 .actions {
   padding: 10px;
   display: flex;
-  position: sticky;
+
   border-radius: 5%;
-  position: relative;
+
+  
 }
 
 button {
