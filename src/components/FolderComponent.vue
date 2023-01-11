@@ -5,10 +5,11 @@
 
       {{ folder.name }}
     </button>
-
-    <button v-if="editable" @click="$emit('edit', folder)">
-      <font-awesome-icon icon="pen" />
-    </button>
+    <div class="editBtn">
+      <button v-if="editable" @click="$emit('edit', folder)">
+        <font-awesome-icon icon="pen" />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -73,19 +74,28 @@ export default defineComponent({
 </script>
 
 <style scoped>
-button {
-  font-size: 40px;
+.folder button {
   font-weight: 400;
-  font-size: 15px;
-  border-radius: 10px;
-  border: 3px thin #293250;
-  width: 150px;
+  border: none;
+  color: rgb(99, 98, 98);
+  background-color: white;
+}
+.folder button:hover {
+  background-color: rgb(190, 189, 189);
 }
 
-button:hover {
-  background-color: darkslateblue;
+.editBtn button {
+  opacity: 0;
+}
+
+.editBtn button:hover {
+  opacity: 1;
 }
 .folder {
   padding: 10px;
+  border: solid black 1px;
+  background: white;
+  display: flex;
+  border-radius: 15%;
 }
 </style>
