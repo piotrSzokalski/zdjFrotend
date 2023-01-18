@@ -1,10 +1,11 @@
 <template>
-  <div class="title">
-    Podfoldery
-    <button @click="openFolderEditor()">
-      <font-awesome-icon icon="folder-plus" />Dodaj Folder
-    </button>
-  </div>
+    <div class="title">
+        Podfoldery
+        
+        <button @click="openFolderEditor()">
+            <font-awesome-icon icon="folder-plus" />
+        </button>
+    </div>
 
   <div>
     <section v-if="subFolders.length" class="subFolders">
@@ -106,11 +107,11 @@ export default defineComponent({
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100px;
-  background: rgb(236, 186, 186);
-  border: 1px solid;
+  border: 0px solid;
   overflow: auto;
+  
 }
 
 .add {
@@ -133,5 +134,19 @@ export default defineComponent({
   position: absolute;
   right: 95%;
 }
+    .title button {
+        color: #808080;
+        text-align: left;
+        border-radius: 3px;
+        border: 0px solid;
+        font-weight: 400;
+        font-size: 20px;
+        background-color: #ffffff;
+    }
+    .title button :hover {
+        border-radius: 8px;
+        opacity: 90%;
+        transform: scale(1.1);
+    }
 </style>
   

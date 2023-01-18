@@ -190,7 +190,7 @@ body {
 }
 .gallery {
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 8px;
   position: relative;
   background-color: white;
 }
