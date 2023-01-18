@@ -61,13 +61,13 @@ export default defineComponent({
 }
 
 .modal button {
-  width: 325px;
+  width:250px;
   color: white;
   background-color: cornflowerblue;
   border: 2px solid #808080;
   border-radius: 5px;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 400;
   padding: 10px;
 }
 </style>

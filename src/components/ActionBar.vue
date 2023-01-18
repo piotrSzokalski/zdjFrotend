@@ -174,20 +174,27 @@ export default defineComponent({
 
 <style scoped>
 .actions {
-  padding: 10px;
+  padding: 5px;
   display: flex;
-
   border-radius: 5%;
 }
 
 .actions button {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 400;
-  border-radius: 50px;
+  border-radius: 8px;
   width: 8%;
   right: 0px;
-  padding: 10px;
+  padding: 3px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   background-color: #ffffff;
   color: #808080;
+  border: 1px solid;
 }
+    .actions button :hover {
+        border-radius: 5px;
+        opacity: 90%;
+        transform: scale(1.1);
+    }
 </style>

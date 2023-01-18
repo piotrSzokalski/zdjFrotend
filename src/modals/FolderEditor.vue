@@ -1,19 +1,18 @@
 <template>
-  <modal :active="active" @close="close">
-    <div class="folderEditor">
-      <p v-if="editMode">Zmień nazwę folderu</p>
-      <p v-else>Utwórz nowy folder</p>
+    <modal :active="active" @close="close">
+        <div class="folderEditor">
+            <p v-if="editMode">Zmień nazwę folderu</p>
+            <p v-else>Utwórz nowy folder</p>
 
-      <input v-model="fName" type="text" />
-        
-      <button @click="save">
-        {{ editMode ? "Zmień" : "Utwórz" }}
-      </button>
+            <input v-model="fName" type="text" />
+            <br /><br />
+            <button @click="save">
+                {{ editMode ? "Zmień" : "Utwórz" }}
+            </button>
 
-      <button v-if="editMode" @click="moveFolder">Przenieś</button>
-      <button v-if="editMode" @click="remove">Usuń</button>
-    </div>
-  </modal>
+        </div>
+        <br /><br />
+    </modal>
   <folder-selector
     move-folder
     :active="folderSelectorActive"
@@ -122,10 +121,13 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.folderEditor {
-  display: block;
-  padding: 10px;
-  background: white;
-  font-size:30px;
-}
+    .folderEditor {
+        display: inline-block;
+        border-radius: 8px;
+        padding: 30px;
+        background: white;
+        font-size: 25px;
+        font-weight: 400;
+    }
+
 </style>

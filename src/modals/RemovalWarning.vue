@@ -1,17 +1,19 @@
 <template>
-  <modal :active="active" @close="$emit('close')">
-    <div class="content">
-      <div v-if="canRemove">
-        <h1>Czy na pewno chcesz usunąć to piękne zdjęcia</h1>
-        <button @click="unSelect">Anuluj</button>
-        <button @click="$emit('remove')">Tak, chcę usunąć wybrane zdjęcia</button>
-      </div>
+    <modal :active="active" @close="$emit('close')">
+        <div class="content">
+            <div v-if="canRemove">
+                <h1>Czy na pewno chcesz usunąć te piękne zdjęcia</h1>
+                <button @click="unSelect">Anuluj</button>
+                <button @click="$emit('remove')">Tak</button>
+            </div>
 
-      <div v-else>
-        <h1>Nie wybrano zdjęć do usunięcia</h1>
-      </div>
-    </div>
-  </modal>
+            <div v-else>
+                <h1>Nie wybrano zdjęć do usunięcia</h1>
+            </div>
+
+        </div>
+        <br /><br />
+    </modal>
 </template>
 
 <script lang="ts">
@@ -57,8 +59,13 @@ export default defineComponent({
 
 
 <style scoped>
-.content {
-  background: white;
-  
-}
+    .content {
+        background: white;
+        display: inline-block;
+        border-radius: 8px;
+        padding: 30px;
+        background: white;
+        font-size: 15px;
+        font-weight:400;
+    }
 </style>

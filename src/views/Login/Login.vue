@@ -68,6 +68,8 @@ body {
 }
 .container label {
   font-size: 15px;
+  position:absolute;
+  left: 235px;
 }
 .container button {
   width: 325px;
@@ -76,7 +78,6 @@ body {
   border: 2px solid #808080;
   border-radius: 5px;
   font-size: 20px;
-  font-weight: 600;
   padding: 10px;
 }
 </style>

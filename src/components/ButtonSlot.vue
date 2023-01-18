@@ -18,5 +18,6 @@ export default defineComponent({});
   color: aqua;
   border: 1px solid;
   border-radius: 5px;
+
 }
 </style>
