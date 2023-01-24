@@ -2,9 +2,9 @@
   <div class="folderMenu">
     {{ folder.id }}
     <button @click="close">Zamknij</button>
-    <button @click="folderEditorActive = true">Zmień nazwe</button>
-    <button>Przenieś</button>
-    <button>Usuń</button>
+    <button @click="folderEditorActive = true">Zmień nazwę</button>
+    <button @click="folderSelectorActive = true">Przenieś</button>
+    <button @click="removeFolder">Usuń</button>
   </div>
 
   <folder-editor
@@ -12,6 +12,13 @@
     :folder="folder"
     edit-mode
     @close="folderEditorActive = false"
+  />
+
+  <folder-selector
+    move-folder
+    :active="folderSelectorActive"
+    :child-folder-id="folder?.id"
+    @close="folderSelectorActive = false"
   />
 </template>
 
@@ -25,10 +32,12 @@ import { folderService } from "@/services/folderService";
 import { currentFolder, loadFolders } from "@/store/folders";
 
 import FolderEditor from "@/modals/FolderEditor.vue";
+import FolderSelector from "@/modals/FolderSelector.vue";
 
 export default defineComponent({
   components: {
     FolderEditor,
+    FolderSelector,
   },
   props: {
     open: {
@@ -46,6 +55,8 @@ export default defineComponent({
   setup(props, { emit }) {
     const folderEditorActive = ref(false);
 
+    const folderSelectorActive = ref(false);
+
     console.log(props.folder);
 
     watch(
@@ -53,12 +64,16 @@ export default defineComponent({
       () => emit("close")
     );
 
-    async function remove() {
+    async function removeFolder() {
       if (props.folder) {
         await folderService.removeFolder(props.folder.id);
         loadFolders();
         close();
       }
+    }
+
+    function moveFolder() {
+      folderSelectorActive.value = true;
     }
 
     function close() {
@@ -67,7 +82,9 @@ export default defineComponent({
 
     return {
       folderEditorActive,
+      folderSelectorActive,
 
+      removeFolder,
       close,
     };
   },

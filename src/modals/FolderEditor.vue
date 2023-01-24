@@ -1,25 +1,16 @@
 <template>
   <modal :active="active" @close="close">
     <div class="folderEditor">
-      {{ fName }}
-      {{ editMode }}
       <p v-if="editMode">Zmień nazwę folderu</p>
       <p v-else>Utwórz nowy folder</p>
 
       <input v-model="fName" type="text" />
-      <br /><br />
+
       <button @click="save">
         {{ editMode ? "Zmień" : "Utwórz" }}
       </button>
     </div>
-    <br /><br />
   </modal>
-  <folder-selector
-    move-folder
-    :active="folderSelectorActive"
-    :child-folder-id="folder?.id"
-    @close="folderSelectorActive = false"
-  />
 </template>
 
 <script lang="ts">
@@ -28,14 +19,12 @@ import { defineComponent, PropType, ref, watch } from "vue";
 import { folderService } from "@/services/folderService";
 import { currentFolder, loadFolders } from "@/store/folders";
 
-import FolderSelector from "./FolderSelector.vue";
 import Modal from "./Modal.vue";
 import { Folder } from "@/interfaces/folder";
 
 export default defineComponent({
   components: {
     Modal,
-    FolderSelector,
   },
   emits: {
     close: null,
@@ -68,13 +57,10 @@ export default defineComponent({
       () => (fName.value = props.folder?.name || "")
     );
 
-    const folderSelectorActive = ref(false);
-
     function save() {
       if (!fName.value) {
         return;
       }
-      console.log("heeere");
       props.editMode ? edit() : create();
     }
 
@@ -87,14 +73,9 @@ export default defineComponent({
     async function edit() {
       if (props.folder && fName.value) {
         await folderService.renameFolder(props.folder.id, fName.value);
-        console.log("changingName");
         loadFolders();
         close();
       }
-    }
-
-    function moveFolder() {
-      folderSelectorActive.value = true;
     }
 
     function close() {
@@ -104,12 +85,9 @@ export default defineComponent({
 
     return {
       fName,
-      folderSelectorActive,
 
       save,
-
       close,
-      moveFolder,
     };
   },
 });
