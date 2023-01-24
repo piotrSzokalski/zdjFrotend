@@ -1,18 +1,19 @@
 <template>
-    <modal :active="active" @close="close">
-        <div class="folderEditor">
-            <p v-if="editMode">Zmień nazwę folderu</p>
-            <p v-else>Utwórz nowy folder</p>
+  <modal :active="active" @close="close">
+    <div class="folderEditor">
+      {{ fName }}
+      {{ editMode }}
+      <p v-if="editMode">Zmień nazwę folderu</p>
+      <p v-else>Utwórz nowy folder</p>
 
-            <input v-model="fName" type="text" />
-            <br /><br />
-            <button @click="save">
-                {{ editMode ? "Zmień" : "Utwórz" }}
-            </button>
-
-        </div>
-        <br /><br />
-    </modal>
+      <input v-model="fName" type="text" />
+      <br /><br />
+      <button @click="save">
+        {{ editMode ? "Zmień" : "Utwórz" }}
+      </button>
+    </div>
+    <br /><br />
+  </modal>
   <folder-selector
     move-folder
     :active="folderSelectorActive"
@@ -73,6 +74,7 @@ export default defineComponent({
       if (!fName.value) {
         return;
       }
+      console.log("heeere");
       props.editMode ? edit() : create();
     }
 
@@ -85,14 +87,7 @@ export default defineComponent({
     async function edit() {
       if (props.folder && fName.value) {
         await folderService.renameFolder(props.folder.id, fName.value);
-        loadFolders();
-        close();
-      }
-    }
-
-    async function remove() {
-      if (props.folder) {
-        await folderService.removeFolder(props.folder.id);
+        console.log("changingName");
         loadFolders();
         close();
       }
@@ -112,7 +107,7 @@ export default defineComponent({
       folderSelectorActive,
 
       save,
-      remove,
+
       close,
       moveFolder,
     };
@@ -121,13 +116,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
-    .folderEditor {
-        display: inline-block;
-        border-radius: 8px;
-        padding: 30px;
-        background: white;
-        font-size: 25px;
-        font-weight: 400;
-    }
-
+.folderEditor {
+  display: inline-block;
+  border-radius: 8px;
+  padding: 30px;
+  background: white;
+  font-size: 25px;
+  font-weight: 400;
+}
 </style>

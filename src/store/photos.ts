@@ -17,9 +17,9 @@ const _filteredPhotos = ref(photos.value);
 
 export const filteredPhotos = computed(() => { 
 
-    console.log(photos.value); 
-    console.log("_____________________________________________________");
-    console.log(_filteredPhotos.value);
+    // console.log(photos.value); 
+    // console.log("_____________________________________________________");
+    // console.log(_filteredPhotos.value);
     return _filteredPhotos.value
 })
 
