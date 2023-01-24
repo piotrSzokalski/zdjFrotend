@@ -15,13 +15,7 @@ const _selectedPhotosId = ref<number[]>([]);
 
 const _filteredPhotos = ref(photos.value);
 
-export const filteredPhotos = computed(() => { 
-
-    // console.log(photos.value); 
-    // console.log("_____________________________________________________");
-    // console.log(_filteredPhotos.value);
-    return _filteredPhotos.value
-})
+export const filteredPhotos = computed(() => _filteredPhotos.value)
 
 // cos nie tak to trzeba poprawić
 watch(() => photos.value, () => _filteredPhotos.value = photos.value);
@@ -30,7 +24,7 @@ watch(() => photos.value, () => _filteredPhotos.value = photos.value);
 export const selectedPhotosId = computed(() => _selectedPhotosId.value);
 
 export function togglePhotoSelected(id: number) {
-    //_selectedPhotosId.value.includes(id) ? _selectedPhotosId.value.filter(item => item != id) : _selectedPhotosId.value.push(id);
+    
     if(_selectedPhotosId.value.includes(id)) {
         _selectedPhotosId.value = selectedPhotosId.value.filter(item => item !== id);
     }
