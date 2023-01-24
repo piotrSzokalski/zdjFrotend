@@ -16,6 +16,9 @@ const _filePath = ref([0]);
  
 export const filePath = computed(() => _filePath.value);
 
+/**
+ * Id obecnego folderu
+ */
 export const currentFolder = computed(() => _filePath.value[_filePath.value.length - 1]);
 
 

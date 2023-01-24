@@ -1,11 +1,11 @@
 <template>
-    <div class="title">
-        Podfoldery
-        
-        <button @click="openFolderEditor()">
-            <font-awesome-icon icon="folder-plus" />
-        </button>
-    </div>
+  <div class="title">
+    Podfoldery
+
+    <button @click="openFolderEditor()">
+      <font-awesome-icon icon="folder-plus" />
+    </button>
+  </div>
 
   <div>
     <section v-if="subFolders.length" class="subFolders">
@@ -14,7 +14,7 @@
         editable
         :key="index"
         :folder="folder"
-        @edit="openFolderEditor(folder)"
+        @edit="toggleFolderMenuOpen(folder)"
       />
     </section>
     <section v-else>
@@ -22,11 +22,16 @@
     </section>
   </div>
 
+  <folder-menu
+    v-if="folderMenuOpen"
+    :folder="selectedFolder"
+    @close="folderMenuOpen = false"
+  />
+
   <div class="add"></div>
   <folder-editor
     :active="folderEditorActive"
     :folder="selectedFolder"
-    :edit-mode="folderEditorEditMode"
     @close="folderEditorActive = false"
   />
 </template>
@@ -37,6 +42,7 @@ import { computed, defineComponent, ref } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import FolderComponent from "./FolderComponent.vue";
 import FolderEditor from "@/modals/FolderEditor.vue";
+import FolderMenu from "@/components/FolderMenu.vue";
 
 //import { exampleFolders } from "@/store/dummyData";
 import { currentFolder, folders } from "@/store/folders";
@@ -50,14 +56,15 @@ export default defineComponent({
     FolderComponent,
     FontAwesomeIcon,
     FolderEditor,
+    FolderMenu,
   },
 
   setup() {
+    const folderMenuOpen = ref(false);
+
     const folderEditorActive = ref(false);
 
     const selectedFolder = ref<Folder>();
-
-    const folderEditorEditMode = ref(false);
 
     const subFolders = computed(() =>
       folders.value.filter((folder) => folder.parentId === currentFolder.value)
@@ -68,29 +75,27 @@ export default defineComponent({
     }
 
     function openFolderEditor(folder?: Folder) {
-      console.log("hwere");
       folderEditorActive.value = true;
 
-      folderEditorEditMode.value = folder ? true : false;
       if (folder) {
         selectedFolder.value = folder;
-        console.log("folder present");
       }
+    }
 
-      // if (folder) {
-      //   selectedFolder.value = folder.name;
-      // }
-      // folderEditorActive.value = false;
+    function toggleFolderMenuOpen(folder?: Folder) {
+      selectedFolder.value = folder;
+      folderMenuOpen.value = !folderMenuOpen.value;
     }
 
     return {
       folderEditorActive,
       selectedFolder,
-      folderEditorEditMode,
       subFolders,
+      folderMenuOpen,
 
       test,
       openFolderEditor,
+      toggleFolderMenuOpen,
     };
   },
 });
@@ -111,7 +116,6 @@ export default defineComponent({
   height: 100px;
   border: 0px solid;
   overflow: auto;
-  
 }
 
 .add {
@@ -134,19 +138,19 @@ export default defineComponent({
   position: absolute;
   right: 95%;
 }
-    .title button {
-        color: #808080;
-        text-align: left;
-        border-radius: 3px;
-        border: 0px solid;
-        font-weight: 400;
-        font-size: 20px;
-        background-color: #ffffff;
-    }
-    .title button :hover {
-        border-radius: 8px;
-        opacity: 90%;
-        transform: scale(1.1);
-    }
+.title button {
+  color: #808080;
+  text-align: left;
+  border-radius: 3px;
+  border: 0px solid;
+  font-weight: 400;
+  font-size: 20px;
+  background-color: #ffffff;
+}
+.title button :hover {
+  border-radius: 8px;
+  opacity: 90%;
+  transform: scale(1.1);
+}
 </style>
   
