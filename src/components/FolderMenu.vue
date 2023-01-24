@@ -4,7 +4,7 @@
     <button @click="close">Zamknij</button>
     <button @click="folderEditorActive = true">Zmień nazwę</button>
     <button @click="folderSelectorActive = true">Przenieś</button>
-    <button @click="removeFolder">Usuń</button>
+    <button @click="removeMaybe">Usuń</button>
   </div>
 
   <folder-editor
@@ -20,6 +20,13 @@
     :child-folder-id="folder?.id"
     @close="folderSelectorActive = false"
   />
+
+  <removal-warning
+    folderRemoval
+    :active="warningActive"
+    @remove="removeFolder"
+    @close="warningActive = false"
+  />
 </template>
 
 
@@ -33,11 +40,13 @@ import { currentFolder, loadFolders } from "@/store/folders";
 
 import FolderEditor from "@/modals/FolderEditor.vue";
 import FolderSelector from "@/modals/FolderSelector.vue";
+import RemovalWarning from "@/modals/RemovalWarning.vue";
 
 export default defineComponent({
   components: {
     FolderEditor,
     FolderSelector,
+    RemovalWarning,
   },
   props: {
     open: {
@@ -57,12 +66,18 @@ export default defineComponent({
 
     const folderSelectorActive = ref(false);
 
+    const warningActive = ref(false);
+
     console.log(props.folder);
 
     watch(
       () => currentFolder.value,
       () => emit("close")
     );
+
+    function removeMaybe() {
+      warningActive.value = true;
+    }
 
     async function removeFolder() {
       if (props.folder) {
@@ -83,7 +98,9 @@ export default defineComponent({
     return {
       folderEditorActive,
       folderSelectorActive,
+      warningActive,
 
+      removeMaybe,
       removeFolder,
       close,
     };
