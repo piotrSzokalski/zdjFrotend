@@ -9,7 +9,7 @@
 
       <div class="foldersToSelect">
         <folder-component
-          v-for="(folder, index) in folderList"
+          v-for="(folder, index) in filteredFolderList"
           :key="index"
           :folder="folder"
           :move-phots-mode="moveFolder ? 2 : 1"
@@ -23,14 +23,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed, watch } from "vue";
 
 // import { exampleFolders } from "@/store/dummyData";
 
-import { folders } from "@/store/folders";
+import { folders, currentFolder } from "@/store/folders";
 
 import Modal from "@/modals/Modal.vue";
 import FolderComponent from "@/components/FolderComponent.vue";
+import { Folder } from "@/interfaces/folder";
 
 export default defineComponent({
   components: { Modal, FolderComponent },
@@ -54,14 +55,27 @@ export default defineComponent({
   setup(props) {
     const searchValue = ref("");
 
-    const folderList = computed(() =>
-      folders.value
-        .filter((folder) => folder.id !== props.childFolderId)
-        .filter((folder) =>
-          folder.name
-            .toLocaleLowerCase()
-            .includes(searchValue.value.trim().toLocaleLowerCase())
-        )
+    const folderList = ref<Folder[]>([]);
+
+    watch(
+      () => folders.value,
+      () => (folderList.value = folders.value)
+    );
+
+    watch(
+      () => currentFolder.value,
+      () =>
+        (folderList.value = folderList.value.filter(
+          (folder) => folder.id != currentFolder.value
+        ))
+    );
+
+    const filteredFolderList = computed(() =>
+      folderList.value.filter((folder) =>
+        folder.name
+          .toLocaleLowerCase()
+          .includes(searchValue.value.trim().toLowerCase())
+      )
     );
 
     /**
@@ -75,7 +89,7 @@ export default defineComponent({
     function switchSorting(): void {
       sortingMode.value = (sortingMode.value + 1) % 3;
       if (sortingMode.value === 0) {
-        folderList.value.sort((a, b) => (a.id > b.id ? 1 : -1));
+        const x = folderList.value.sort((a, b) => (a.id > b.id ? 1 : -1));
       }
       if (sortingMode.value === 1) {
         folderList.value.sort((a, b) =>
@@ -93,6 +107,7 @@ export default defineComponent({
       folderList,
       sortingMode,
       searchValue,
+      filteredFolderList,
 
       switchSorting,
     };
