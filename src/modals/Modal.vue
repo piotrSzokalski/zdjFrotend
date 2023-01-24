@@ -1,8 +1,9 @@
 <template>
   <div v-if="active" class="modal">
-    <slot :style="background"> </slot>
-
+    <div class="closeButton"></div>
     <button @click="$emit('close')">Powrót</button>
+    <br />
+    <slot :style="background"> </slot>
   </div>
 </template>
 
@@ -43,8 +44,8 @@ export default defineComponent({
   left: 0;
   top: 0;
   width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
+  height: 90%; /* Full height */
+  overflow: hidden; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0, 0.9); /* Fallback color */
 
   /* background-color: rgba(0, 0, 0, 0.4); Black w/ opacity */
@@ -61,7 +62,7 @@ export default defineComponent({
 }
 
 .modal button {
-  width:250px;
+  width: 250px;
   color: white;
   background-color: cornflowerblue;
   border: 2px solid #808080;

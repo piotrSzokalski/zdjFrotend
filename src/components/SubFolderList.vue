@@ -14,7 +14,7 @@
         editable
         :key="index"
         :folder="folder"
-        @edit="openFolderMenu(folder)"
+        @edit="toggleFolderMenuOpen(folder)"
       />
     </section>
     <section v-else>
@@ -80,17 +80,11 @@ export default defineComponent({
       if (folder) {
         selectedFolder.value = folder;
       }
-
-      // if (folder) {
-      //   selectedFolder.value = folder.name;
-      // }
-      // folderEditorActive.value = false;
     }
 
-    function openFolderMenu(folder?: Folder) {
-      console.log(folder?.id);
+    function toggleFolderMenuOpen(folder?: Folder) {
       selectedFolder.value = folder;
-      folderMenuOpen.value = true;
+      folderMenuOpen.value = !folderMenuOpen.value;
     }
 
     return {
@@ -101,7 +95,7 @@ export default defineComponent({
 
       test,
       openFolderEditor,
-      openFolderMenu,
+      toggleFolderMenuOpen,
     };
   },
 });

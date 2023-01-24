@@ -1,6 +1,6 @@
 <template>
   <div class="folderMenu">
-    {{ folder.id }}
+    {{ folder.name }}
     <button @click="close">Zamknij</button>
     <button @click="folderEditorActive = true">Zmień nazwę</button>
     <button @click="folderSelectorActive = true">Przenieś</button>

@@ -1,20 +1,25 @@
 <template>
-    <modal :active="active" @close="$emit('close')">
-        <div class="folderSelector">
-            <input v-model="searchValue" type="text" />
-            <br /><br />
-            <button @click="switchSorting">Sortuj</button>
+  <modal :active="active" @close="$emit('close')">
+    <div class="folderSelector">
+      <h2>przenieś do</h2>
+      <label>Wyszukaj</label>
+      <input v-model="searchValue" type="text" />
+      <br /><br />
+      <button @click="switchSorting">Sortuj</button>
 
-            <folder-component v-for="(folder, index) in folderList"
-                              :key="index"
-                              :folder="folder"
-                              :move-phots-mode="moveFolder ? 2 : 1"
-                              :child-folder-id="childFolderId"
-                              @moved="$emit('close')" />
-            {{ sortingMode }}
-        </div>
-        <br /><br />
-    </modal>
+      <div class="foldersToSelect">
+        <folder-component
+          v-for="(folder, index) in folderList"
+          :key="index"
+          :folder="folder"
+          :move-phots-mode="moveFolder ? 2 : 1"
+          :child-folder-id="childFolderId"
+          @moved="$emit('close')"
+        />
+      </div>
+    </div>
+    <br /><br />
+  </modal>
 </template>
 
 <script lang="ts">
@@ -97,13 +102,18 @@ export default defineComponent({
 
 
 <style scoped>
-    .folderSelector {
-        background: white;
-        display: inline-block;
-        border-radius: 8px;
-        padding: 30px;
-        background: white;
-        font-size: 25px;
-        font-weight: 400;
-    }
+.folderSelector {
+  background: white;
+  display: inline-block;
+  border-radius: 8px;
+  padding: 30px;
+  background: rgb(210, 203, 203);
+  font-size: 25px;
+  font-weight: 400;
+}
+
+.foldersToSelect {
+  overflow: auto;
+  height: 550px;
+}
 </style>
