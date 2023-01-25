@@ -3,11 +3,11 @@
   <div class="container">
     <form>
       <label for="email">E-mail</label>
-      <br /><br />
+       <br />
       <input id="email" type="text" />
       <br /><br />
       <label for="password">Hasło</label>
-      <br /><br />
+      <br />
       <input id="password" type="text" />
       <br /><br />
 
@@ -47,37 +47,46 @@ export default defineComponent({
 body {
 }
 .container {
-  border: 2px solid #ddd;
+  border: 1px solid #ddd;
   background-color: darkgrey;
   width: 300px;
   padding: 50px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 100px;
+  margin-top: 85px;
   border-radius: 5px;
-  background-color: #bfd3f0;
+  background-color: #fefefe;
 }
-.container input {
-  width: 300px;
-  background-color: #efefef;
-  color: #666;
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  font-size: 20px;
-  padding: 10px;
-}
+    .container input {
+        width: 285px;
+        background-color: #efefef;
+        color: #666;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 20px;
+        padding: 10px;
+        position: relative;
+
+
+    }
 .container label {
   font-size: 15px;
-  position:absolute;
-  left: 235px;
+  position: relative;
+  float: left;
+  margin-bottom: 7px;
 }
-.container button {
-  width: 325px;
-  color: white;
-  background-color: cornflowerblue;
-  border: 2px solid #808080;
-  border-radius: 5px;
-  font-size: 20px;
-  padding: 10px;
-}
+    .container button {
+        width: 300px;
+        color: white;
+        background-color: #5a28aa;
+        border: 0;
+        border-radius: 5px;
+        font-size: 17px;
+        padding: 10px;
+        display: block;
+        box-shadow: inset 0 0 0 #000;
+        position: relative;
+        cursor: pointer;
+        margin-top: 30px;
+    }
 </style>

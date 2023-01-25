@@ -1,25 +1,26 @@
 <template>
+    <br />
     <div class="title">
         Podfoldery
-        
-        <button @click="openFolderEditor()">
-            <font-awesome-icon icon="folder-plus" />
-        </button>
     </div>
 
   <div>
-    <section v-if="subFolders.length" class="subFolders">
-      <folder-component
-        v-for="(folder, index) in subFolders"
-        editable
-        :key="index"
-        :folder="folder"
-        @edit="openFolderEditor(folder)"
-      />
-    </section>
-    <section v-else>
-      <h3>Brak podfolderów</h3>
-    </section>
+      <section v-if="subFolders.length" class="subFolders">
+          <button @click="openFolderEditor()">
+              <font-awesome-icon icon="folder-plus" />
+              Dodaj nowy folder
+          </button>
+          <folder-component v-for="(folder, index) in subFolders"
+                            editable
+                            :key="index"
+                            :folder="folder"
+                            @edit="openFolderEditor(folder)" />
+      </section>
+      <section v-else>
+          <br /><br/>
+          Brak podfolderów
+          <br /><br/>
+      </section>
   </div>
 
   <div class="add"></div>
@@ -98,52 +99,61 @@ export default defineComponent({
   
 <style scoped>
 .title {
-  font-size: 25px;
+  font-size: 20px;
   text-align: left;
-  margin-left: 20px;
-}
-
-.subFolders {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100px;
-  border: 0px solid;
-  overflow: auto;
+  margin-left: 15px;
+  color: #42026b
   
 }
+
+    .subFolders {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100px;
+        border: 0px solid;
+        overflow: auto;
+        
+    }
 
 .add {
   font-size: 24px;
 }
 
-.arrowR {
-  background-color: darkblue;
-  width: 50px;
-  border: darkblue;
-  border-radius: 50px;
-  position: absolute;
-  left: 95%;
-}
-.arrowL {
-  background-color: darkblue;
-  width: 50px;
-  border: darkblue;
-  border-radius: 50px;
-  position: absolute;
-  right: 95%;
-}
-    .title button {
-        color: #808080;
-        text-align: left;
-        border-radius: 3px;
-        border: 0px solid;
-        font-weight: 400;
-        font-size: 20px;
-        background-color: #ffffff;
+    .arrowR {
+        background-color: darkblue;
+        width: 50px;
+        border: darkblue;
+        border-radius: 50px;
+        position: absolute;
+        left: 95%;
+        cursor: pointer;
     }
-    .title button :hover {
+    .arrowL {
+        background-color: darkblue;
+        width: 50px;
+        border: darkblue;
+        border-radius: 50px;
+        position: absolute;
+        right: 95%;
+        cursor: pointer;
+    }
+    .subFolders button {
+        font-size: 14px;
+        font-weight: 400;
+        color: white;
+        text-align: left;
+        border-radius: 8px;
+        padding: 10px;
+        padding-top: 17px;
+        padding-bottom: 16px;
+        border: 1px solid;
+        margin-left: 10px;
+        background-color: #5a28aa;
+        cursor: pointer;
+    }
+    .subFolders button :hover {
         border-radius: 8px;
         opacity: 90%;
         transform: scale(1.1);

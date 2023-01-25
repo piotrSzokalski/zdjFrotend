@@ -1,10 +1,11 @@
 <template>
   <div v-if="open" class="picFilter">
     <h3>Filtuj</h3>
-    Data: Od:
+    Od:
     <input v-model="fromDateString" type="date" @change="$emit('filter', fromDateString, toDateString)" />
     Do:
     <input v-model="toDateString" type="date" @change="$emit('filter', fromDateString, toDateString)" />
+      <br /><br />
     <button @click="clearFilter">
       <font-awesome-icon icon="trash" />
       Wyczyść filtr
@@ -52,15 +53,38 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.picFilter {
-  display: block;
-  border: 1px solid;
-  width: 900px;
-  border-radius: 5px;
-  position: relative;
-  left: 20%;
-  right: 25%;
-  
-}
+    .picFilter {
+        padding-left:15px;
+        padding-bottom: 15px;
+        font-size: 15px;
+        text-align: left;
+        color: #42026b;
+        display: block;
+        border: 1px solid #e5e2e7;
+        width: 500px;
+        border-radius: 5px;
+        position: relative;
+        left: 0.7%;
+        right: 25%;
+        background-color: #d3f4f31a;
+    }
+    .picFilter input{
+        border-radius: 5px;
+        border:1px solid;
+        padding:5px;
+        margin: 5px;
+    }
+        .picFilter button {
+            font-size: 14px;
+            font-weight: 400;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #5a28aa;
+            color: white;
+            border: 1px solid;
+            cursor: pointer;
+            position: relative;
+            left: 74%;
+        }
 
 </style>

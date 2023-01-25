@@ -179,19 +179,20 @@ export default defineComponent({
   border-radius: 5%;
 }
 
-.actions button {
-  font-size: 15px;
-  font-weight: 400;
-  border-radius: 8px;
-  width: 8%;
-  right: 0px;
-  padding: 3px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  background-color: #ffffff;
-  color: #808080;
-  border: 1px solid;
-}
+    .actions button {
+        font-size: 14px;
+        font-weight: 400;
+        border-radius: 8px;
+        width: 8%;
+        right: 0px;
+        padding: 1px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        background-color: #a5aff0;
+        color: white;
+        border: 1px solid;
+        cursor: pointer;
+    }
     .actions button :hover {
         border-radius: 5px;
         opacity: 90%;

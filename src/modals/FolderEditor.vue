@@ -6,6 +6,7 @@
 
             <input v-model="fName" type="text" />
             <br /><br />
+            <button @click="$emit('close')">Powrót</button>
             <button @click="save">
                 {{ editMode ? "Zmień" : "Utwórz" }}
             </button>
@@ -128,6 +129,17 @@ export default defineComponent({
         background: white;
         font-size: 25px;
         font-weight: 400;
-    }
+        text-align:left;
 
+    }
+        .folderEditor button {
+            position: relative;
+            float: right;
+            cursor: pointer;
+            width:35%;
+
+        }
+.folderEditor input{
+    width: 380px;
+}
 </style>

@@ -2,13 +2,18 @@
     <modal :active="active" @close="$emit('close')">
         <div class="content">
             <div v-if="canRemove">
-                <h1>Czy na pewno chcesz usunąć te piękne zdjęcia</h1>
+                Czy na pewno chcesz usunąć te piękne zdjęcia?
+                <br/><br/>
                 <button @click="unSelect">Anuluj</button>
                 <button @click="$emit('remove')">Tak</button>
+
+
             </div>
 
             <div v-else>
-                <h1>Nie wybrano zdjęć do usunięcia</h1>
+                Nie wybrano zdjęć do usunięcia
+                <br/><br/>
+                <button @click="$emit('close')">Powrót</button>
             </div>
 
         </div>
@@ -65,7 +70,15 @@ export default defineComponent({
         border-radius: 8px;
         padding: 30px;
         background: white;
-        font-size: 15px;
-        font-weight:400;
+        font-size: 25px;
+        font-weight:300;
+        
     }
+    .content button{
+        position:relative;
+        float:right;
+        width: 30%;
+        
+    }
+    
 </style>
