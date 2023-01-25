@@ -1,9 +1,7 @@
 <template>
   <div v-if="active" class="modal">
-
+    <button class="exitModalButton" @click="$emit('close')">Powrót</button>
     <slot :style="background"> </slot>
-
-
   </div>
 </template>
 
@@ -44,8 +42,8 @@ export default defineComponent({
   left: 0;
   top: 0;
   width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
+  height: 90%; /* Full height */
+  overflow: hidden; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0, 0.9); /* Fallback color */
 
   /* background-color: rgba(0, 0, 0, 0.4); Black w/ opacity */
@@ -61,17 +59,21 @@ export default defineComponent({
   padding: 10px;
 }
 
-    .modal button {
-        font-size: 14px;
-        font-weight: 400;
-        width: 50%;
-        color: white;
-        text-align: center;
-        border-radius: 8px;
-        border: 1px solid;
-        background-color: #5a28aa;
-        cursor: pointer;
-        padding: 10px;
-        
-    }
+.modal button {
+  font-size: 14px;
+  font-weight: 400;
+  width: 50%;
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid;
+  background-color: #5a28aa;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.modal .exitModalButton {
+  position: absolute;
+  width: 100px;
+}
 </style>

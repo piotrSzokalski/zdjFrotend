@@ -15,7 +15,12 @@
       Usuń
     </button>
 
-    <button @click="$emit('multiSelect')">
+    <button
+      :class="
+        pictureSelectionMode ? 'selectingPictures' : 'notSelectingPictures'
+      "
+      @click="multiSelect"
+    >
       <font-awesome-icon icon="fa-solid fa-circle-check" />
       Zaznacz
     </button>
@@ -59,7 +64,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import FolderSelector from "@/modals/FolderSelector.vue";
@@ -69,8 +74,13 @@ import RemovalWarning from "@/modals/RemovalWarning.vue";
 //import { exampleImages } from "@/store/dummyData";
 
 import { photoService } from "@/services/photoService";
-import { loadPhotos } from "@/store/photos";
+import {
+  loadPhotos,
+  selectedPhotosId,
+  togglePhotoSelected,
+} from "@/store/photos";
 import { filteredPhotos } from "@/store/photos";
+import { currentFolder } from "@/store/folders";
 
 export default defineComponent({
   components: {
@@ -154,6 +164,21 @@ export default defineComponent({
         : emit("openPhotoFilter");
     }
 
+    const pictureSelectionMode = ref(false);
+
+    function multiSelect() {
+      pictureSelectionMode.value = !pictureSelectionMode.value;
+      emit("multiSelect");
+    }
+
+    watch(
+      () => currentFolder.value,
+      () => {
+        selectedPhotosId.value.forEach((id) => togglePhotoSelected(id));
+        pictureSelectionMode.value = false;
+      }
+    );
+
     return {
       pictureFiles,
       folderSelectorActive,
@@ -161,7 +186,9 @@ export default defineComponent({
       nextSortingName,
       photoFilterOpen,
       removalWarningActive,
+      pictureSelectionMode,
 
+      multiSelect,
       removePhotos,
       sortPictures,
       addPictures,
@@ -179,23 +206,30 @@ export default defineComponent({
   border-radius: 5%;
 }
 
-    .actions button {
-        font-size: 14px;
-        font-weight: 400;
-        border-radius: 8px;
-        width: 8%;
-        right: 0px;
-        padding: 1px;
-        padding-top: 3px;
-        padding-bottom: 3px;
-        background-color: #a5aff0;
-        color: white;
-        border: 1px solid;
-        cursor: pointer;
-    }
-    .actions button :hover {
-        border-radius: 5px;
-        opacity: 90%;
-        transform: scale(1.1);
-    }
+.actions button {
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 8px;
+  width: 8%;
+  right: 0px;
+  padding: 1px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  background-color: #a5aff0;
+  color: white;
+  border: 1px solid;
+  cursor: pointer;
+}
+.actions button :hover {
+  border-radius: 5px;
+  opacity: 90%;
+  transform: scale(1.1);
+}
+
+.actions .selectingPictures {
+  color: rgb(41, 204, 58);
+}
+
+.actions .notSelectingPictures {
+}
 </style>

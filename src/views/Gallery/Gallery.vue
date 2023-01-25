@@ -27,9 +27,9 @@
       />
     </div>
     <div v-else>
-        <br /><br />
-        Brak zdjęć w tym folderze
-        <br /><br />
+      <br /><br />
+      Brak zdjęć w tym folderze
+      <br /><br />
     </div>
   </div>
 

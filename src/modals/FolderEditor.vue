@@ -1,25 +1,16 @@
 <template>
-    <modal :active="active" @close="close">
-        <div class="folderEditor">
-            <p v-if="editMode">Zmień nazwę folderu</p>
-            <p v-else>Utwórz nowy folder</p>
+  <modal :active="active" @close="close">
+    <div class="folderEditor">
+      <p v-if="editMode">Zmień nazwę folderu</p>
+      <p v-else>Utwórz nowy folder</p>
 
-            <input v-model="fName" type="text" />
-            <br /><br />
-            <button @click="$emit('close')">Powrót</button>
-            <button @click="save">
-                {{ editMode ? "Zmień" : "Utwórz" }}
-            </button>
+      <input v-model="fName" type="text" />
 
-        </div>
-        <br /><br />
-    </modal>
-  <folder-selector
-    move-folder
-    :active="folderSelectorActive"
-    :child-folder-id="folder?.id"
-    @close="folderSelectorActive = false"
-  />
+      <button @click="save">
+        {{ editMode ? "Zmień" : "Utwórz" }}
+      </button>
+    </div>
+  </modal>
 </template>
 
 <script lang="ts">
@@ -28,14 +19,12 @@ import { defineComponent, PropType, ref, watch } from "vue";
 import { folderService } from "@/services/folderService";
 import { currentFolder, loadFolders } from "@/store/folders";
 
-import FolderSelector from "./FolderSelector.vue";
 import Modal from "./Modal.vue";
 import { Folder } from "@/interfaces/folder";
 
 export default defineComponent({
   components: {
     Modal,
-    FolderSelector,
   },
   emits: {
     close: null,
@@ -68,8 +57,6 @@ export default defineComponent({
       () => (fName.value = props.folder?.name || "")
     );
 
-    const folderSelectorActive = ref(false);
-
     function save() {
       if (!fName.value) {
         return;
@@ -91,18 +78,6 @@ export default defineComponent({
       }
     }
 
-    async function remove() {
-      if (props.folder) {
-        await folderService.removeFolder(props.folder.id);
-        loadFolders();
-        close();
-      }
-    }
-
-    function moveFolder() {
-      folderSelectorActive.value = true;
-    }
-
     function close() {
       fName.value = "";
       emit("close");
@@ -110,36 +85,31 @@ export default defineComponent({
 
     return {
       fName,
-      folderSelectorActive,
 
       save,
-      remove,
       close,
-      moveFolder,
     };
   },
 });
 </script>
 
 <style scoped>
-    .folderEditor {
-        display: inline-block;
-        border-radius: 8px;
-        padding: 30px;
-        background: white;
-        font-size: 25px;
-        font-weight: 400;
-        text-align:left;
-
-    }
-        .folderEditor button {
-            position: relative;
-            float: right;
-            cursor: pointer;
-            width:35%;
-
-        }
-.folderEditor input{
-    width: 380px;
+.folderEditor {
+  display: inline-block;
+  border-radius: 8px;
+  padding: 30px;
+  background: white;
+  font-size: 25px;
+  font-weight: 400;
+  text-align: left;
+}
+.folderEditor button {
+  position: relative;
+  float: right;
+  cursor: pointer;
+  width: 35%;
+}
+.folderEditor input {
+  width: 380px;
 }
 </style>
