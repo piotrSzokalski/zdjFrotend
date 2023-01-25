@@ -8,14 +8,8 @@
       <br /><br />
 
       <div class="foldersToSelect">
-        <folder-component
-          v-for="(folder, index) in filteredFolderList"
-          :key="index"
-          :folder="folder"
-          :move-phots-mode="moveFolder ? 2 : 1"
-          :child-folder-id="childFolderId"
-          @moved="$emit('close')"
-        />
+        <folder-component v-for="(folder, index) in filteredFolderList" :key="index" :folder="folder"
+          :move-phots-mode="moveFolder ? 2 : 1" :child-folder-id="childFolderId" @moved="$emit('close')" />
       </div>
     </div>
     <br /><br />
@@ -53,27 +47,23 @@ export default defineComponent({
   setup(props) {
     const searchValue = ref("");
 
-    const folderList = ref<Folder[]>([]);
+    const folderList = ref<Folder[]>([...folders.value]);
 
     watch(
       () => folders.value,
       () => (folderList.value = folders.value)
     );
 
-    watch(
-      () => currentFolder.value,
-      () =>
-        (folderList.value = folderList.value.filter(
-          (folder) => folder.id != currentFolder.value
-        ))
-    );
+
 
     const filteredFolderList = computed(() =>
-      folderList.value.filter((folder) =>
-        folder.name
-          .toLocaleLowerCase()
-          .includes(searchValue.value.trim().toLowerCase())
-      )
+      folderList.value
+        .filter((folder) => folder.id != currentFolder.value)
+        .filter((folder) =>
+          folder.name
+            .toLocaleLowerCase()
+            .includes(searchValue.value.trim().toLowerCase())
+        )
     );
 
     /**
@@ -124,12 +114,14 @@ export default defineComponent({
   font-size: 25px;
   font-weight: 400;
 }
+
 .folderSelector button {
   position: relative;
   float: right;
   cursor: pointer;
   width: 35%;
 }
+
 .folderSelector input {
   width: 380px;
 }
