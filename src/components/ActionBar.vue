@@ -15,12 +15,9 @@
       Usuń
     </button>
 
-    <button
-      :class="
-        pictureSelectionMode ? 'selectingPictures' : 'notSelectingPictures'
-      "
-      @click="multiSelect"
-    >
+    <button :class="
+      pictureSelectionMode ? 'selectingPictures' : 'notSelectingPictures'
+    " @click="multiSelect">
       <font-awesome-icon icon="fa-solid fa-circle-check" />
       Zaznacz
     </button>
@@ -30,20 +27,8 @@
       Przenieś
     </button>
 
-    <input
-      type="file"
-      ref="pictureFiles"
-      style="display: none"
-      @change="addPictures"
-      multiple
-    />
-    <input
-      type="file"
-      ref="pictureFiles"
-      style="display: none"
-      @change="addPictures"
-      multiple
-    />
+    <input type="file" ref="pictureFiles" style="display: none" @change="addPictures" multiple />
+    <input type="file" ref="pictureFiles" style="display: none" @change="addPictures" multiple />
     <button @click="$refs.pictureFiles.click()">
       <font-awesome-icon icon="add" />
       Dodaj Zdjęcia
@@ -52,15 +37,8 @@
     <button v-if="false" @click="test">Test</button>
   </div>
 
-  <folder-selector
-    :active="folderSelectorActive"
-    @close="folderSelectorActive = false"
-  />
-  <removal-warning
-    :active="removalWarningActive"
-    @close="removalWarningActive = false"
-    @remove="removePhotos"
-  />
+  <folder-selector :active="folderSelectorActive" @close="folderSelectorActive = false" />
+  <removal-warning :active="removalWarningActive" @close="removalWarningActive = false" @remove="removePhotos" />
 </template>
 
 <script lang="ts">
@@ -220,16 +198,10 @@ export default defineComponent({
   border: 1px solid;
   cursor: pointer;
 }
+
 .actions button :hover {
   border-radius: 5px;
   opacity: 90%;
   transform: scale(1.1);
-}
-
-.actions .selectingPictures {
-  color: rgb(41, 204, 58);
-}
-
-.actions .notSelectingPictures {
 }
 </style>
