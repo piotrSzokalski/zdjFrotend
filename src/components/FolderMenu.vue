@@ -7,26 +7,12 @@
     <button @click="removeMaybe">Usuń</button>
   </div>
 
-  <folder-editor
-    :active="folderEditorActive"
-    :folder="folder"
-    edit-mode
-    @close="folderEditorActive = false"
-  />
+  <folder-editor :active="folderEditorActive" :folder="folder" edit-mode @close="folderEditorActive = false" />
 
-  <folder-selector
-    move-folder
-    :active="folderSelectorActive"
-    :child-folder-id="folder?.id"
-    @close="folderSelectorActive = false"
-  />
+  <folder-selector move-folder :active="folderSelectorActive" :child-folder-id="folder?.id"
+    @close="closeFolderSelector" />
 
-  <removal-warning
-    folderRemoval
-    :active="warningActive"
-    @remove="removeFolder"
-    @close="warningActive = false"
-  />
+  <removal-warning folderRemoval :active="warningActive" @remove="removeFolder" @close="warningActive = false" />
 </template>
 
 
@@ -95,6 +81,11 @@ export default defineComponent({
       emit("close");
     }
 
+    function closeFolderSelector() {
+      folderSelectorActive.value = false;
+      close();
+    }
+
     return {
       folderEditorActive,
       folderSelectorActive,
@@ -103,6 +94,8 @@ export default defineComponent({
       removeMaybe,
       removeFolder,
       close,
+
+      closeFolderSelector
     };
   },
 });
