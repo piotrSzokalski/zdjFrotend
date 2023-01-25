@@ -1,8 +1,6 @@
 <template>
   <div v-if="active" class="modal">
-    <div class="closeButton"></div>
-    <button @click="$emit('close')">Powrót</button>
-    <br />
+    <button class="exitModalButton" @click="$emit('close')">Powrót</button>
     <slot :style="background"> </slot>
   </div>
 </template>
@@ -62,13 +60,20 @@ export default defineComponent({
 }
 
 .modal button {
-  width: 250px;
-  color: white;
-  background-color: cornflowerblue;
-  border: 2px solid #808080;
-  border-radius: 5px;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 400;
+  width: 50%;
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid;
+  background-color: #5a28aa;
+  cursor: pointer;
   padding: 10px;
+}
+
+.modal .exitModalButton {
+  position: absolute;
+  width: 100px;
 }
 </style>

@@ -77,13 +77,13 @@ export default defineComponent({
 .folder button {
   font-weight: 400;
   border: none;
-  color: white;
-  background-color: #a7c7fd;
   font-size: 15px;
+  color: #808080;
+  background-color: white;
 }
 .folder button:hover {
   border-radius: 5px;
-  opacity: 90%;
+  opacity: 100%;
   transform: scale(1.1);
 }
 
@@ -96,12 +96,15 @@ export default defineComponent({
 }
 .folder {
   padding: 10px;
-  border: solid black 1px;
-  background: #a7c7fd;
+  border: solid 1px;
   display: flex;
   border-radius: 8px;
   margin-right: 5px;
-  margin-left: 5px;
+  margin-left: 15px;
+  margin: 5px;
   position: unset;
+  background-color: #ffffff;
+  color: #808080;
+  border: 1px solid;
 }
 </style>

@@ -27,7 +27,9 @@
       />
     </div>
     <div v-else>
-      <h3>Brak zdjęć w tym folderze</h3>
+      <br /><br />
+      Brak zdjęć w tym folderze
+      <br /><br />
     </div>
   </div>
 
@@ -189,10 +191,12 @@ body {
   background-color: lavender;
 }
 .gallery {
-  border: 1px solid;
+  border: 0;
   border-radius: 8px;
   position: relative;
   background-color: white;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .pictures {
@@ -205,7 +209,7 @@ body {
   max-width: 2000px;
   overflow: auto;
 }
-button {
+.gallery button {
   margin: 5px;
 }
 </style>

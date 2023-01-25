@@ -1,11 +1,11 @@
 <template>
   <modal :active="active" @close="$emit('close')">
     <div class="folderSelector">
-      <h2>przenieś do</h2>
+      <h2>Do jakiego folderu przenieść ?</h2>
       <label>Wyszukaj</label>
       <input v-model="searchValue" type="text" />
-      <br /><br />
       <button @click="switchSorting">Sortuj</button>
+      <br /><br />
 
       <div class="foldersToSelect">
         <folder-component
@@ -24,8 +24,6 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, watch } from "vue";
-
-// import { exampleFolders } from "@/store/dummyData";
 
 import { folders, currentFolder } from "@/store/folders";
 
@@ -125,6 +123,15 @@ export default defineComponent({
   background: rgb(210, 203, 203);
   font-size: 25px;
   font-weight: 400;
+}
+.folderSelector button {
+  position: relative;
+  float: right;
+  cursor: pointer;
+  width: 35%;
+}
+.folderSelector input {
+  width: 380px;
 }
 
 .foldersToSelect {

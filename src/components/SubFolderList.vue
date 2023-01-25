@@ -84,7 +84,8 @@ export default defineComponent({
 
     function toggleFolderMenuOpen(folder?: Folder) {
       selectedFolder.value = folder;
-      folderMenuOpen.value = !folderMenuOpen.value;
+
+      folderMenuOpen.value = true;
     }
 
     return {
@@ -103,9 +104,10 @@ export default defineComponent({
   
 <style scoped>
 .title {
-  font-size: 25px;
+  font-size: 20px;
   text-align: left;
-  margin-left: 20px;
+  margin-left: 15px;
+  color: #42026b;
 }
 
 .subFolders {
@@ -129,6 +131,7 @@ export default defineComponent({
   border-radius: 50px;
   position: absolute;
   left: 95%;
+  cursor: pointer;
 }
 .arrowL {
   background-color: darkblue;
@@ -137,17 +140,23 @@ export default defineComponent({
   border-radius: 50px;
   position: absolute;
   right: 95%;
+  cursor: pointer;
 }
-.title button {
-  color: #808080;
-  text-align: left;
-  border-radius: 3px;
-  border: 0px solid;
+.subFolders button {
+  font-size: 14px;
   font-weight: 400;
-  font-size: 20px;
-  background-color: #ffffff;
+  color: white;
+  text-align: left;
+  border-radius: 8px;
+  padding: 10px;
+  padding-top: 17px;
+  padding-bottom: 16px;
+  border: 1px solid;
+  margin-left: 10px;
+  background-color: #5a28aa;
+  cursor: pointer;
 }
-.title button :hover {
+.subFolders button :hover {
   border-radius: 8px;
   opacity: 90%;
   transform: scale(1.1);
