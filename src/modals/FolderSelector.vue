@@ -2,8 +2,10 @@
   <modal :active="active" @close="$emit('close')">
     <div class="folderSelector">
       <h2>Do jakiego folderu przenieść ?</h2>
-      <label>Wyszukaj</label>
+      <label>Wyszukaj folder</label>
+        <br/>
       <input v-model="searchValue" type="text" />
+        <br/><br/>
       <button @click="switchSorting">Sortuj</button>
       <br /><br />
 
@@ -115,27 +117,38 @@ export default defineComponent({
 
 
 <style scoped>
-.folderSelector {
-  background: white;
-  display: inline-block;
-  border-radius: 8px;
-  padding: 30px;
-  background: rgb(210, 203, 203);
-  font-size: 25px;
-  font-weight: 400;
-}
+    .folderSelector {
+        background: white;
+        display: inline-block;
+        border-radius: 8px;
+        padding: 15px;
+
+        font-size: 25px;
+        font-weight: 400;
+    }
 .folderSelector button {
   position: relative;
   float: right;
   cursor: pointer;
-  width: 35%;
+  width: 30%;
 }
-.folderSelector input {
-  width: 380px;
-}
+    .folderSelector input {
+        width: 350px;
+        text-align: left;
+        position: relative;
+        float: left;
+        margin-left: 10px;
+    }
+    .folderSelector label {
+        position: relative;
+        float: left;
+        margin-left: 10px;
+    }
 
 .foldersToSelect {
   overflow: auto;
   height: 550px;
+  
+
 }
 </style>

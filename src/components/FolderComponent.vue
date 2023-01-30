@@ -77,14 +77,16 @@ export default defineComponent({
 .folder button {
   font-weight: 400;
   border: none;
-  font-size: 15px;
+  font-size: 20px;
   color: #808080;
   background-color: white;
+  text-align: left;
 }
 .folder button:hover {
   border-radius: 5px;
-  opacity: 100%;
+  opacity: 90%;
   transform: scale(1.1);
+
 }
 
 .editBtn button {
@@ -94,17 +96,18 @@ export default defineComponent({
 .editBtn button:hover {
   opacity: 4;
 }
-.folder {
-  padding: 10px;
-  border: solid 1px;
-  display: flex;
-  border-radius: 8px;
-  margin-right: 5px;
-  margin-left: 15px;
-  margin: 5px;
-  position: unset;
-  background-color: #ffffff;
-  color: #808080;
-  border: 1px solid;
-}
+    .folder {
+        padding: 3px;
+        border: solid 1px;
+        display: flex;
+        border-radius: 8px;
+        margin-right: 5px;
+        margin-left: 15px;
+        margin: 5px;
+        position: unset;
+        background-color: #ffffff;
+        color: #808080;
+        border: 1px solid;
+
+    }
 </style>

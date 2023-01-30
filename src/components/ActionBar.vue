@@ -227,7 +227,7 @@ export default defineComponent({
 }
 
 .actions .selectingPictures {
-  color: rgb(41, 204, 58);
+  color: #5a28aa;
 }
 
 .actions .notSelectingPictures {
