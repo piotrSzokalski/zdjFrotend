@@ -1,5 +1,4 @@
 <template>
-  {{ "foldery  [" + breadcrumbs.map((item) => item.id) + "]" }}
   <div class="breadcrumbs">
     <folder-component :folder="rootFolder" />
     <folder-component
@@ -26,7 +25,11 @@ export default defineComponent({
 
   setup() {
     const breadcrumbs = computed(() =>
-      folders.value.filter((folder) => filePath.value.includes(folder.id))
+      folders.value
+        .filter((folder) => filePath.value.includes(folder.id))
+        .sort(
+          (a, b) => filePath.value.indexOf(a.id) - filePath.value.indexOf(b.id)
+        )
     );
 
     const rootFolder: Folder = {

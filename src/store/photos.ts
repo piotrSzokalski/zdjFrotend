@@ -73,14 +73,8 @@ export function unSetSinglePhotoSelected() {
         return;
     }
 
-    console.log('unSetSinglePhotoSelected()');
-
-
     _selectedPhotosId.value = _selectedPhotosIdCopy;
     singlePhotoSelectionMode.value = false;
 
-    console.log(_selectedPhotosIdCopy);
-    console.log("______________________________");
-    console.log(_selectedPhotosId.value);
 }
  

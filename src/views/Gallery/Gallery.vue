@@ -1,5 +1,4 @@
 <template>
-  {{ selectedPhotosId }}
   <breadcrumb-list />
   <div class="gallery">
     <sub-folder-list />
