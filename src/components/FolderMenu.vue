@@ -106,17 +106,13 @@ export default defineComponent({
       close();
     }
 
-    const posX = ref();
-    const posY = ref();
-    posX.value = 0 + "px";
+    const posX = ref(0);
+    const posY = ref(0);
 
-    watch(
-      () => props.open,
-      () => {
-        posX.value = mousePosX.value;
-        posY.value = mousePosY.value;
-      }
-    );
+    watch([() => props.open, () => props.folder], () => {
+      posX.value = mousePosX.value - 200 + "px";
+      posY.value = mousePosY.value - 100 + "px";
+    });
 
     return {
       folderEditorActive,
