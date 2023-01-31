@@ -6,6 +6,8 @@ import { APICalls } from "@/enums/apiCalls.enum";
 
 import { currentFolder } from "@/store/folders";
 
+import { unSetSinglePhotoSelected } from '@/store/photos';
+
 class PhotoService {
   getPhotos(): Promise<Photo[]> {
     return fetch(APIurl[APICalls.PHOTOS])
@@ -87,6 +89,8 @@ class PhotoService {
         togglePhotoSelected(id);
       }
     }
+
+    unSetSinglePhotoSelected();
     return results;
   }
 
@@ -104,6 +108,7 @@ class PhotoService {
     }
     return results;
   }
+
 }
 
 export const photoService = new PhotoService();

@@ -6,6 +6,7 @@
       @multiSelect="toggleSelectMode"
       @open-photo-filter="photoFilterOpen = true"
       @close-photo-filter="photoFilterOpen = false"
+      @multi-select-off="selectMode = false"
     />
     <picture-filter
       :open="photoFilterOpen"
@@ -17,6 +18,11 @@
       <button>Zaznacz wszystkie</button>
       <button>Anuluj zaznaczanie</button>
     </div>
+    <div v-if="selectMode">
+      <button @click="selectAllPhotos">Zaznacz wsystkie</button>
+      <button @click="unSelectAllPhotos">Anuluj zaznaczenie</button>
+    </div>
+
     <div v-if="photosFiltered.length" class="pictures">
       <ImageComponent
         v-for="(image, index) in photosFiltered"
@@ -59,8 +65,6 @@ import PictureFilter from "@/components/PictureFilter.vue";
 
 import Modal from "@/modals/Modal.vue";
 
-//import { exampleImages } from "@/store/dummyData";
-
 import {
   photos,
   filteredPhotos,
@@ -68,6 +72,8 @@ import {
   loadPhotos,
   selectedPhotosId,
   unFilterPhots,
+  selectAllPhotos,
+  unSelectAllPhotos,
 } from "@/store/photos";
 import { folders, loadFolders, currentFolder } from "@/store/folders";
 
@@ -100,9 +106,11 @@ export default defineComponent({
 
     const photoFilterOpen = ref(false);
 
-    const lastImage = computed(() => false);
+    const lastImage = computed(
+      () => activeImageIndex.value == photosFiltered.value.length - 1
+    );
 
-    const firstImage = computed(() => false);
+    const firstImage = computed(() => activeImageIndex.value == 0);
 
     onMounted(() => {
       loadPhotos();
@@ -180,6 +188,8 @@ export default defineComponent({
       previousImage,
       filter,
       clearFilter,
+      selectAllPhotos,
+      unSelectAllPhotos,
     };
   },
 });

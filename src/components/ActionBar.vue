@@ -92,6 +92,7 @@ export default defineComponent({
     multiSelect: null,
     openPhotoFilter: null,
     closePhotoFilter: null,
+    multiSelectOff: null,
   },
   setup(_, { emit }) {
     const pictureFiles = ref<HTMLInputElement>();
@@ -176,6 +177,7 @@ export default defineComponent({
       () => {
         selectedPhotosId.value.forEach((id) => togglePhotoSelected(id));
         pictureSelectionMode.value = false;
+        emit("multiSelectOff");
       }
     );
 

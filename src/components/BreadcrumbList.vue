@@ -25,7 +25,11 @@ export default defineComponent({
 
   setup() {
     const breadcrumbs = computed(() =>
-      folders.value.filter((folder) => filePath.value.includes(folder.id))
+      folders.value
+        .filter((folder) => filePath.value.includes(folder.id))
+        .sort(
+          (a, b) => filePath.value.indexOf(a.id) - filePath.value.indexOf(b.id)
+        )
     );
 
     const rootFolder: Folder = {
@@ -49,8 +53,7 @@ export default defineComponent({
   display: flex;
   border: 1px unset #808080;
   background-color: lavender;
- margin-bottom: 5px;
- margin-left:10px;
+  margin-bottom: 5px;
+  margin-left: 10px;
 }
-
 </style>

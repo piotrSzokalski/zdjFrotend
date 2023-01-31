@@ -34,6 +34,16 @@ export function togglePhotoSelected(id: number) {
    
 }
 
+export function selectAllPhotos() {
+    _selectedPhotosId.value = _filteredPhotos.value.map(photo => photo.id);
+}
+
+export function unSelectAllPhotos() {
+    _selectedPhotosId.value =[];
+}
+
+
+
 export function loadPhotos() {
     return photoService.getPhotos().then(res => _photos.value = res);
 }
@@ -53,3 +63,27 @@ export function unFilterPhots(): void {
     _filteredPhotos.value = photos.value;
 }
 
+let _selectedPhotosIdCopy : number[] = [];
+
+export const singlePhotoSelectionMode = ref(false);
+
+export function setSinglePhotoSelected(id: number) {
+
+    singlePhotoSelectionMode.value = true;
+
+
+    _selectedPhotosIdCopy = selectedPhotosId.value;
+    _selectedPhotosId.value = [id];
+    console.log(_selectedPhotosId.value);
+}
+
+export function unSetSinglePhotoSelected() {
+    
+    if(!singlePhotoSelectionMode.value) {
+        return;
+    }
+
+    _selectedPhotosId.value = _selectedPhotosIdCopy;
+    singlePhotoSelectionMode.value = false;
+
+}
