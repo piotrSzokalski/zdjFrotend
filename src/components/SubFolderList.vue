@@ -1,29 +1,30 @@
 <template>
   <div class="title">
-      <br/>
+    <br />
     Podfoldery
-
   </div>
 
   <div>
-      <section v-if="subFolders.length" class="subFolders">
-          <button @click="openFolderEditor()">
-              <font-awesome-icon icon="folder-plus" />  Dodaj nowy folder
-          </button>
+    <section v-if="subFolders.length" class="subFolders">
+      <button @click="openFolderEditor()">
+        <font-awesome-icon icon="folder-plus" /> Dodaj nowy folder
+      </button>
 
-          <folder-component v-for="(folder, index) in subFolders"
-                            editable
-                            :key="index"
-                            :folder="folder"
-                            @edit="toggleFolderMenuOpen(folder)" />
-      </section>
+      <folder-component
+        v-for="(folder, index) in subFolders"
+        editable
+        :key="index"
+        :folder="folder"
+        @edit="toggleFolderMenuOpen(folder)"
+      />
+    </section>
     <section v-else>
       <h3>Brak podfolderów</h3>
     </section>
   </div>
 
   <folder-menu
-    v-if="folderMenuOpen"
+    :open="folderMenuOpen"
     :folder="selectedFolder"
     @close="folderMenuOpen = false"
   />

@@ -1,23 +1,37 @@
 <template>
-    <div class="folderMenu">
-        {{ folder.name }}
-        <br /><br/>
+  <div v-if="open" class="folderMenu">
+    {{ folder.name }}
+    <br /><br />
 
-        <button @click="folderEditorActive = true">Zmień nazwę</button>
-        <br />
-        <button @click="folderSelectorActive = true">Przenieś</button>
-        <br />
-        <button @click="removeMaybe">Usuń</button>
-        <br />
-        <button @click="close">Zamknij okno</button>
-    </div>
+    <button @click="folderEditorActive = true">Zmień nazwę</button>
+    <br />
+    <button @click="folderSelectorActive = true">Przenieś</button>
+    <br />
+    <button @click="removeMaybe">Usuń</button>
+    <br />
+    <button @click="close">Zamknij okno</button>
+  </div>
 
-  <folder-editor :active="folderEditorActive" :folder="folder" edit-mode @close="folderEditorActive = false" />
+  <folder-editor
+    :active="folderEditorActive"
+    :folder="folder"
+    edit-mode
+    @close="folderEditorActive = false"
+  />
 
-  <folder-selector move-folder :active="folderSelectorActive" :child-folder-id="folder?.id"
-    @close="closeFolderSelector" />
+  <folder-selector
+    move-folder
+    :active="folderSelectorActive"
+    :child-folder-id="folder?.id"
+    @close="closeFolderSelector"
+  />
 
-  <removal-warning folderRemoval :active="warningActive" @remove="removeFolder" @close="warningActive = false" />
+  <removal-warning
+    folderRemoval
+    :active="warningActive"
+    @remove="removeFolder"
+    @close="warningActive = false"
+  />
 </template>
 
 
@@ -28,6 +42,7 @@ import { defineComponent, PropType, ref, watch } from "vue";
 import { Folder } from "@/interfaces/folder";
 import { folderService } from "@/services/folderService";
 import { currentFolder, loadFolders } from "@/store/folders";
+import { mousePosX, mousePosY } from "@/store/mousePos";
 
 import FolderEditor from "@/modals/FolderEditor.vue";
 import FolderSelector from "@/modals/FolderSelector.vue";
@@ -91,16 +106,32 @@ export default defineComponent({
       close();
     }
 
+    const posX = ref();
+    const posY = ref();
+    posX.value = 0 + "px";
+
+    watch(
+      () => props.open,
+      () => {
+        posX.value = mousePosX.value;
+        posY.value = mousePosY.value;
+      }
+    );
+
     return {
       folderEditorActive,
       folderSelectorActive,
       warningActive,
+      mousePosX,
+      mousePosY,
+      posX,
+      posY,
 
       removeMaybe,
       removeFolder,
       close,
 
-      closeFolderSelector
+      closeFolderSelector,
     };
   },
 });
@@ -108,27 +139,26 @@ export default defineComponent({
 
 <style>
 .folderMenu {
-  
   border: 1px solid;
   background-color: #eeedf0;
   display: inline-block;
   border-radius: 5px;
 
   position: absolute;
+  top: v-bind(posY);
+  left: v-bind(posX);
 
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 12px 16px;
   z-index: 1;
 }
-    .folderMenu button {
-        border: 1px solid;
-        border-radius: 5px;
-        padding: 8px;
-        background-color: #5a28aa;
-        color: white;
-        width:130px;
-       
-        
-    }
+.folderMenu button {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 8px;
+  background-color: #5a28aa;
+  color: white;
+  width: 130px;
+}
 </style>
