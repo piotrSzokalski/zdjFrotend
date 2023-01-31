@@ -37,9 +37,6 @@ export function changePath(id: number) {
         _filePath.value = _filePath.value.splice(0, index + 1);
         return;
     }
-    console.log('|here|', _filePath.value);
     _filePath.value.push(id);
-    console.log("_________________________");
-    console.log('|here|', _filePath.value);
 }
 

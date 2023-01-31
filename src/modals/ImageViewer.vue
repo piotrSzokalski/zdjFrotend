@@ -6,10 +6,11 @@
   >
     <div class="actions">
       <button @click="actionsOpen = !actionsOpen">
+        {{ selectedPhotosId }}
         <font-awesome-icon icon="ellipsis-vertical" />
       </button>
       <div v-if="actionsOpen" class="actionsDropdown">
-        <button @click="removePhoto">Usuń</button>
+        <button @click="removalWarningActive = true">Usuń</button>
         <br />
         <button @click="movePhoto">Przenieś</button>
       </div>
@@ -30,14 +31,28 @@
       </div>
     </div>
   </modal>
+
   <folder-selector
     :active="folderSelectorActive"
     @close="folderSelectorActive = false"
   />
+
+  <removal-warning
+    :active="removalWarningActive"
+    @close="removalWarningActive = false"
+    @remove="remove"
+  />
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref, watch } from "vue";
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  PropType,
+  ref,
+  watch,
+} from "vue";
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -52,10 +67,12 @@ import {
   singlePhotoSelectionMode,
   loadPhotos,
   photos,
+  selectedPhotosId,
 } from "@/store/photos";
 
 import Modal from "./Modal.vue";
 import FolderSelector from "./FolderSelector.vue";
+import RemovalWarning from "./RemovalWarning.vue";
 
 /**
  * Podgląd zdjęcia
@@ -65,6 +82,7 @@ export default defineComponent({
     FontAwesomeIcon,
     Modal,
     FolderSelector,
+    RemovalWarning,
   },
   props: {
     /**
@@ -115,19 +133,28 @@ export default defineComponent({
       () => APIurl[APICalls.PHOTOS_GET_PHOTO] + props.image.id
     );
 
+    watch(
+      () => props.active == true,
+      () => setSinglePhotoSelected(props.image.id)
+    );
+
     const actionsOpen = ref(false);
 
     const folderSelectorActive = ref(false);
 
+    const removalWarningActive = ref(false);
+
+    function remove() {
+      removePhoto();
+    }
+
     async function removePhoto() {
-      setSinglePhotoSelected(props.image.id);
       await photoService.removePhotos();
       close();
     }
 
     function movePhoto() {
       folderSelectorActive.value = true;
-      setSinglePhotoSelected(props.image.id);
       close();
     }
 
@@ -147,8 +174,10 @@ export default defineComponent({
       photoPath,
       actionsOpen,
       folderSelectorActive,
+      removalWarningActive,
+      selectedPhotosId,
 
-      removePhoto,
+      remove,
       movePhoto,
       close,
     };
