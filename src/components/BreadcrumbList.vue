@@ -1,4 +1,5 @@
 <template>
+  {{ "foldery  [" + breadcrumbs.map((item) => item.id) + "]" }}
   <div class="breadcrumbs">
     <folder-component :folder="rootFolder" />
     <folder-component

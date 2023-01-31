@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from "vue";
+import { computed, defineComponent, PropType, ref, watch } from "vue";
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -46,7 +46,13 @@ import { Photo } from "@/interfaces/photo";
 import { APIurl } from "@/const/photoAPI";
 import { APICalls } from "@/enums/apiCalls.enum";
 import { photoService } from "@/services/photoService";
-import { setSinglePhotoSelected, loadPhotos } from "@/store/photos";
+import {
+  setSinglePhotoSelected,
+  unSetSinglePhotoSelected,
+  singlePhotoSelectionMode,
+  loadPhotos,
+  photos,
+} from "@/store/photos";
 
 import Modal from "./Modal.vue";
 import FolderSelector from "./FolderSelector.vue";
@@ -113,9 +119,9 @@ export default defineComponent({
 
     const folderSelectorActive = ref(false);
 
-    function removePhoto() {
+    async function removePhoto() {
       setSinglePhotoSelected(props.image.id);
-      photoService.removePhotos();
+      await photoService.removePhotos();
       close();
     }
 
@@ -125,8 +131,14 @@ export default defineComponent({
       close();
     }
 
+    watch(photos.value, () => {
+      console.log("photos changed");
+      close();
+    });
+
     function close() {
       actionsOpen.value = false;
+      unSetSinglePhotoSelected();
       loadPhotos();
       emit("close");
     }

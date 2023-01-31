@@ -53,7 +53,34 @@ export function unFilterPhots(): void {
     _filteredPhotos.value = photos.value;
 }
 
+let _selectedPhotosIdCopy : number[] = [];
+
+export const singlePhotoSelectionMode = ref(false);
+
 export function setSinglePhotoSelected(id: number) {
+
+    singlePhotoSelectionMode.value = true;
+
+
+    _selectedPhotosIdCopy = selectedPhotosId.value;
     _selectedPhotosId.value = [id];
-    console.log(_selectedPhotosId);
+    console.log(_selectedPhotosId.value);
 }
+
+export function unSetSinglePhotoSelected() {
+    
+    if(!singlePhotoSelectionMode.value) {
+        return;
+    }
+
+    console.log('unSetSinglePhotoSelected()');
+
+
+    _selectedPhotosId.value = _selectedPhotosIdCopy;
+    singlePhotoSelectionMode.value = false;
+
+    console.log(_selectedPhotosIdCopy);
+    console.log("______________________________");
+    console.log(_selectedPhotosId.value);
+}
+ 

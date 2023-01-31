@@ -1,5 +1,5 @@
 <template>
-  {{ activeImageIndex }}
+  {{ selectedPhotosId }}
   <breadcrumb-list />
   <div class="gallery">
     <sub-folder-list />
@@ -7,6 +7,7 @@
       @multiSelect="toggleSelectMode"
       @open-photo-filter="photoFilterOpen = true"
       @close-photo-filter="photoFilterOpen = false"
+      @multi-select-off="selectMode = false"
     />
     <picture-filter
       :open="photoFilterOpen"
