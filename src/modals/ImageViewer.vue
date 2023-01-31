@@ -6,7 +6,6 @@
   >
     <div class="actions">
       <button @click="actionsOpen = !actionsOpen">
-        {{ selectedPhotosId }}
         <font-awesome-icon icon="ellipsis-vertical" />
       </button>
       <div v-if="actionsOpen" class="actionsDropdown">
@@ -40,7 +39,7 @@
   <removal-warning
     :active="removalWarningActive"
     @close="removalWarningActive = false"
-    @remove="remove"
+    @remove="removePhoto"
   />
 </template>
 
@@ -144,12 +143,9 @@ export default defineComponent({
 
     const removalWarningActive = ref(false);
 
-    function remove() {
-      removePhoto();
-    }
-
     async function removePhoto() {
       await photoService.removePhotos();
+      removalWarningActive.value = false;
       close();
     }
 
@@ -158,10 +154,7 @@ export default defineComponent({
       close();
     }
 
-    watch(photos.value, () => {
-      console.log("photos changed");
-      close();
-    });
+    watch(photos.value, () => close());
 
     function close() {
       actionsOpen.value = false;
@@ -177,7 +170,7 @@ export default defineComponent({
       removalWarningActive,
       selectedPhotosId,
 
-      remove,
+      removePhoto,
       movePhoto,
       close,
     };
@@ -231,11 +224,13 @@ export default defineComponent({
 
 .actions {
   font-size: 14px;
-  float: right;
+  position: absolute;
+  right: 10px;
+  padding: 2px;
 }
 
 .actions button {
-  background-color: black;
+  background-color: transparent;
   min-width: 50px;
   border: rgb(76, 76, 153);
   border-radius: 50px;
