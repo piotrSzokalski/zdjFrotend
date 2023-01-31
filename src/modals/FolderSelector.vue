@@ -3,9 +3,9 @@
     <div class="folderSelector">
       <h2>Do jakiego folderu przenieść ?</h2>
       <label>Wyszukaj folder</label>
-        <br/>
+      <br />
       <input v-model="searchValue" type="text" />
-        <br/><br/>
+      <br /><br />
       <button @click="switchSorting">Sortuj</button>
       <br /><br />
 
@@ -55,27 +55,21 @@ export default defineComponent({
   setup(props) {
     const searchValue = ref("");
 
-    const folderList = ref<Folder[]>([]);
+    const folderList = ref<Folder[]>([...folders.value]);
 
     watch(
       () => folders.value,
       () => (folderList.value = folders.value)
     );
 
-    watch(
-      () => currentFolder.value,
-      () =>
-        (folderList.value = folderList.value.filter(
-          (folder) => folder.id != currentFolder.value
-        ))
-    );
-
     const filteredFolderList = computed(() =>
-      folderList.value.filter((folder) =>
-        folder.name
-          .toLocaleLowerCase()
-          .includes(searchValue.value.trim().toLowerCase())
-      )
+      folderList.value
+        .filter((folder) => folder.id != currentFolder.value)
+        .filter((folder) =>
+          folder.name
+            .toLocaleLowerCase()
+            .includes(searchValue.value.trim().toLowerCase())
+        )
     );
 
     /**
@@ -117,38 +111,36 @@ export default defineComponent({
 
 
 <style scoped>
-    .folderSelector {
-        background: white;
-        display: inline-block;
-        border-radius: 8px;
-        padding: 15px;
+.folderSelector {
+  background: white;
+  display: inline-block;
+  border-radius: 8px;
+  padding: 15px;
 
-        font-size: 25px;
-        font-weight: 400;
-    }
+  font-size: 25px;
+  font-weight: 400;
+}
 .folderSelector button {
   position: relative;
   float: right;
   cursor: pointer;
   width: 30%;
 }
-    .folderSelector input {
-        width: 350px;
-        text-align: left;
-        position: relative;
-        float: left;
-        margin-left: 10px;
-    }
-    .folderSelector label {
-        position: relative;
-        float: left;
-        margin-left: 10px;
-    }
+.folderSelector input {
+  width: 350px;
+  text-align: left;
+  position: relative;
+  float: left;
+  margin-left: 10px;
+}
+.folderSelector label {
+  position: relative;
+  float: left;
+  margin-left: 10px;
+}
 
 .foldersToSelect {
   overflow: auto;
   height: 550px;
-  
-
 }
 </style>
