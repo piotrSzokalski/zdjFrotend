@@ -1,11 +1,16 @@
 <template>
-  <div class="folderMenu">
-    {{ folder.name }}
-    <button @click="close">Zamknij</button>
-    <button @click="folderEditorActive = true">Zmień nazwę</button>
-    <button @click="folderSelectorActive = true">Przenieś</button>
-    <button @click="removeMaybe">Usuń</button>
-  </div>
+    <div class="folderMenu">
+        {{ folder.name }}
+        <br /><br/>
+
+        <button @click="folderEditorActive = true">Zmień nazwę</button>
+        <br />
+        <button @click="folderSelectorActive = true">Przenieś</button>
+        <br />
+        <button @click="removeMaybe">Usuń</button>
+        <br />
+        <button @click="close">Zamknij okno</button>
+    </div>
 
   <folder-editor :active="folderEditorActive" :folder="folder" edit-mode @close="folderEditorActive = false" />
 
@@ -103,9 +108,11 @@ export default defineComponent({
 
 <style>
 .folderMenu {
+  
   border: 1px solid;
-  background-color: rgb(239, 230, 178);
+  background-color: #eeedf0;
   display: inline-block;
+  border-radius: 5px;
 
   position: absolute;
 
@@ -114,4 +121,14 @@ export default defineComponent({
   padding: 12px 16px;
   z-index: 1;
 }
+    .folderMenu button {
+        border: 1px solid;
+        border-radius: 5px;
+        padding: 8px;
+        background-color: #5a28aa;
+        color: white;
+        width:130px;
+       
+        
+    }
 </style>
