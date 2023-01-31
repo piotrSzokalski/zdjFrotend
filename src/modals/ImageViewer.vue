@@ -11,14 +11,13 @@
       <div class="image">
         <img :src="photoPath" />
       </div>
-
       <div class="pre">
-        <button v-if="!last" @click="$emit('previous')">
+        <button v-if="!first" @click="$emit('previous')">
           <font-awesome-icon icon="arrow-left" />
         </button>
       </div>
       <div class="next">
-        <button v-if="!first" @click="$emit('next')">
+        <button v-if="!last" @click="$emit('next')">
           <font-awesome-icon icon="arrow-right" />
         </button>
       </div>
@@ -126,7 +125,7 @@ img {
 .pre:hover {
   visibility: visible;
   background-color: lightblue;
-  border-radius:50px;
+  border-radius: 50px;
 }
 
 .next {
@@ -139,9 +138,9 @@ img {
 .next:hover {
   visibility: visible;
   background-color: lightblue;
-  border-radius:50px;
+  border-radius: 50px;
 }
-button{
+button {
   background-color: darkblue;
   width: 50px;
   border: darkblue;

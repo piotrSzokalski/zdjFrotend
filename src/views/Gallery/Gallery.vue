@@ -1,4 +1,5 @@
 <template>
+  {{ activeImageIndex }}
   <breadcrumb-list />
   <div class="gallery">
     <sub-folder-list />
@@ -100,9 +101,11 @@ export default defineComponent({
 
     const photoFilterOpen = ref(false);
 
-    const lastImage = computed(() => false);
+    const lastImage = computed(
+      () => activeImageIndex.value == photosFiltered.value.length - 1
+    );
 
-    const firstImage = computed(() => false);
+    const firstImage = computed(() => activeImageIndex.value == 0);
 
     onMounted(() => {
       loadPhotos();
