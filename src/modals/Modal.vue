@@ -1,5 +1,8 @@
 <template>
   <div v-if="active" class="modal">
+    <!--
+
+    -->
     <button class="exitModalButton" @click="$emit('close')">Powrót</button>
     <slot :style="background"> </slot>
   </div>

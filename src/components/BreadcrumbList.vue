@@ -49,8 +49,7 @@ export default defineComponent({
   display: flex;
   border: 1px unset #808080;
   background-color: lavender;
- margin-bottom: 5px;
- margin-left:10px;
+  margin-bottom: 5px;
+  margin-left: 10px;
 }
-
 </style>

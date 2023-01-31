@@ -7,7 +7,7 @@
     </button>
     <div class="editBtn">
       <button v-if="editable" @click="$emit('edit', folder)">
-        <font-awesome-icon icon="pen" />
+        <font-awesome-icon icon="ellipsis-vertical" />
       </button>
     </div>
   </div>
@@ -57,7 +57,6 @@ export default defineComponent({
         return;
       }
       //  Przenieś folder do folderu
-      console.log("here0", props.childFolderId);
       if (props.childFolderId) {
         console.log("here1");
         await folderService.moveFolder(props.childFolderId, props.folder.id);
@@ -86,7 +85,6 @@ export default defineComponent({
   border-radius: 5px;
   opacity: 90%;
   transform: scale(1.1);
-
 }
 
 .editBtn button {
@@ -96,18 +94,17 @@ export default defineComponent({
 .editBtn button:hover {
   opacity: 4;
 }
-    .folder {
-        padding: 3px;
-        border: solid 1px;
-        display: flex;
-        border-radius: 8px;
-        margin-right: 5px;
-        margin-left: 15px;
-        margin: 5px;
-        position: unset;
-        background-color: #ffffff;
-        color: #808080;
-        border: 1px solid;
-
-    }
+.folder {
+  padding: 3px;
+  border: solid 1px;
+  display: flex;
+  border-radius: 8px;
+  margin-right: 5px;
+  margin-left: 15px;
+  margin: 5px;
+  position: unset;
+  background-color: #ffffff;
+  color: #808080;
+  border: 1px solid;
+}
 </style>

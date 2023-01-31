@@ -104,6 +104,7 @@ class PhotoService {
     }
     return results;
   }
+
 }
 
 export const photoService = new PhotoService();

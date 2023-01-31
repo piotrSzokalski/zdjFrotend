@@ -53,3 +53,7 @@ export function unFilterPhots(): void {
     _filteredPhotos.value = photos.value;
 }
 
+export function setSinglePhotoSelected(id: number) {
+    _selectedPhotosId.value = [id];
+    console.log(_selectedPhotosId);
+}

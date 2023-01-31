@@ -2,11 +2,18 @@
   <modal
     :active="active"
     :background="'background-color: rgb(0, 0, 0)'"
-    @close="$emit('close')"
+    @close="close"
   >
-    <!--
- <action-bar />
-    -->
+    <div class="actions">
+      <button @click="actionsOpen = !actionsOpen">
+        <font-awesome-icon icon="ellipsis-vertical" />
+      </button>
+      <div v-if="actionsOpen" class="actionsDropdown">
+        <button @click="removePhoto">Usuń</button>
+        <br />
+        <button @click="movePhoto">Przenieś</button>
+      </div>
+    </div>
     <div class="content">
       <div class="image">
         <img :src="photoPath" />
@@ -23,21 +30,26 @@
       </div>
     </div>
   </modal>
+  <folder-selector
+    :active="folderSelectorActive"
+    @close="folderSelectorActive = false"
+  />
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
+import { computed, defineComponent, PropType, ref } from "vue";
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-// import { Image } from "@/interfaces/image";
 import { Photo } from "@/interfaces/photo";
 
 import { APIurl } from "@/const/photoAPI";
 import { APICalls } from "@/enums/apiCalls.enum";
+import { photoService } from "@/services/photoService";
+import { setSinglePhotoSelected, loadPhotos } from "@/store/photos";
 
 import Modal from "./Modal.vue";
-import ActionBar from "@/components/ActionBar.vue";
+import FolderSelector from "./FolderSelector.vue";
 
 /**
  * Podgląd zdjęcia
@@ -46,7 +58,7 @@ export default defineComponent({
   components: {
     FontAwesomeIcon,
     Modal,
-    //ActionBar,
+    FolderSelector,
   },
   props: {
     /**
@@ -92,12 +104,41 @@ export default defineComponent({
      */
     next: null,
   },
-  setup(props) {
+  setup(props, { emit }) {
     const photoPath = computed(
       () => APIurl[APICalls.PHOTOS_GET_PHOTO] + props.image.id
     );
+
+    const actionsOpen = ref(false);
+
+    const folderSelectorActive = ref(false);
+
+    function removePhoto() {
+      setSinglePhotoSelected(props.image.id);
+      photoService.removePhotos();
+      close();
+    }
+
+    function movePhoto() {
+      folderSelectorActive.value = true;
+      setSinglePhotoSelected(props.image.id);
+      close();
+    }
+
+    function close() {
+      actionsOpen.value = false;
+      loadPhotos();
+      emit("close");
+    }
+
     return {
       photoPath,
+      actionsOpen,
+      folderSelectorActive,
+
+      removePhoto,
+      movePhoto,
+      close,
     };
   },
 });
@@ -108,7 +149,7 @@ export default defineComponent({
   background-color: rgb(0, 0, 0); /* Fallback color */
 }
 
-img {
+.content img {
   border: 1px #ddd;
   border-radius: 5px;
   padding: 5px;
@@ -140,10 +181,39 @@ img {
   background-color: lightblue;
   border-radius: 50px;
 }
-button {
+.content button {
   background-color: darkblue;
-  width: 50px;
+  min-width: 50px;
   border: darkblue;
   border-radius: 50px;
+}
+
+.actions {
+  font-size: 14px;
+  float: right;
+}
+
+.actions button {
+  background-color: black;
+  min-width: 50px;
+  border: rgb(76, 76, 153);
+  border-radius: 50px;
+}
+
+.actions button:hover {
+  background-color: rgb(66, 65, 65);
+  min-width: 50px;
+  border: rgb(76, 76, 153);
+  border-radius: 50px;
+}
+
+.actions .actionsDropdown {
+  display: block;
+}
+
+.actions .actionsDropdown button {
+  font-size: 14px;
+  columns: white;
+  width: fit-content;
 }
 </style>
