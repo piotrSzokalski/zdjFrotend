@@ -2,14 +2,22 @@
   <modal :active="active" @close="$emit('close')">
     <div class="folderSelector">
       <h2>Do jakiego folderu przenieść ?</h2>
-      <label>Wyszukaj</label>
+      <label>Wyszukaj folder</label>
+      <br />
       <input v-model="searchValue" type="text" />
+      <br /><br />
       <button @click="switchSorting">Sortuj</button>
       <br /><br />
 
       <div class="foldersToSelect">
-        <folder-component v-for="(folder, index) in filteredFolderList" :key="index" :folder="folder"
-          :move-phots-mode="moveFolder ? 2 : 1" :child-folder-id="childFolderId" @moved="$emit('close')" />
+        <folder-component
+          v-for="(folder, index) in filteredFolderList"
+          :key="index"
+          :folder="folder"
+          :move-phots-mode="moveFolder ? 2 : 1"
+          :child-folder-id="childFolderId"
+          @moved="$emit('close')"
+        />
       </div>
     </div>
     <br /><br />
@@ -53,8 +61,6 @@ export default defineComponent({
       () => folders.value,
       () => (folderList.value = folders.value)
     );
-
-
 
     const filteredFolderList = computed(() =>
       folderList.value
@@ -109,21 +115,28 @@ export default defineComponent({
   background: white;
   display: inline-block;
   border-radius: 8px;
-  padding: 30px;
-  background: rgb(210, 203, 203);
+  padding: 15px;
+
   font-size: 25px;
   font-weight: 400;
 }
-
 .folderSelector button {
   position: relative;
   float: right;
   cursor: pointer;
-  width: 35%;
+  width: 30%;
 }
-
 .folderSelector input {
-  width: 380px;
+  width: 350px;
+  text-align: left;
+  position: relative;
+  float: left;
+  margin-left: 10px;
+}
+.folderSelector label {
+  position: relative;
+  float: left;
+  margin-left: 10px;
 }
 
 .foldersToSelect {

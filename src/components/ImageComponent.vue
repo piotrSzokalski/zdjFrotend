@@ -113,13 +113,12 @@ export default defineComponent({
 
 .pictureSelected img {
   object-fit: cover;
-  vertical-align: ;
 }
 
 .pictureSelected img:hover {
   object-fit: cover;
   vertical-align: bottom;
-  border-radius: 20%;
+  border-radius: 5px;
   opacity: 90%;
   transform: scale(1.1);
 }
