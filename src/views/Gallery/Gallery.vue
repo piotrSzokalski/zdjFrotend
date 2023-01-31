@@ -18,6 +18,11 @@
       <button>Zaznacz wszystkie</button>
       <button>Anuluj zaznaczanie</button>
     </div>
+    <div v-if="selectMode">
+      <button @click="selectAllPhotos">Zaznacz wsystkie</button>
+      <button @click="unSelectAllPhotos">Anuluj zaznaczenie</button>
+    </div>
+
     <div v-if="photosFiltered.length" class="pictures">
       <ImageComponent
         v-for="(image, index) in photosFiltered"
@@ -60,8 +65,6 @@ import PictureFilter from "@/components/PictureFilter.vue";
 
 import Modal from "@/modals/Modal.vue";
 
-//import { exampleImages } from "@/store/dummyData";
-
 import {
   photos,
   filteredPhotos,
@@ -69,6 +72,8 @@ import {
   loadPhotos,
   selectedPhotosId,
   unFilterPhots,
+  selectAllPhotos,
+  unSelectAllPhotos,
 } from "@/store/photos";
 import { folders, loadFolders, currentFolder } from "@/store/folders";
 
@@ -183,6 +188,8 @@ export default defineComponent({
       previousImage,
       filter,
       clearFilter,
+      selectAllPhotos,
+      unSelectAllPhotos,
     };
   },
 });

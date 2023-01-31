@@ -34,6 +34,16 @@ export function togglePhotoSelected(id: number) {
    
 }
 
+export function selectAllPhotos() {
+    _selectedPhotosId.value = _filteredPhotos.value.map(photo => photo.id);
+}
+
+export function unSelectAllPhotos() {
+    _selectedPhotosId.value =[];
+}
+
+
+
 export function loadPhotos() {
     return photoService.getPhotos().then(res => _photos.value = res);
 }
@@ -77,4 +87,3 @@ export function unSetSinglePhotoSelected() {
     singlePhotoSelectionMode.value = false;
 
 }
- 
