@@ -21,6 +21,7 @@
     <div v-if="selectMode">
       <button @click="selectAllPhotos">Zaznacz wsystkie</button>
       <button @click="unSelectAllPhotos">Anuluj zaznaczenie</button>
+        
     </div>
 
     <div v-if="photosFiltered.length" class="pictures">
@@ -222,4 +223,5 @@ body {
 .gallery button {
   margin: 5px;
 }
+
 </style>

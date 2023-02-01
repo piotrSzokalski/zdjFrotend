@@ -116,13 +116,12 @@ export default defineComponent({
   display: inline-block;
   border-radius: 8px;
   padding: 15px;
-
   font-size: 25px;
   font-weight: 400;
 }
 .folderSelector button {
   position: relative;
-  float: right;
+  float: left;
   cursor: pointer;
   width: 30%;
 }
@@ -131,16 +130,17 @@ export default defineComponent({
   text-align: left;
   position: relative;
   float: left;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 .folderSelector label {
   position: relative;
   float: left;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 .foldersToSelect {
   overflow: auto;
   height: 550px;
+  width:72%;
 }
 </style>
