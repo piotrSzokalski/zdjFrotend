@@ -19,7 +19,7 @@
 import { defineComponent, PropType, ref, watch } from "vue";
 
 import { folderService } from "@/services/folderService";
-import { currentFolder, loadFolders } from "@/store/folders";
+import { loadFolders } from "@/store/folders";
 
 import Modal from "./Modal.vue";
 import { Folder } from "@/interfaces/folder";
@@ -43,7 +43,7 @@ export default defineComponent({
      * Nazwa folderu
      */
     folder: {
-      type: Object as PropType<Folder>,
+      type: Object as PropType<Folder> | null,
       required: false,
     },
     editMode: {
@@ -52,16 +52,11 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const fName = ref(props.folder?.name);
+    const fName = ref(props.editMode ? props.folder?.name : "");
 
     watch(
       () => props.folder,
       () => (fName.value = props.folder?.name || "")
-    );
-
-    watch(
-      () => props.folder,
-      () => console.log("test")
     );
 
     function save() {
