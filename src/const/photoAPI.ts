@@ -1,5 +1,3 @@
-import { APICalls } from '@/enums/apiCalls.enum'
-
 const url = 'https://localhost:7002/api/';
 
 export const APIurl = [
