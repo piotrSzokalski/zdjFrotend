@@ -2,21 +2,23 @@
   <modal :active="active" @close="$emit('close')">
     <div class="content">
       <div v-if="folderRemoval">
+          <br/>
         <h1>Czy na pewno chcesz ten folder</h1>
         <h2>
           Wszystkie zawarte w nim zdjęcia i podfoldery ( również ze zdjęciami
           zostaną stracone)
         </h2>
-        <button @click="unSelect">Anuluj</button>
+        <button class="cancel" @click="unSelect">Anuluj</button>
         <button @click="$emit('remove')">Tak</button>
       </div>
       <div v-else>
-        <div v-if="canRemove">
-          Czy na pewno chcesz usunąć te piękne zdjęcia?
-          <br /><br />
-          <button @click="unSelect">Anuluj</button>
-          <button @click="$emit('remove')">Tak</button>
-        </div>
+          <div v-if="canRemove">
+              <br />
+              Czy na pewno chcesz usunąć te piękne zdjęcia?
+              <br /><br />
+              <button class="cancel" @click="unSelect">Anuluj</button>
+              <button @click="$emit('remove')">Tak</button>
+          </div>
 
         <div v-else>
           <h1>Nie wybrano zdjęć do usunięcia</h1>
@@ -88,4 +90,7 @@ export default defineComponent({
   float: right;
   width: 30%;
 }
+    .content .cancel {
+        background-color: #6665658c;
+    }
 </style>

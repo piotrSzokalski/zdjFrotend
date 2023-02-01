@@ -3,18 +3,24 @@
     <!--
 
     -->
-    <button class="exitModalButton" @click="$emit('close')">Powrót</button>
+      <button class="exitModalButton" @click="$emit('close')">
+          <font-awesome-icon icon="xmark" />
+      </button>
     <slot :style="background"> </slot>
   </div>
 </template>
 
 <script lang="ts">
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { defineComponent } from "vue";
 
 /**
  * Generalny modal
  */
-export default defineComponent({
+    export default defineComponent({
+  components: {      
+     FontAwesomeIcon
+            },
   props: {
     /**
      * Czy widoczny
@@ -77,6 +83,15 @@ export default defineComponent({
 
 .modal .exitModalButton {
   position: absolute;
-  width: 100px;
+  float: right;
+  width: 50px;
+  color:black;
+  background-color: white;
+  margin: 15px;
+  padding:7px;
+  border:0;
+  font-size:20px;
+  
+
 }
 </style>
