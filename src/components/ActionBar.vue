@@ -25,7 +25,7 @@
       Zaznacz
     </button>
 
-    <button @click="folderSelectorActive = true">
+    <button v-if="pictureSelectionMode" @click="folderSelectorActive = true">
       <font-awesome-icon icon="fa-solid fa-share-from-square" />
       Przenieś
     </button>
