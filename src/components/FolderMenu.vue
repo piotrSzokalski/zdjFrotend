@@ -1,15 +1,31 @@
 <template>
   <div v-if="open" class="folderMenu">
-    {{ folder.name }}
+    <div class="header">
+      <button @click="close">
+        <font-awesome-icon icon="xmark" />
+      </button>
+      {{ folder.name }}
+    </div>
+
     <br /><br />
 
-    <button @click="folderEditorActive = true">Zmień nazwę</button>
+    <button @click="folderEditorActive = true">
+      <font-awesome-icon icon="pen" />
+      Zmień nazwę
+    </button>
+
     <br />
-    <button @click="folderSelectorActive = true">Przenieś</button>
+    <button @click="folderSelectorActive = true">
+      <font-awesome-icon icon="fa-solid fa-share-from-square" />
+      Przenieś
+    </button>
+
     <br />
-    <button @click="removeMaybe">Usuń</button>
+    <button @click="removeMaybe">
+      <font-awesome-icon icon="trash" />
+      Usuń
+    </button>
     <br />
-    <button @click="close">Zamknij okno</button>
   </div>
 
   <folder-editor
@@ -39,10 +55,11 @@
 <script>
 import { defineComponent, PropType, ref, watch } from "vue";
 
-import { Folder } from "@/interfaces/folder";
 import { folderService } from "@/services/folderService";
 import { currentFolder, loadFolders } from "@/store/folders";
 import { mousePosX, mousePosY } from "@/store/mousePos";
+
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import FolderEditor from "@/modals/FolderEditor.vue";
 import FolderSelector from "@/modals/FolderSelector.vue";
@@ -53,6 +70,7 @@ export default defineComponent({
     FolderEditor,
     FolderSelector,
     RemovalWarning,
+    FontAwesomeIcon,
   },
   props: {
     open: {
@@ -111,7 +129,7 @@ export default defineComponent({
 
     watch([() => props.open, () => props.folder], () => {
       posX.value = mousePosX.value - 200 + "px";
-      posY.value = mousePosY.value - 100 + "px";
+      posY.value = mousePosY.value - 90 + "px";
     });
 
     return {
@@ -156,5 +174,16 @@ export default defineComponent({
   background-color: #5a28aa;
   color: white;
   width: 130px;
+}
+
+.folderMenu .header {
+  height: 15px;
+}
+
+.folderMenu .header button {
+  background: transparent;
+  color: black;
+  width: 25px;
+  float: top;
 }
 </style>

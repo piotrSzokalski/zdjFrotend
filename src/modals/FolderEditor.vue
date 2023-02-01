@@ -1,6 +1,8 @@
 <template>
   <modal :active="active" @close="close">
     <div class="folderEditor">
+      <br />
+      {{ editMode }}
       <p v-if="editMode">Zmień nazwę folderu</p>
       <p v-else>Utwórz nowy folder</p>
 
@@ -55,6 +57,11 @@ export default defineComponent({
     watch(
       () => props.folder,
       () => (fName.value = props.folder?.name || "")
+    );
+
+    watch(
+      () => props.folder,
+      () => console.log("test")
     );
 
     function save() {
