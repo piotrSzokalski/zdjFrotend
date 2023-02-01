@@ -52,12 +52,10 @@ class FolderService {
         if(id < 1 ) {
             return;
         }
-        console.log("here 2");
         const formData = new FormData();
         formData.append('FolderID', JSON.stringify(id));
         formData.append('ParentID', JSON.stringify(newParentID));
-        const res = await fetch(APIurl[APICalls.FOLDERS_CHANGE_PARENT], {method: 'POST', body: formData});
-        console.log(res);
+        const res = await fetch(APIurl[APICalls.FOLDERS_CHANGE_PARENT], {method: 'POST', body: formData});       
     }
 }
 

@@ -69,7 +69,7 @@ export const singlePhotoSelectionMode = ref(false);
 
 export function setSinglePhotoSelected(id: number) {
 
-    console.log('h1');
+    console.log('h2');
     singlePhotoSelectionMode.value = true;
 
 

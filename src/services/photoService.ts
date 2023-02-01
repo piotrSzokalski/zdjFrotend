@@ -13,12 +13,9 @@ class PhotoService {
     return fetch(APIurl[APICalls.PHOTOS])
       .then((res) => res.json())
       .then((data) => {
-      //   for(const i of data) {
-      //     console.log(i);
-      // }w
-        
         const phots: Photo[] = [];
         let index = 0;
+
         while (data[index]) {
           phots.push({
             id: data[index].PhotoID,
@@ -49,9 +46,9 @@ class PhotoService {
       const formData = new FormData();
 
       formData.append("PhotoName", photos[index].name);
-      console.log('here 1');
+      
       formData.append("FolderID", JSON.stringify(currentFolder.value));
-      console.log('here 2');
+    
       formData.append(
         "PhotoDate",
         new Date(photos[index].lastModified)
@@ -60,18 +57,15 @@ class PhotoService {
           .replace("T", " ")
       );
 
-      console.log('here 1');
       formData.append("PhotoPath", 'e');
-
-      console.log('here 4');
       formData.append("PhotoFile", photos[index]);
-      console.log('here 5');
-      await fetch("https://localhost:7002/api/Photos", {
+
+      await fetch(APIurl[APICalls.PHOTOS], {
         method: "POST",
         body: formData,
-      }).then((res) => { console.log(res);results.push(res)});
+      }).then((res) => { results.push(res)});
     }
-    console.log(results);
+    
     return results;
   }
 
@@ -98,7 +92,7 @@ class PhotoService {
     const results: Response[] = [];
 
     for (const id of selectedPhotosId.value) {
-      const res = await fetch("https://localhost:7002/api/Photos/" + id, {
+      const res = await fetch(APIurl[APICalls.PHOTOS] + id, {
         method: "DELETE",
       });
       results.push(res);
