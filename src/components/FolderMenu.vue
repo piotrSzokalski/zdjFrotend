@@ -28,26 +28,12 @@
     <br />
   </div>
 
-  <folder-editor
-    :active="folderEditorActive"
-    :folder="folder"
-    edit-mode
-    @close="folderEditorActive = false"
-  />
+  <folder-editor :active="folderEditorActive" :folder="folder" edit-mode @close="folderEditorActive = false" />
 
-  <folder-selector
-    move-folder
-    :active="folderSelectorActive"
-    :child-folder-id="folder?.id"
-    @close="closeFolderSelector"
-  />
+  <folder-selector move-folder :active="folderSelectorActive" :child-folder-id="folder?.id"
+    @close="closeFolderSelector" />
 
-  <removal-warning
-    folderRemoval
-    :active="warningActive"
-    @remove="removeFolder"
-    @close="warningActive = false"
-  />
+  <removal-warning folderRemoval :active="warningActive" @remove="removeFolder" @close="warningActive = false" />
 </template>
 
 
@@ -104,6 +90,7 @@ export default defineComponent({
     }
 
     async function removeFolder() {
+      warningActive.value = false;
       if (props.folder) {
         await folderService.removeFolder(props.folder.id);
         loadFolders();
@@ -167,6 +154,7 @@ export default defineComponent({
   padding: 12px 16px;
   z-index: 1;
 }
+
 .folderMenu button {
   border: 1px solid;
   border-radius: 5px;
