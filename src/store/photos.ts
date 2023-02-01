@@ -69,13 +69,10 @@ export const singlePhotoSelectionMode = ref(false);
 
 export function setSinglePhotoSelected(id: number) {
 
-    console.log('h2');
     singlePhotoSelectionMode.value = true;
-
 
     _selectedPhotosIdCopy = selectedPhotosId.value;
     _selectedPhotosId.value = [id];
-    console.log('selectedPhotsId', _selectedPhotosId.value);
 }
 
 export function unSetSinglePhotoSelected() {
