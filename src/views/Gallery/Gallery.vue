@@ -14,14 +14,9 @@
       @clear-filter="clearFilter"
     />
 
-    <div v-if="false" class="selectButtons">
-      <button>Zaznacz wszystkie</button>
-      <button>Anuluj zaznaczanie</button>
-    </div>
-    <div v-if="selectMode">
-      <button @click="selectAllPhotos">Zaznacz wsystkie</button>
+    <div v-if="selectMode" class="selectButtons">
+      <button @click="selectAllPhotos">Zaznacz wszystkie</button>
       <button @click="unSelectAllPhotos">Anuluj zaznaczenie</button>
-        
     </div>
 
     <div v-if="photosFiltered.length" class="pictures">
@@ -224,4 +219,15 @@ body {
   margin: 5px;
 }
 
+.gallery .selectButtons button {
+  font-size: 14px;
+  font-weight: 400;
+  color: white;
+  border-radius: 8px;
+  padding: 4px;
+  border: 1px solid;
+  margin-left: 10px;
+  background-color: #5a28aa;
+  cursor: pointer;
+}
 </style>

@@ -51,14 +51,13 @@ export default defineComponent({
       }
       //  Przenieś zdjęcia do folderu
       if (props.movePhotsMode === 1) {
+        emit("moved");
         await photoService.movePhotos(props.folder.id);
         await loadPhotos();
-        emit("moved");
         return;
       }
       //  Przenieś folder do folderu
       if (props.childFolderId) {
-        console.log("here1");
         await folderService.moveFolder(props.childFolderId, props.folder.id);
         await loadPhotos();
         await loadFolders();

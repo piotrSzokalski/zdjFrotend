@@ -1,23 +1,43 @@
 <template>
   <modal :active="active" @close="$emit('close')">
     <div class="folderSelector">
-      <h2>Do jakiego folderu przenieść ?</h2>
-      <label>Wyszukaj folder</label>
-      <br />
-      <input v-model="searchValue" type="text" />
-      <br /><br />
-      <button @click="switchSorting">Sortuj</button>
-      <br /><br />
+      <div v-if="selectedPhotosId.length > 0 || moveFolder">
+        <h2>Do jakiego folderu przenieść ?</h2>
 
-      <div class="foldersToSelect">
+        <label>Wyszukaj folder</label>
+
+        <br />
+
+        <input v-model="searchValue" type="text" />
+
+        <br /><br />
+
+        <button @click="switchSorting">Sortuj</button>
+
+        <br /><br />
         <folder-component
-          v-for="(folder, index) in filteredFolderList"
-          :key="index"
-          :folder="folder"
+          :folder="rootFolder"
           :move-phots-mode="moveFolder ? 2 : 1"
           :child-folder-id="childFolderId"
           @moved="$emit('close')"
         />
+
+        <div class="foldersToSelect">
+          <folder-component
+            v-for="(folder, index) in filteredFolderList"
+            :key="index"
+            :folder="folder"
+            :move-phots-mode="moveFolder ? 2 : 1"
+            :child-folder-id="childFolderId"
+            @moved="$emit('close')"
+          />
+        </div>
+      </div>
+
+      <div v-else>
+        <br /><br /><br />
+
+        <h2>Nie wybrano żadnych zdjęć do przeniesienia</h2>
       </div>
     </div>
     <br /><br />
@@ -28,6 +48,7 @@
 import { defineComponent, ref, computed, watch } from "vue";
 
 import { folders, currentFolder } from "@/store/folders";
+import { selectedPhotosId } from "@/store/photos";
 
 import Modal from "@/modals/Modal.vue";
 import FolderComponent from "@/components/FolderComponent.vue";
@@ -97,11 +118,20 @@ export default defineComponent({
       }
     }
 
+    const rootFolder: Folder = {
+      id: 0,
+      name: "root",
+      creationDate: new Date("2000-12-12"),
+      parentId: -100,
+    };
+
     return {
       folderList,
       sortingMode,
       searchValue,
       filteredFolderList,
+      selectedPhotosId,
+      rootFolder,
 
       switchSorting,
     };
@@ -141,6 +171,6 @@ export default defineComponent({
 .foldersToSelect {
   overflow: auto;
   height: 550px;
-  width:72%;
+  width: 100%;
 }
 </style>

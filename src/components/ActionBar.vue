@@ -15,21 +15,6 @@
       Usuń
     </button>
 
-    <button
-      :class="
-        pictureSelectionMode ? 'selectingPictures' : 'notSelectingPictures'
-      "
-      @click="multiSelect"
-    >
-      <font-awesome-icon icon="fa-solid fa-circle-check" />
-      Zaznacz
-    </button>
-
-    <button v-if="pictureSelectionMode" @click="folderSelectorActive = true">
-      <font-awesome-icon icon="fa-solid fa-share-from-square" />
-      Przenieś
-    </button>
-
     <input
       type="file"
       ref="pictureFiles"
@@ -47,6 +32,21 @@
     <button @click="$refs.pictureFiles.click()">
       <font-awesome-icon icon="add" />
       Dodaj Zdjęcia
+    </button>
+
+    <button
+      :class="
+        pictureSelectionMode ? 'selectingPictures' : 'notSelectingPictures'
+      "
+      @click="multiSelect"
+    >
+      <font-awesome-icon icon="fa-solid fa-circle-check" />
+      Zaznacz
+    </button>
+
+    <button v-if="pictureSelectionMode" @click="folderSelectorActive = true">
+      <font-awesome-icon icon="fa-solid fa-share-from-square" />
+      Przenieś
     </button>
 
     <button v-if="false" @click="test">Test</button>
