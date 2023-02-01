@@ -3,9 +3,9 @@
     <!--
 
     -->
-      <button class="exitModalButton" @click="$emit('close')">
-          <font-awesome-icon icon="xmark" />
-      </button>
+    <button class="exitModalButton" @click="$emit('close')">
+      <font-awesome-icon icon="xmark" />
+    </button>
     <slot :style="background"> </slot>
   </div>
 </template>
@@ -17,10 +17,10 @@ import { defineComponent } from "vue";
 /**
  * Generalny modal
  */
-    export default defineComponent({
-  components: {      
-     FontAwesomeIcon
-            },
+export default defineComponent({
+  components: {
+    FontAwesomeIcon,
+  },
   props: {
     /**
      * Czy widoczny
@@ -85,13 +85,11 @@ import { defineComponent } from "vue";
   position: absolute;
   float: right;
   width: 50px;
-  color:black;
-  background-color: white;
+  color: black;
+  background-color: transparent;
   margin: 15px;
-  padding:7px;
-  border:0;
-  font-size:20px;
-  
-
+  padding: 7px;
+  border: 0;
+  font-size: 20px;
 }
 </style>
