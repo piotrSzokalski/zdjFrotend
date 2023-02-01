@@ -2,7 +2,6 @@
   <modal :active="active" @close="close">
     <div class="folderEditor">
       <br />
-      {{ editMode }}
       <p v-if="editMode">Zmień nazwę folderu</p>
       <p v-else>Utwórz nowy folder</p>
 
