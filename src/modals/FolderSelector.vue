@@ -1,7 +1,7 @@
 <template>
   <modal :active="active" @close="$emit('close')">
     <div class="folderSelector">
-      <div v-if="selectedPhotosId.length > 0">
+      <div v-if="selectedPhotosId.length > 0 || moveFolder">
         <h2>Do jakiego folderu przenieść ?</h2>
 
         <label>Wyszukaj folder</label>
@@ -157,6 +157,6 @@ export default defineComponent({
 .foldersToSelect {
   overflow: auto;
   height: 550px;
-  width: 72%;
+  width: 100%;
 }
 </style>

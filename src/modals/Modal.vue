@@ -92,4 +92,8 @@ export default defineComponent({
   border: 0;
   font-size: 20px;
 }
+
+.modal .exitModalButton:hover {
+  background-color: white;
+}
 </style>
