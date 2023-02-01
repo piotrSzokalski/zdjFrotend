@@ -15,6 +15,12 @@
         <button @click="switchSorting">Sortuj</button>
 
         <br /><br />
+        <folder-component
+          :folder="rootFolder"
+          :move-phots-mode="moveFolder ? 2 : 1"
+          :child-folder-id="childFolderId"
+          @moved="$emit('close')"
+        />
 
         <div class="foldersToSelect">
           <folder-component
@@ -112,12 +118,20 @@ export default defineComponent({
       }
     }
 
+    const rootFolder: Folder = {
+      id: 0,
+      name: "root",
+      creationDate: new Date("2000-12-12"),
+      parentId: -100,
+    };
+
     return {
       folderList,
       sortingMode,
       searchValue,
       filteredFolderList,
       selectedPhotosId,
+      rootFolder,
 
       switchSorting,
     };
