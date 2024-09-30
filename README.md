@@ -1,4 +1,6 @@
 # zdiecia
+Grupowy projek szkolny - minimalne repozytorium zdięć
+![image](https://github.com/user-attachments/assets/d10917d4-162e-4924-8749-baf0f28c2221)
 
 ## Potrzebne oprogramowanie
 
