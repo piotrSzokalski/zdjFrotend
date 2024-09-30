@@ -1,4 +1,8 @@
 # zdiecia
+Projekt Szoklny - minimale repozytorium zdięć
+![image](https://github.com/user-attachments/assets/23b95948-69cc-4947-85f0-7f518f73f701)
+
+
 
 ## Potrzebne oprogramowanie
 
